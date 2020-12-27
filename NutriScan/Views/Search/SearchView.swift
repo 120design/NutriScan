@@ -15,7 +15,11 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("Rercherchez un produit en scannant son code à barres ou en tapant le numéro EAN à treize chiffres inscrit sous son code à barres.")
+                Text("Rercherchez un produit en scannant son code à barres ou en tapant le numéro EAN à huit ou treize chiffres inscrit sous son code à barres.")
+                    .padding(.bottom)
+                Text("NutriScan interrogera alors la base de données d’Open Food Facts, un projet citoyen à but non lucratif créé par des milliers de volontaires à travers le monde recensant plus de 700 000 produits à travers le monde.")
+                    .padding(.bottom)
+
                 Spacer()
                 if let eanCode = eanCode {
                     Text("Code EAN : \(eanCode)")

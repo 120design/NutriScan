@@ -8,15 +8,39 @@
 import SwiftUI
 
 struct SearchResultView: View {
+    @State var product: NSProduct?
+
     let eanCode: String?
+
     var body: some View {
         NavigationView {
-            if let eanCode = eanCode {
-                Text(eanCode)
-                    .navigationTitle("Résultat")
-            } else {
-                Text("lol")
+                    
+            
+            List {
+                if let product = product {
+                    Text("Nom du produit : \(product.name)")
+                    Text("Code EAN : \(product.id)")
+                }
             }
+            .navigationTitle("Résultat")
+            .onAppear(perform: getProduct)
+        }
+    }
+
+    private func getProduct() {
+        guard let eanCode = eanCode else {
+            print("PAS DE CODE EAN !")
+            return
+        }
+        OFFService.shared.getProduct(from: eanCode) { (error, product) in
+            if let error = error {
+                print("ERROR :", error)
+            }
+            guard let product = product else {
+                print("PRODUCT ERROR")
+                return
+            }
+            self.product = product
         }
     }
 }

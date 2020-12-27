@@ -18,10 +18,11 @@ struct ScanSheetView: View {
     var body: some View {
         ZStack(alignment: .top) {
             CBScanner(
-                supportBarcode: .constant([.ean13]),
+                supportBarcode: .constant([.ean8, .ean13]),
                 torchLightIsOn: $torchIsOn,
                 scanInterval: .constant(5.0)
             ) {
+                print($0.value)
                 self.eanCode = $0.value
                 self.isShowing = false
                 self.goToResult = true
