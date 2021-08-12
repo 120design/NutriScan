@@ -12,6 +12,14 @@
 		2F09F8B925962398005F97FA /* ScanSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F09F8B825962398005F97FA /* ScanSheetView.swift */; };
 		2F09F8C725966C1E005F97FA /* UIScanSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F09F8C625966C1E005F97FA /* UIScanSheetView.swift */; };
 		2F09F8CF259677FD005F97FA /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F09F8CE259677FD005F97FA /* SearchResultView.swift */; };
+		2FD776E026C46628003B03E2 /* NUColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776DF26C46628003B03E2 /* NUColors.swift */; };
+		2FD776E226C46894003B03E2 /* NUNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776E126C46894003B03E2 /* NUNavigationBar.swift */; };
+		2FD776E826C46AC8003B03E2 /* OperatorMono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FD776E326C46AC7003B03E2 /* OperatorMono-Bold.otf */; };
+		2FD776E926C46AC8003B03E2 /* OperatorMono-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FD776E426C46AC8003B03E2 /* OperatorMono-Medium.otf */; };
+		2FD776EA26C46AC8003B03E2 /* OperatorMono-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FD776E526C46AC8003B03E2 /* OperatorMono-MediumItalic.otf */; };
+		2FD776EB26C46AC8003B03E2 /* OperatorMono-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FD776E626C46AC8003B03E2 /* OperatorMono-Light.otf */; };
+		2FD776EC26C46AC8003B03E2 /* OperatorMono-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FD776E726C46AC8003B03E2 /* OperatorMono-BoldItalic.otf */; };
+		2FD776EF26C5A5A0003B03E2 /* NUModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776EE26C5A5A0003B03E2 /* NUModifiers.swift */; };
 		2FE3E22A2590D59A00CF5AB0 /* NutriScanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE3E2292590D59A00CF5AB0 /* NutriScanApp.swift */; };
 		2FE3E22E2590D59D00CF5AB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE3E22D2590D59D00CF5AB0 /* Assets.xcassets */; };
 		2FE3E2312590D59D00CF5AB0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE3E2302590D59D00CF5AB0 /* Preview Assets.xcassets */; };
@@ -28,6 +36,14 @@
 		2F09F8B825962398005F97FA /* ScanSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanSheetView.swift; sourceTree = "<group>"; };
 		2F09F8C625966C1E005F97FA /* UIScanSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScanSheetView.swift; sourceTree = "<group>"; };
 		2F09F8CE259677FD005F97FA /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
+		2FD776DF26C46628003B03E2 /* NUColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUColors.swift; sourceTree = "<group>"; };
+		2FD776E126C46894003B03E2 /* NUNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUNavigationBar.swift; sourceTree = "<group>"; };
+		2FD776E326C46AC7003B03E2 /* OperatorMono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-Bold.otf"; sourceTree = "<group>"; };
+		2FD776E426C46AC8003B03E2 /* OperatorMono-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-Medium.otf"; sourceTree = "<group>"; };
+		2FD776E526C46AC8003B03E2 /* OperatorMono-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-MediumItalic.otf"; sourceTree = "<group>"; };
+		2FD776E626C46AC8003B03E2 /* OperatorMono-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-Light.otf"; sourceTree = "<group>"; };
+		2FD776E726C46AC8003B03E2 /* OperatorMono-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-BoldItalic.otf"; sourceTree = "<group>"; };
+		2FD776EE26C5A5A0003B03E2 /* NUModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUModifiers.swift; sourceTree = "<group>"; };
 		2FE3E2262590D59A00CF5AB0 /* NutriScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NutriScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FE3E2292590D59A00CF5AB0 /* NutriScanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutriScanApp.swift; sourceTree = "<group>"; };
 		2FE3E22D2590D59D00CF5AB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,6 +94,28 @@
 			path = SearchResultView;
 			sourceTree = "<group>";
 		};
+		2FD776DE26C465C5003B03E2 /* ViewHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				2FD776DF26C46628003B03E2 /* NUColors.swift */,
+				2FD776E126C46894003B03E2 /* NUNavigationBar.swift */,
+				2FD776EE26C5A5A0003B03E2 /* NUModifiers.swift */,
+			);
+			path = ViewHelpers;
+			sourceTree = "<group>";
+		};
+		2FD776ED26C46ACF003B03E2 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				2FD776E326C46AC7003B03E2 /* OperatorMono-Bold.otf */,
+				2FD776E726C46AC8003B03E2 /* OperatorMono-BoldItalic.otf */,
+				2FD776E626C46AC8003B03E2 /* OperatorMono-Light.otf */,
+				2FD776E426C46AC8003B03E2 /* OperatorMono-Medium.otf */,
+				2FD776E526C46AC8003B03E2 /* OperatorMono-MediumItalic.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		2FE3E21D2590D59A00CF5AB0 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +140,7 @@
 				2FE3E2392590D5DE00CF5AB0 /* Views */,
 				2FE3E22D2590D59D00CF5AB0 /* Assets.xcassets */,
 				2FE3E2322590D59D00CF5AB0 /* Info.plist */,
+				2FD776ED26C46ACF003B03E2 /* Fonts */,
 				2FE3E22F2590D59D00CF5AB0 /* Preview Content */,
 			);
 			path = NutriScan;
@@ -118,6 +157,7 @@
 		2FE3E2392590D5DE00CF5AB0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2FD776DE26C465C5003B03E2 /* ViewHelpers */,
 				2F09F8AC25960E54005F97FA /* Search */,
 				2F09F8C32596647E005F97FA /* Scan */,
 				2F09F8CD259677C5005F97FA /* SearchResultView */,
@@ -250,7 +290,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FE3E2312590D59D00CF5AB0 /* Preview Assets.xcassets in Resources */,
+				2FD776EA26C46AC8003B03E2 /* OperatorMono-MediumItalic.otf in Resources */,
+				2FD776E926C46AC8003B03E2 /* OperatorMono-Medium.otf in Resources */,
+				2FD776EB26C46AC8003B03E2 /* OperatorMono-Light.otf in Resources */,
+				2FD776EC26C46AC8003B03E2 /* OperatorMono-BoldItalic.otf in Resources */,
 				2FE3E22E2590D59D00CF5AB0 /* Assets.xcassets in Resources */,
+				2FD776E826C46AC8003B03E2 /* OperatorMono-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,12 +308,15 @@
 			files = (
 				2FE94C0E259914E700595F71 /* NovaGroup.swift in Sources */,
 				2FE94C0425990F6900595F71 /* OFFService.swift in Sources */,
+				2FD776E026C46628003B03E2 /* NUColors.swift in Sources */,
 				2F09F8B1259612FA005F97FA /* SearchView.swift in Sources */,
 				2FE94C17259916AF00595F71 /* NSProduct.swift in Sources */,
 				2F09F8CF259677FD005F97FA /* SearchResultView.swift in Sources */,
 				2F09F8B925962398005F97FA /* ScanSheetView.swift in Sources */,
+				2FD776EF26C5A5A0003B03E2 /* NUModifiers.swift in Sources */,
 				2FE3E23C2590D66300CF5AB0 /* HistoryView.swift in Sources */,
 				2FE3E22A2590D59A00CF5AB0 /* NutriScanApp.swift in Sources */,
+				2FD776E226C46894003B03E2 /* NUNavigationBar.swift in Sources */,
 				2FE94C0B259913A400595F71 /* OFFData.swift in Sources */,
 				2F09F8C725966C1E005F97FA /* UIScanSheetView.swift in Sources */,
 				2FE94C132599152900595F71 /* NutriScore.swift in Sources */,
