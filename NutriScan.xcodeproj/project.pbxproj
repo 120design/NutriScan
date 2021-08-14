@@ -29,6 +29,7 @@
 		2FE94C0E259914E700595F71 /* NovaGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE94C0D259914E700595F71 /* NovaGroup.swift */; };
 		2FE94C132599152900595F71 /* NutriScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE94C122599152900595F71 /* NutriScore.swift */; };
 		2FE94C17259916AF00595F71 /* NSProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE94C16259916AF00595F71 /* NSProduct.swift */; };
+		2FEA7DB126C7DB020089AAA8 /* NUCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEA7DB026C7DB020089AAA8 /* NUCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		2FE94C0D259914E700595F71 /* NovaGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NovaGroup.swift; path = NutriScan/Model/Entities/SharedEntities/NovaGroup.swift; sourceTree = SOURCE_ROOT; };
 		2FE94C122599152900595F71 /* NutriScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NutriScore.swift; path = NutriScan/Model/Entities/SharedEntities/NutriScore.swift; sourceTree = SOURCE_ROOT; };
 		2FE94C16259916AF00595F71 /* NSProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSProduct.swift; sourceTree = "<group>"; };
+		2FEA7DB026C7DB020089AAA8 /* NUCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 		2FE3E2392590D5DE00CF5AB0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2FEA7DAF26C7DADF0089AAA8 /* Shared */,
 				2FD776DE26C465C5003B03E2 /* ViewHelpers */,
 				2F09F8AC25960E54005F97FA /* Search */,
 				2F09F8C32596647E005F97FA /* Scan */,
@@ -224,6 +227,14 @@
 				2FE94C122599152900595F71 /* NutriScore.swift */,
 			);
 			path = SharedEntities;
+			sourceTree = "<group>";
+		};
+		2FEA7DAF26C7DADF0089AAA8 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				2FEA7DB026C7DB020089AAA8 /* NUCardView.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +323,7 @@
 				2F09F8B1259612FA005F97FA /* SearchView.swift in Sources */,
 				2FE94C17259916AF00595F71 /* NSProduct.swift in Sources */,
 				2F09F8CF259677FD005F97FA /* SearchResultView.swift in Sources */,
+				2FEA7DB126C7DB020089AAA8 /* NUCardView.swift in Sources */,
 				2F09F8B925962398005F97FA /* ScanSheetView.swift in Sources */,
 				2FD776EF26C5A5A0003B03E2 /* NUModifiers.swift in Sources */,
 				2FE3E23C2590D66300CF5AB0 /* HistoryView.swift in Sources */,
