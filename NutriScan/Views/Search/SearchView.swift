@@ -12,10 +12,11 @@ struct SearchView: View {
     @State private var eanCode: String?
     @State private var goToResult = false
     
-    var text1: some View {
-        Text("Rercherchez un produit ")
-            .modifier(NUTextBodyModifier())
-    }
+    @Namespace var eanNamespace
+    @Namespace var scanNamespace
+    
+    @State var showEanDetail = false
+    @State var showScanDetail = false
     
     let firstParagraph: some View =
         HStack {
@@ -28,73 +29,56 @@ struct SearchView: View {
                 + Text(" à huit ou treize chiffres inscrit sous son code à barres.")
         }
         .modifier(NUTextBodyModifier())
+        .frame(maxWidth: .infinity)
         .padding([.top, .leading, .trailing])
-
+    
     let secondaryParagraph: some View =
         HStack {
             Text("NutriScan interrogera alors ")
-            + Text("la base de données d’Open Food Facts,")
-                .font(
-                    .custom(
-                        "OperatorMono-MediumItalic",
-                        size: 16
-                    )
-                )
-            + Text(" un projet citoyen à but non lucratif créé par des milliers de volontaires à travers le monde recensant ")
-            + Text("plus de 700\u{00a0}000 produits.")
-                .font(
-                    .custom(
-                        "OperatorMono-MediumItalic",
-                        size: 16
-                    )
-                )
+                + Text("la base de données d’Open Food Facts,")
+                .font(NUBodyTextEmphasisFont)
+                + Text(" un projet citoyen à but non lucratif créé par des milliers de volontaires à travers le monde recensant ")
+                + Text("plus de 700\u{00a0}000 produits.")
+                .font(NUBodyTextEmphasisFont)
         }
         .modifier(NUTextBodyModifier())
-        .padding([.top, .leading, .trailing])
+        .frame(maxWidth: .infinity)
+        .padding([.leading, .trailing])
+        .padding(.top, 8)
     
     var body: some View {
         NavigationView {
             ZStack {
-                NUwBackgroundView()
+                NUBackgroundView()
                 ScrollView {
                     firstParagraph
                     secondaryParagraph
                     
                     Spacer()
                     
-                    if let eanCode = eanCode {
-                        Text("Code EAN : \(eanCode)")
-                    }
                     Button(action: {
-                        self.scanViewIsShowing = true
+                        self.showScanDetail = true
                     }, label: {
-                        NUCardView(type: .scanButton)
+                        CardView(
+                            namespace: scanNamespace,
+                            cardType: .scanButton
+                        )
                     })
+                    
                     Text("ou")
                         .padding(.top, -10.0)
                         .padding(.bottom, -5.0)
                         .modifier(NUStrongLabelModifier())
-                    NavigationLink(
-                        destination:
-                            ScrollView{
-                                text
-                                NavigationLink(
-                                    destination:
-                                        ScrollView{
-                                            text
-                                            
-                                        }
-                                        .navigationTitle("Détails"),
-                                    label: {
-                                        NUCardView(type: .eanButton)
-                                    }
-                                )
-                            }
-                            .navigationTitle("Résultat"),
-                        label: {
-                            NUCardView(type: .eanButton)
-                        }
-                    )
+                    
+                    Button(action: {
+                        self.showEanDetail = true
+                    }, label: {
+                        CardView(
+                            namespace: eanNamespace,
+                            cardType: .eanButton
+                        )
+                    })
+                    
                     NavigationLink(
                         destination: SearchResultView(eanCode: eanCode),
                         isActive: $goToResult,
@@ -115,6 +99,25 @@ struct SearchView: View {
             })
         }
         .nuNavigationBar()
+        .overlay(
+            ZStack {
+                if showEanDetail {
+                    CardDetailView(
+                        showDetail: $showEanDetail,
+                        namespace: eanNamespace,
+                        type: .eanButton
+                    )
+                } else if showScanDetail {
+                    CardDetailView(
+                        showDetail: $showScanDetail,
+                        namespace: scanNamespace,
+                        type: .scanButton
+                    )
+                }
+            }
+            .padding(.top)
+            .ignoresSafeArea()
+        )
     }
 }
 
@@ -131,17 +134,3 @@ var text: some View {
     Text("Lol")
 }
 
-
-struct NUwBackgroundView: View {
-    var body: some View {
-        LinearGradient(
-            gradient:
-                Gradient(
-                    colors: [.nuQuinaryColor, .nuPrimaryColor]
-                ),
-            startPoint: UnitPoint(x: 0.5, y: 0.55),
-            endPoint: .bottom
-        )
-        .ignoresSafeArea()
-    }
-}

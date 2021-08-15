@@ -76,11 +76,53 @@ struct NUSmoothCornersModifier: ViewModifier {
     var cornerRadius: CGFloat = 20
     func body(content: Content) -> some View {
         content
-            .clipShape(
+            .mask(
                 RoundedRectangle(
                     cornerRadius: cornerRadius,
                     style: .continuous
                 )
+            )
+    }
+}
+
+// MARK: Background
+
+struct NUBackgroundView: View {
+    var body: some View {
+        LinearGradient(
+            gradient:
+                Gradient(
+                    colors: [.nuQuinaryColor, .nuPrimaryColor]
+                ),
+            startPoint: UnitPoint(x: 0.5, y: 0.55),
+            endPoint: .bottom
+        )
+        .ignoresSafeArea()
+    }
+}
+
+// MARK: Shadow
+
+struct NUPrimaryShadowModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .shadow(
+                color: .nuPrimaryColor.opacity(0.2),
+                radius: 24,
+                x: 0,
+                y: 12
+            )
+    }
+}
+
+struct NUTertiaryShadowModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .shadow(
+                color: .nuTertiaryColor.opacity(0.2),
+                radius: 24,
+                x: 0,
+                y: 12
             )
     }
 }
