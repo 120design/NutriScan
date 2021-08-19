@@ -61,6 +61,7 @@ struct SearchView: View {
                             cardType: .scanButton
                         )
                     })
+                    .opacity(showScanDetail ? 0 : 1)
                     
                     Text("ou")
                         .padding(.top, -10.0)
@@ -75,6 +76,7 @@ struct SearchView: View {
                             cardType: .eanButton
                         )
                     })
+                    .opacity(showEanDetail ? 0 : 1)
                     
                     NavigationLink(
                         destination: SearchResultView(eanCode: eanCode),
@@ -99,7 +101,8 @@ struct SearchView: View {
                         namespace: scanNamespace,
                         cardType: .scanButton
                     )
-                } else if showEanDetail {
+                }
+                if showEanDetail {
                     CardDetailView(
                         showDetail: $showEanDetail,
                         eanCode: $eanCode,
