@@ -9,29 +9,37 @@ import SwiftUI
 
 struct SearchResultView: View {
     @State var product: NSProduct?
-
-    let eanCode: String?
-
+    
+    let eanCode: String
+    
     var body: some View {
-        NavigationView {
-                    
-            
-            List {
-                if let product = product {
-                    Text("Nom du produit : \(product.name)")
-                    Text("Code EAN : \(product.id)")
+        ZStack {
+            NUBackgroundView()
+            ScrollView {
+                if let _ = product {
+                    Text("NutriScan a trouvé dans la base de données d’Open Food Facts ce produit correspondant au code EAN 1234567890123 :")
+                        .foregroundColor(.white)
+                } else {
+                    Text("...")
+                        .foregroundColor(.white)
+                }
+                List {
+                    if let product = product {
+                        Text("Nom du produit : \(product.name)")
+                        Text("Code EAN : \(product.id)")
+                    }
                 }
             }
-            .navigationTitle("Résultat")
             .onAppear(perform: getProduct)
         }
+        .navigationTitle("Résultat")
     }
-
+    
     private func getProduct() {
-        guard let eanCode = eanCode else {
-            print("PAS DE CODE EAN !")
-            return
-        }
+        //        guard let eanCode = eanCode else {
+        //            print("PAS DE CODE EAN !")
+        //            return
+        //        }
         OFFService.shared.getProduct(from: eanCode) { (error, product) in
             if let error = error {
                 print("ERROR :", error)

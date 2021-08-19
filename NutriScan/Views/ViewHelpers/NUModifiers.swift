@@ -76,7 +76,7 @@ struct NUSmoothCornersModifier: ViewModifier {
     var cornerRadius: CGFloat = 20
     func body(content: Content) -> some View {
         content
-            .mask(
+            .clipShape(
                 RoundedRectangle(
                     cornerRadius: cornerRadius,
                     style: .continuous
@@ -85,7 +85,7 @@ struct NUSmoothCornersModifier: ViewModifier {
     }
 }
 
-// MARK: Background
+// MARK: Gradient Background
 
 struct NUBackgroundView: View {
     var body: some View {
@@ -124,5 +124,36 @@ struct NUTertiaryShadowModifier: ViewModifier {
                 x: 0,
                 y: 12
             )
+    }
+}
+
+struct NUQuaternaryShadowModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .shadow(
+                color: .nuQuaternaryColor.opacity(0.2),
+                radius: 24,
+                x: 0,
+                y: 12
+            )
+    }
+}
+
+// MARK: TextField
+
+struct NUPlaceholderStyleModifier: ViewModifier {
+    var showPlaceHolder: Bool
+    var placeholder: String
+    var foregroundColor: Color
+    
+    public func body(content: Content) -> some View {
+        ZStack(alignment: .leading) {
+            if showPlaceHolder {
+                Text(placeholder)
+                    .padding(.horizontal, 15)
+                    .foregroundColor(foregroundColor.opacity(0.4))
+            }
+            content
+        }
     }
 }

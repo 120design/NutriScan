@@ -8,50 +8,23 @@
 import SwiftUI
 
 struct CardView: View {
-    let namespace: Namespace.ID
+    var namespace: Namespace.ID
     
     let cardType: CardType
-    enum CardType: String {
-        case scanButton = "Scanner un code à\u{00a0}barres",
-             eanButton = "Taper un code EAN13 ou EAN8"
-    }
     
     var body: some View {
         VStack {
-            HStack(spacing: 12.0) {
-                Image(
-                    systemName: cardType == .scanButton
-                        ? "barcode.viewfinder"
-                        : "textformat.123"
-                )
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding()
-                .frame(width: pictureWidth, height: pictureWidth)
-                .foregroundColor(.nuTertiaryColor)
-                .background(Color.nuPrimaryColor)
-                .modifier(NUSmoothCornersModifier())
-                VStack {
-                    Text(cardType.rawValue)
-                        .modifier(NUButtonLabelModifier())
-                }
-                Spacer()
-            }
-            .matchedGeometryEffect(id: "header", in: namespace)
-            .padding()
-            .frame(maxWidth: .infinity)
+            CardHeaderView(cardType: cardType, namespace: namespace)
+                .matchedGeometryEffect(id: "header", in: namespace)
         }
+        .padding()
         .background(
-            Color
-                .nuTertiaryColor
+            RoundedRectangle(
+                cornerRadius: 28,
+                style: .continuous
+            )
+                .fill(Color.nuTertiaryColor)
                 .matchedGeometryEffect(id: "container", in: namespace)
-                .mask(
-                    RoundedRectangle(
-                        cornerRadius: 28,
-                        style: .continuous
-                    )
-                    .matchedGeometryEffect(id: "shape", in: namespace)
-                )
         )
         .modifier(NUTertiaryShadowModifier())
         .padding()
@@ -61,7 +34,7 @@ struct CardView: View {
 
 struct NUCardView_Previews: PreviewProvider {
     @Namespace static var namespace
-    let type = CardView.CardType.eanButton
+    let type = CardType.eanButton
     
     static var previews: some View {
         CardView(
@@ -80,3 +53,8 @@ struct NUCardView_Previews: PreviewProvider {
 
 let screen = UIScreen.main.bounds
 let pictureWidth = screen.width * 0.25
+
+enum CardType: String {
+    case scanButton = "Scanner un code à\u{00a0}barres",
+         eanButton = "Taper un code EAN13 ou EAN8"
+}

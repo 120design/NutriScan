@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct SearchView: View {
-    @State private var scanViewIsShowing = false
-    @State private var eanCode: String?
+    @State private var eanCode = "3229820108605"
     @State private var goToResult = false
     
-    @Namespace var eanNamespace
-    @Namespace var scanNamespace
+    @Namespace private var eanNamespace
+    @Namespace private var scanNamespace
     
     @State var showEanDetail = false
     @State var showScanDetail = false
@@ -54,8 +53,6 @@ struct SearchView: View {
                     firstParagraph
                     secondaryParagraph
                     
-                    Spacer()
-                    
                     Button(action: {
                         self.showScanDetail = true
                     }, label: {
@@ -90,28 +87,25 @@ struct SearchView: View {
             }
             .navigationTitle("Recherche")
             .foregroundColor(.nuSecondaryColor)
-            .sheet(isPresented: $scanViewIsShowing, content: {
-                ScanSheetView(
-                    eanCode: $eanCode,
-                    isShowing: $scanViewIsShowing,
-                    goToResult: $goToResult
-                )
-            })
         }
         .nuNavigationBar()
         .overlay(
-            ZStack {
-                if showEanDetail {
-                    CardDetailView(
-                        showDetail: $showEanDetail,
-                        namespace: eanNamespace,
-                        type: .eanButton
-                    )
-                } else if showScanDetail {
+            Group {
+                if showScanDetail {
                     CardDetailView(
                         showDetail: $showScanDetail,
+                        eanCode: $eanCode,
+                        goToResult: $goToResult,
                         namespace: scanNamespace,
-                        type: .scanButton
+                        cardType: .scanButton
+                    )
+                } else if showEanDetail {
+                    CardDetailView(
+                        showDetail: $showEanDetail,
+                        eanCode: $eanCode,
+                        goToResult: $goToResult,
+                        namespace: eanNamespace,
+                        cardType: .eanButton
                     )
                 }
             }
@@ -129,8 +123,3 @@ struct SearchView_Previews: PreviewProvider {
             .previewDevice("iPhone SE (1st generation)")
     }
 }
-
-var text: some View {
-    Text("Lol")
-}
-
