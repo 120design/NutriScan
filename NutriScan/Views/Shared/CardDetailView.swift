@@ -42,15 +42,9 @@ struct CardDetailView: View {
                 }
             }
             .opacity(appear ? 1 : 0)
-            .animation(.spring().delay(1))
+            .animation(.spring())
         }
         .animation(.spring())
-        .onAppear {
-            appear = true
-        }
-        .onDisappear {
-            appear = false
-        }
         .padding(.vertical)
         .background(
             RoundedRectangle(
@@ -76,7 +70,7 @@ struct CardDetailView: View {
                 .foregroundColor(.nuPrimaryColor)
                 .padding([.top,.trailing])
                 .opacity(appear ? 1 : 0)
-                .animation(.spring().delay(2))
+                .animation(.spring())
                 .onTapGesture {
                     showDetail = false
                 },
@@ -86,7 +80,8 @@ struct CardDetailView: View {
         .gesture(
             DragGesture()
                 .onChanged { value in
-                    guard value.translation.height > 0
+                    guard appear
+                            && value.translation.height > 0
                     else { return }
                     self.yTranslation = value.translation.height
                 }
@@ -97,6 +92,14 @@ struct CardDetailView: View {
                     self.yTranslation = CGSize.zero.height
                 }
         )
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                appear = true
+            }
+        }
+        .onDisappear {
+            appear = false
+        }
     }
 }
 
