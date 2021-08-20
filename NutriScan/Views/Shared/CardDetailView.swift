@@ -76,10 +76,12 @@ struct CardDetailView: View {
                 },
             alignment: .topTrailing
         )
-        .scaleEffect(1 - self.yTranslation / 1000)
+        .scaleEffect(1 - self.yTranslation / 3000)
+        .offset(x: 0, y: yTranslation)
         .gesture(
             DragGesture()
                 .onChanged { value in
+                    print(value.translation.height)
                     guard appear
                             && value.translation.height > 0
                     else { return }
