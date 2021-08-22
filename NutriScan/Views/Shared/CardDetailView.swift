@@ -18,7 +18,7 @@ struct CardDetailView: View {
     @State var yTranslation = CGSize.zero.height
     
     var namespace: Namespace.ID
-    let cardType: CardType
+    let cardType: CardView.CardType
     
     func search() {
         guard eanCode.count == 8 || eanCode.count == 13 else {
@@ -29,18 +29,24 @@ struct CardDetailView: View {
         showDetail = false
     }
     
+    @ViewBuilder
+    private var cardContentView: some View {
+        switch cardType {
+        case .scanButton:
+            ScanView(eanCode: $eanCode, search: search)
+        case .eanButton:
+            EANView(eanCode: $eanCode, search: search)
+        case .product(let product):
+            ProductView(product: product)
+        }
+    }
+    
     var body: some View {
         VStack {
             CardHeaderView(cardType: cardType, namespace: namespace)
                 .matchedGeometryEffect(id: "header", in: namespace)
                 .padding([.top, .horizontal])
-            VStack {
-                if cardType == .scanButton {
-                    ScanView(eanCode: $eanCode, search: search)
-                } else if cardType == .eanButton {
-                    EANView(eanCode: $eanCode, search: search)
-                }
-            }
+            cardContentView
             .opacity(appear ? 1 : 0)
             .animation(.spring())
         }
@@ -53,7 +59,7 @@ struct CardDetailView: View {
                     : 28,
                 style: .continuous
             )
-            .fill(Color.nuTertiaryColor)
+            .fill(cardType.backgroundColor)
             .ignoresSafeArea()
             .matchedGeometryEffect(id: "container", in: namespace)
         )
@@ -81,7 +87,6 @@ struct CardDetailView: View {
         .gesture(
             DragGesture()
                 .onChanged { value in
-                    print(value.translation.height)
                     guard appear
                             && value.translation.height > 0
                     else { return }

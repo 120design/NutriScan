@@ -34,6 +34,7 @@ struct OFFData: Decodable {
         let selectedImages: OFFSelectedImages?
         let nutriments: OFFNutriments?
         let nutriscore_grade: NutriScore?
+        let image_url: String?
     }
 
     let status: Int

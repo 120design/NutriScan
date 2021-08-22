@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 // MARK: Typography
 
@@ -51,7 +52,7 @@ struct NUStrongLabelModifier: ViewModifier {
                 x: 0,
                 y: 0
             )
-
+        
     }
 }
 
@@ -102,6 +103,19 @@ struct NUBackgroundView: View {
 }
 
 // MARK: Shadow
+
+extension View {
+    func nuShadowModifier(color: Color) -> some View {
+        self
+            .shadow(
+                color: color.opacity(0.2),
+                radius: 24,
+                x: 0,
+                y: 12
+            )
+    }
+}
+
 
 struct NUPrimaryShadowModifier: ViewModifier {
     func body(content: Content) -> some View {
@@ -155,5 +169,31 @@ struct NUPlaceholderStyleModifier: ViewModifier {
             }
             content
         }
+    }
+}
+
+// MARK: Images
+
+extension Image {
+    func nuCardHeaderImageModifier() -> some View {
+        self
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .padding()
+            .frame(width: pictureWidth, height: pictureWidth)
+            .foregroundColor(.nuTertiaryColor)
+            .background(Color.nuPrimaryColor)
+            .modifier(NUSmoothCornersModifier())
+    }
+}
+extension KFImage {
+    func nuCardHeaderImageModifier() -> some View {
+        self
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: pictureWidth, height: pictureWidth)
+            .foregroundColor(.nuTertiaryColor)
+            .background(Color.nuPrimaryColor)
+            .modifier(NUSmoothCornersModifier())
     }
 }

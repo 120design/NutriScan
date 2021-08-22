@@ -6,29 +6,61 @@
 //
 
 import SwiftUI
+import Kingfisher
 
-struct CardHeaderView: View {
-    let cardType: CardType
-    var namespace: Namespace.ID
+struct CardHeaderImageView: View {
+    let isProductImage: Bool
+    let image: String
     
     var body: some View {
-        HStack(spacing: 12.0) {
-            Image(
-                systemName: cardType == .scanButton
-                ? "barcode.viewfinder"
-                : "textformat.123"
-            )
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding()
-                .frame(width: pictureWidth, height: pictureWidth)
-                .foregroundColor(.nuTertiaryColor)
-                .background(Color.nuPrimaryColor)
-                .modifier(NUSmoothCornersModifier())
-//                .matchedGeometryEffect(id: "image", in: namespace)
+        Group {
+            if isProductImage {
+                KFImage.url(URL(string: image))
+                    .nuCardHeaderImageModifier()
+            } else {
+                Image(systemName: image)
+                    .nuCardHeaderImageModifier()
+            }
+        }
+    }
+}
+
+struct CardHeaderView: View {
+    let cardType: CardView.CardType
+    var namespace: Namespace.ID
+    
+    @ViewBuilder
+    private var imageView: some View {
+        switch cardType {
+        case .scanButton:
+            Image(systemName: "barcode.viewfinder")
+                .nuCardHeaderImageModifier()
+        case .eanButton:
+            Image(systemName: "textformat.123")
+                .nuCardHeaderImageModifier()
+        case .product(let product):
+            KFImage.url(URL(string: product.imageURL ?? ""))
+                .nuCardHeaderImageModifier()
+        }
+    }
+    
+    @ViewBuilder
+    private var title: some View {
+        switch cardType {
+        case .scanButton:
+            Text("Scanner un code à\u{00a0}barres")
+        case .eanButton:
+            Text("Taper un code EAN13 ou EAN8")
+        case .product(let product):
+            Text(product.name)
+        }
+    }
+    
+    var body: some View {
+        return HStack(spacing: 12.0) {
+            imageView
             VStack {
-                Text(cardType.rawValue)
-//                    .matchedGeometryEffect(id: "title", in: namespace)
+                title
                     .multilineTextAlignment(.leading)
                     .modifier(NUButtonLabelModifier())
             }
@@ -40,7 +72,7 @@ struct CardHeaderView: View {
 
 struct CardHeaderView_Previews: PreviewProvider {
     @Namespace static var namespace
-    static let cardType = CardType.eanButton
+    static let cardType = CardView.CardType.eanButton
     
     static var previews: some View {
         CardHeaderView(cardType: cardType, namespace: namespace)

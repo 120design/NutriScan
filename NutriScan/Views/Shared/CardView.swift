@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CardView: View {
     var namespace: Namespace.ID
@@ -13,7 +14,7 @@ struct CardView: View {
     let cardType: CardType
     
     var body: some View {
-        VStack {
+        return VStack {
             CardHeaderView(cardType: cardType, namespace: namespace)
                 .matchedGeometryEffect(id: "header", in: namespace)
         }
@@ -23,18 +24,35 @@ struct CardView: View {
                 cornerRadius: 28,
                 style: .continuous
             )
-                .fill(Color.nuTertiaryColor)
-                .matchedGeometryEffect(id: "container", in: namespace)
+            .fill(cardType.backgroundColor)
+            .matchedGeometryEffect(id: "container", in: namespace)
         )
-        .modifier(NUTertiaryShadowModifier())
+        .nuShadowModifier(color: cardType.backgroundColor)
         .padding()
         .animation(.spring())
+    }
+    
+    
+    enum CardType: Equatable {
+        case scanButton,
+             eanButton,
+             product(NUProduct)
+        
+        var backgroundColor: Color {
+            switch self {
+            case .scanButton,
+                 .eanButton:
+                return .nuTertiaryColor
+            case .product(_):
+                return .nuQuaternaryColor
+            }
+        }
     }
 }
 
 struct NUCardView_Previews: PreviewProvider {
     @Namespace static var namespace
-    let type = CardType.eanButton
+    let type = CardView.CardType.eanButton
     
     static var previews: some View {
         CardView(
@@ -53,8 +71,3 @@ struct NUCardView_Previews: PreviewProvider {
 
 let screen = UIScreen.main.bounds
 let pictureWidth = screen.width * 0.25
-
-enum CardType: String {
-    case scanButton = "Scanner un code à\u{00a0}barres",
-         eanButton = "Taper un code EAN13 ou EAN8"
-}

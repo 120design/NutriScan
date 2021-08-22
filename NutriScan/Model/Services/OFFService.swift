@@ -18,7 +18,7 @@ struct OFFService {
         case connection, undefined, response, statusCode, data, noProductFound
     }
 
-    func getProduct(from eanCode: String, completion: @escaping (OFFError?, NSProduct?) -> Void) {
+    func getProduct(from eanCode: String, completion: @escaping (OFFError?, NUProduct?) -> Void) {
         let productURL = URL(string: offApi + eanCode)!
         let task = URLSession.shared.dataTask(with: productURL) { data, response, error in
 
@@ -48,43 +48,38 @@ struct OFFService {
             }
 
 //            Récupérer les données JSON de la réponse et les décoder
-            guard let data = data, let offData = try? JSONDecoder().decode(OFFData.self, from: data) else {
+            guard let data = data,
+                  let offData = try? JSONDecoder().decode(OFFData.self, from: data)
+            else {
                 print("ERROR WITH THE DATA")
                 completion(OFFError.data, nil)
                 return
             }
 
 //            Vérifier que l’EAN13 a retourné un produit enregistré dans la DB d’OFF
-            guard offData.status == 1, let offProduct = offData.product else {
+            guard offData.status == 1,
+                  let offProduct = offData.product
+            else {
                 print("NO PRODUCT FOUND")
                 completion(OFFError.noProductFound, nil)
                 return
             }
 
-//            Construire une instance de NSProduct
+//            Construire une instance de NUProduct
             let id = offProduct._id
 
-            var name = offProduct.product_name
-            if let product_name_fr = offProduct.product_name_fr {
-                name = product_name_fr
-            }
+            let name = offProduct.product_name_fr ?? offProduct.product_name
 
-            var novaGroup: NovaGroup? = nil
-            if let nutriments = offProduct.nutriments {
-                if let nova_group = nutriments.nova_group {
-                    novaGroup = nova_group
-                }
-            }
+            let novaGroup = offProduct.nutriments?.nova_group ?? nil
 
-            var nutriScore: NutriScore? = nil
-            if let nutriscore_grade = offProduct.nutriscore_grade {
-                nutriScore = nutriscore_grade
-            }
+            let nutriScore = offProduct.nutriscore_grade ?? nil
 
-            let product = NSProduct(
+            let image_url = offProduct.image_url ?? nil
+
+            let product = NUProduct(
                 id: id,
                 name: name,
-                imageURL: nil,
+                imageURL: image_url,
                 nutriScore: nutriScore,
                 novaGroup: novaGroup
             )
