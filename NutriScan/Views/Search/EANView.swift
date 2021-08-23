@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct EANView: View {
-    @Binding var eanCode: String
-    let search: () -> ()
+    @EnvironmentObject var cardDetailManager : CardDetailManager
+
+    @State var eanCode = ""
+//    let search: () -> ()
     
     let firstParagraph: some View = VStack(alignment: .leading) {
         Text("Recherchez un produit après avoir soit renseigné ")
@@ -84,7 +86,7 @@ struct EANView: View {
                 .disabled(eanCode.isEmpty)
                 
                 Button(action: {
-                    search()
+                    print("EANVIEW ~> search button")
                 }, label: {
                     Text("Rechercher")
                         .padding(.vertical, 10)
@@ -117,6 +119,6 @@ struct EANView_Previews: PreviewProvider {
     static func search() {}
     
     static var previews: some View {
-        EANView(eanCode: .constant(""), search: search)
+        EANView()
     }
 }

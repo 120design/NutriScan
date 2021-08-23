@@ -8,14 +8,30 @@
 import SwiftUI
 
 struct SearchView: View {
-    @State private var eanCode = "3229820108605"
-    @State private var goToResult = false
+    @EnvironmentObject var cardDetailManager: CardDetailManager
     
     @Namespace private var eanNamespace
     @Namespace private var scanNamespace
     
-    @State var showEanDetail = false
-    @State var showScanDetail = false
+    @State var goToResult = false
+    @State var eanCode = "3229820108605"
+    @State var showDetail = false
+    
+    @ViewBuilder
+    private var eanCardView: some View {
+        CardView(
+            namespace: eanNamespace,
+            cardType: .eanButton
+        )
+    }
+    
+    @ViewBuilder
+    private var cardDetailView: some View {
+        CardDetailView(
+            namespace: eanNamespace,
+            cardType: .eanButton
+        )
+    }
     
     let firstParagraph: some View =
         HStack {
@@ -54,14 +70,24 @@ struct SearchView: View {
                     secondaryParagraph
                     
                     Button(action: {
-                        self.showScanDetail = true
+                        cardDetailManager
+                            .setCardDetailView(
+                                namespace: scanNamespace,
+                                cardType: .scanButton
+                            )
                     }, label: {
                         CardView(
                             namespace: scanNamespace,
                             cardType: .scanButton
                         )
                     })
-                    .opacity(showScanDetail ? 0 : 1)
+                    .opacity(
+                        cardDetailManager
+                            .cardDetailView?
+                            .cardType == .scanButton
+                            ? 0
+                            : 1
+                    )
                     
                     Text("ou")
                         .padding(.top, -10.0)
@@ -69,14 +95,21 @@ struct SearchView: View {
                         .modifier(NUStrongLabelModifier())
                     
                     Button(action: {
-                        self.showEanDetail = true
+                        cardDetailManager
+                            .setCardDetailView(
+                                namespace: eanNamespace,
+                                cardType: .eanButton
+                            )
                     }, label: {
-                        CardView(
-                            namespace: eanNamespace,
-                            cardType: .eanButton
-                        )
+                        eanCardView
                     })
-                    .opacity(showEanDetail ? 0 : 1)
+                    .opacity(
+                        cardDetailManager
+                            .cardDetailView?
+                            .cardType == .eanButton
+                            ? 0
+                            : 1
+                    )
                     
                     NavigationLink(
                         destination: SearchResultView(eanCode: eanCode),
@@ -91,37 +124,37 @@ struct SearchView: View {
             .foregroundColor(.nuSecondaryColor)
         }
         .nuNavigationBar()
-        .overlay(
-            Group {
-                if showScanDetail {
-                    CardDetailView(
-                        showDetail: $showScanDetail,
-                        eanCode: $eanCode,
-                        goToResult: $goToResult,
-                        namespace: scanNamespace,
-                        cardType: .scanButton
-                    )
-                }
-                if showEanDetail {
-                    CardDetailView(
-                        showDetail: $showEanDetail,
-                        eanCode: $eanCode,
-                        goToResult: $goToResult,
-                        namespace: eanNamespace,
-                        cardType: .eanButton
-                    )
-                }
-            }
-            .padding(.top)
-            .ignoresSafeArea()
-        )
+//        .overlay(
+//            Group {
+//                if showScanDetail {
+//                    CardDetailView(
+//                        showDetail: $showScanDetail,
+//                        eanCode: $eanCode,
+//                        goToResult: $goToResult,
+//                        namespace: scanNamespace,
+//                        cardType: .scanButton
+//                    )
+//                }
+//                if showEanDetail {
+//                    CardDetailView(
+//                        showDetail: $showEanDetail,
+//                        eanCode: $eanCode,
+//                        goToResult: $goToResult,
+//                        namespace: eanNamespace,
+//                        cardType: .eanButton
+//                    )
+//                }
+//            }
+//            .padding(.top)
+//            .ignoresSafeArea()
+//        )
     }
 }
 
 struct SearchView_Previews: PreviewProvider {
+    @Namespace static var namespace
+    
     static var previews: some View {
-        SearchView()
-            .previewDevice("iPhone 8")
         SearchView()
             .previewDevice("iPhone SE (1st generation)")
     }

@@ -15,7 +15,7 @@ struct CardView: View {
     
     var body: some View {
         return VStack {
-            CardHeaderView(cardType: cardType, namespace: namespace)
+            CardHeaderView(cardType: cardType)
                 .matchedGeometryEffect(id: "header", in: namespace)
         }
         .padding()
@@ -31,7 +31,6 @@ struct CardView: View {
         .padding()
         .animation(.spring())
     }
-    
     
     enum CardType: Equatable {
         case scanButton,

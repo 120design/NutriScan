@@ -8,34 +8,38 @@
 import SwiftUI
 
 struct CardDetailView: View {
-    @Binding var showDetail: Bool
+    @EnvironmentObject var cardDetailManager : CardDetailManager
     
-    @Binding var eanCode: String
-    @Binding var goToResult: Bool
+    //    @Binding var showDetail: Bool
+    //
+    //    @Binding var eanCode: String
+    //    @Binding var goToResult: Bool
+    
+    let namespace: Namespace.ID
     
     @State var appear = false
     
     @State var yTranslation = CGSize.zero.height
     
-    var namespace: Namespace.ID
     let cardType: CardView.CardType
     
     func search() {
-        guard eanCode.count == 8 || eanCode.count == 13 else {
-            return
-        }
-        eanCode = eanCode
-        goToResult = true
-        showDetail = false
+//        guard eanCode.count == 8 || eanCode.count == 13 else {
+//            return
+//        }
+//        eanCode = eanCode
+//        goToResult = true
+//        showDetail = false
     }
     
     @ViewBuilder
     private var cardContentView: some View {
         switch cardType {
         case .scanButton:
-            ScanView(eanCode: $eanCode, search: search)
+//            ScanView()
+            Text("CardDetailView.scanbutton")
         case .eanButton:
-            EANView(eanCode: $eanCode, search: search)
+            EANView()
         case .product(let product):
             ProductView(product: product)
         }
@@ -43,15 +47,15 @@ struct CardDetailView: View {
     
     var body: some View {
         VStack {
-            CardHeaderView(cardType: cardType, namespace: namespace)
+            CardHeaderView(cardType: cardType)
                 .matchedGeometryEffect(id: "header", in: namespace)
                 .padding([.top, .horizontal])
             cardContentView
-            .opacity(appear ? 1 : 0)
-            .animation(.spring())
+                .opacity(appear ? 1 : 0)
+                .animation(.spring())
         }
-        .animation(.spring())
         .padding(.vertical)
+        .animation(.spring())
         .background(
             RoundedRectangle(
                 cornerRadius: yTranslation < 56
@@ -60,8 +64,9 @@ struct CardDetailView: View {
                 style: .continuous
             )
             .fill(cardType.backgroundColor)
-            .ignoresSafeArea()
             .matchedGeometryEffect(id: "container", in: namespace)
+            .ignoresSafeArea()
+            .animation(.spring())
         )
         .overlay(
             Image(systemName: "xmark.circle.fill")
@@ -78,7 +83,7 @@ struct CardDetailView: View {
                 .opacity(appear ? 1 : 0)
                 .animation(.spring())
                 .onTapGesture {
-                    showDetail = false
+                    cardDetailManager.cardDetailView = nil
                 },
             alignment: .topTrailing
         )
@@ -94,7 +99,8 @@ struct CardDetailView: View {
                 }
                 .onEnded { value in
                     if self.yTranslation > 50 {
-                        self.showDetail = false
+                        cardDetailManager.cardDetailView = nil
+                        return
                     }
                     self.yTranslation = CGSize.zero.height
                 }
@@ -115,9 +121,6 @@ struct DetailView_Previews: PreviewProvider {
     
     static var previews: some View {
         CardDetailView(
-            showDetail: .constant(true),
-            eanCode: .constant(""),
-            goToResult: .constant(false),
             namespace: namespace,
             cardType: .eanButton
         )

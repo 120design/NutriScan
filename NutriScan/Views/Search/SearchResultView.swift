@@ -15,8 +15,6 @@ struct SearchResultView: View {
     
     let eanCode: String
     
-    @State var fakeEanCode = ""
-    
     @Namespace private var namespace
     
     @ViewBuilder
@@ -61,22 +59,22 @@ struct SearchResultView: View {
         }
         .navigationTitle("Résultat")
         .foregroundColor(.nuSecondaryColor)
-        .overlay(
-            Group {
-                if showDetail,
-                   let product = product {
-                    CardDetailView(
-                        showDetail: $showDetail,
-                        eanCode: $fakeEanCode,
-                        goToResult: $goToResult,
-                        namespace: namespace,
-                        cardType: .product(product)
-                    )
-                }
-            }
-            .padding(.top)
-            .ignoresSafeArea()
-        )
+//        .overlay(
+//            Group {
+//                if showDetail,
+//                   let product = product {
+//                    CardDetailView(
+//                        showDetail: $showDetail,
+//                        eanCode: $fakeEanCode,
+//                        goToResult: $goToResult,
+//                        namespace: namespace,
+//                        cardType: .product(product)
+//                    )
+//                }
+//            }
+//            .padding(.top)
+//            .ignoresSafeArea()
+//        )
     }
     
     private func getProduct() {

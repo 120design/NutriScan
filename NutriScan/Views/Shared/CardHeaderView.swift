@@ -27,7 +27,6 @@ struct CardHeaderImageView: View {
 
 struct CardHeaderView: View {
     let cardType: CardView.CardType
-    var namespace: Namespace.ID
     
     @ViewBuilder
     private var imageView: some View {
@@ -75,6 +74,6 @@ struct CardHeaderView_Previews: PreviewProvider {
     static let cardType = CardView.CardType.eanButton
     
     static var previews: some View {
-        CardHeaderView(cardType: cardType, namespace: namespace)
+        CardHeaderView(cardType: cardType)
     }
 }
