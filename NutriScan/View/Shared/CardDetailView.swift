@@ -9,11 +9,7 @@ import SwiftUI
 
 struct CardDetailView: View {
     @EnvironmentObject var cardDetailManager : CardDetailManager
-    
-    //    @Binding var showDetail: Bool
-    //
-    //    @Binding var eanCode: String
-    //    @Binding var goToResult: Bool
+    @EnvironmentObject var searchManager: SearchManager
     
     let namespace: Namespace.ID
     
@@ -23,26 +19,34 @@ struct CardDetailView: View {
     
     let cardType: CardView.CardType
     
-    func search() {
-//        guard eanCode.count == 8 || eanCode.count == 13 else {
-//            return
-//        }
-//        eanCode = eanCode
-//        goToResult = true
-//        showDetail = false
-    }
-    
     @ViewBuilder
     private var cardContentView: some View {
         switch cardType {
         case .scanButton:
-//            ScanView()
+            //            ScanView()
             Text("CardDetailView.scanbutton")
         case .eanButton:
-            EANView()
+            EANView(
+                eanCode: $searchManager.eanCode,
+                search: search
+            )
         case .product(let product):
             ProductView(product: product)
         }
+    }
+    
+    private func getBackgroundCornerRadius() -> CGFloat {
+        if appear {
+            return yTranslation < 56
+                ? yTranslation / 2
+                : 28
+        }
+        return 28
+    }
+    
+    private func search() {
+        searchManager
+            .getProduct(from: searchManager.eanCode)
     }
     
     var body: some View {
@@ -50,17 +54,25 @@ struct CardDetailView: View {
             CardHeaderView(cardType: cardType)
                 .matchedGeometryEffect(id: "header", in: namespace)
                 .padding([.top, .horizontal])
-            cardContentView
-                .opacity(appear ? 1 : 0)
-                .animation(.spring())
+            if searchManager.currentlyResearching {
+                Spacer()
+                ProgressView("Recherche en cours")
+                    .progressViewStyle(
+                        CircularProgressViewStyle(tint: .nuPrimaryColor)
+                    )
+                    .foregroundColor(.nuPrimaryColor)
+                Spacer()
+            } else {
+                cardContentView
+                    .opacity(appear ? 1 : 0)
+                    .animation(.spring())
+            }
         }
         .padding(.vertical)
         .animation(.spring())
         .background(
             RoundedRectangle(
-                cornerRadius: yTranslation < 56
-                    ? yTranslation / 2
-                    : 28,
+                cornerRadius: getBackgroundCornerRadius(),
                 style: .continuous
             )
             .fill(cardType.backgroundColor)

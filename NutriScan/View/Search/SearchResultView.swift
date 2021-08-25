@@ -8,23 +8,19 @@
 import SwiftUI
 
 struct SearchResultView: View {
-    @State var product: NUProduct?
-    @State var showDetail = false
-    
-    @State var goToResult = false
-    
-    let eanCode: String
-    
+    @EnvironmentObject var searchManager: SearchManager
+    @EnvironmentObject var cardDetailManager: CardDetailManager
+
     @Namespace private var namespace
     
     @ViewBuilder
-    var foundParagraph: some View {
+    private var foundParagraph: some View {
         HStack {
             Text("NutriScan a trouvé dans ")
                 + Text("la base de données d’Open Food Facts")
                 .font(NUBodyTextEmphasisFont)
                 + Text(" ce produit correspondant ")
-                + Text("au code EAN \(eanCode)")
+                + Text("au code EAN \(searchManager.eanCode)")
                 .font(NUBodyTextEmphasisFont)
                 + Text(" :")
         }
@@ -37,17 +33,21 @@ struct SearchResultView: View {
         ZStack {
             NUBackgroundView()
             VStack {
-                if let product = product {
+                if let product = searchManager.foundProduct {
                     foundParagraph
-                    Button(action: {
-                        self.showDetail = true
+                    Button (action: {
+                        cardDetailManager
+                            .setCardDetailView(
+                                namespace: namespace,
+                                cardType: .product(product)
+                            )
                     }, label: {
                         CardView(
                             namespace: namespace,
                             cardType: .product(product)
                         )
                     })
-                    .opacity(showDetail ? 0 : 1)
+//                    .opacity(showDetail ? 0 : 1)
                 } else {
                     Text("...")
                         .foregroundColor(.white)
@@ -55,10 +55,14 @@ struct SearchResultView: View {
                 
                 Spacer()
             }
-            .onAppear(perform: getProduct)
+//            .onAppear(perform: getProduct)
         }
         .navigationTitle("Résultat")
         .foregroundColor(.nuSecondaryColor)
+        .onAppear{
+            cardDetailManager
+                .cardDetailView = nil
+        }
 //        .overlay(
 //            Group {
 //                if showDetail,
@@ -77,26 +81,17 @@ struct SearchResultView: View {
 //        )
     }
     
-    private func getProduct() {
-        //        guard let eanCode = eanCode else {
-        //            print("PAS DE CODE EAN !")
-        //            return
-        //        }
-        OFFService.shared.getProduct(from: eanCode) { (error, product) in
-            if let error = error {
-                print("ERROR :", error)
-            }
-            guard let product = product else {
-                print("PRODUCT ERROR")
-                return
-            }
-            self.product = product
-        }
-    }
+//    private func getProduct() {
+//        //        guard let eanCode = eanCode else {
+//        //            print("PAS DE CODE EAN !")
+//        //            return
+//        //        }
+//
+//    }
 }
 
 struct SearchResultView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchResultView(eanCode: "lol")
+        SearchResultView()
     }
 }

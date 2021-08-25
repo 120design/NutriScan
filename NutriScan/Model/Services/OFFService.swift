@@ -9,73 +9,78 @@ import Foundation
 
 struct OFFService {
     private let offApi = "https://world.openfoodfacts.org/api/v0/products/"
-
-// Création du singleton
+    
+    // Création du singleton
     static let shared = OFFService()
     private init() {}
-
-    enum OFFError {
-        case connection, undefined, response, statusCode, data, noProductFound
+    
+    enum OFFError: Error {
+        case connection,
+             undefined,
+             response,
+             statusCode,
+             data,
+             noProductFound
     }
-
-    func getProduct(from eanCode: String, completion: @escaping (OFFError?, NUProduct?) -> Void) {
+    
+    func getProduct(from eanCode: String, completion: @escaping (Result<NUProduct, OFFError>) -> Void) {
         let productURL = URL(string: offApi + eanCode)!
         let task = URLSession.shared.dataTask(with: productURL) { data, response, error in
-
-//            Traiter l’erreur de la requête HTTP
+            
+            // HTTP request error handling
             if let error = error as? URLError {
                 if error.code == URLError.Code.notConnectedToInternet {
                     print("ERROR BECAUSE NOT CONNECTED TO INTERNET")
-                    completion(OFFError.connection, nil)
+                    completion(.failure(.connection))
                     return
                 } else {
                     print("UNDEFINED REQUEST ERROR")
-                    completion(OFFError.undefined, nil)
+                    completion(.failure(.undefined))
                     return
                 }
             }
-
-//            Récupérer la réponse HTTP
+            
+            // Getting HTTP response
             guard let response = response as? HTTPURLResponse else {
                 print("ERROR WITH THE RESPONSE")
-                completion(OFFError.response, nil)
+                completion(.failure(.response))
                 return
             }
             guard response.statusCode == 200 else {
                 print("ERROR WITH THE RESPONSE'S STATUS CODE", response.statusCode)
-                completion(OFFError.statusCode, nil)
+                completion(.failure(.statusCode))
                 return
             }
-
-//            Récupérer les données JSON de la réponse et les décoder
+            
+            // Getting and decoding response's JSON data
             guard let data = data,
                   let offData = try? JSONDecoder().decode(OFFData.self, from: data)
             else {
                 print("ERROR WITH THE DATA")
-                completion(OFFError.data, nil)
+                completion(.failure(.data))
                 return
             }
-
-//            Vérifier que l’EAN13 a retourné un produit enregistré dans la DB d’OFF
+            
+            // Checking than the response provide a product
             guard offData.status == 1,
                   let offProduct = offData.product
             else {
                 print("NO PRODUCT FOUND")
-                completion(OFFError.noProductFound, nil)
+                completion(.failure(.noProductFound))
                 return
             }
-
-//            Construire une instance de NUProduct
+            
+            // Constructing a NUProduct's instance
             let id = offProduct._id
-
+            
             let name = offProduct.product_name_fr ?? offProduct.product_name
-
+            
             let novaGroup = offProduct.nutriments?.nova_group ?? nil
-
+            
             let nutriScore = offProduct.nutriscore_grade ?? nil
-
+            
             let image_url = offProduct.image_url ?? nil
-
+            
             let product = NUProduct(
                 id: id,
                 name: name,
@@ -83,9 +88,9 @@ struct OFFService {
                 nutriScore: nutriScore,
                 novaGroup: novaGroup
             )
-
-//            Tout s’est bien passé et la fermeture retourne une erreur nulle et un produit
-            completion(nil, product)
+            
+            // Return the NUProduct
+            completion(.success(product))
         }
         task.resume()
     }

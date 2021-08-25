@@ -11,12 +11,13 @@ import Combine
 struct NUTabView: View {
     @Namespace private var scanNamespace
     
-    @State private var goToResult = false
-    @State private var eanCode = "3229820108605"
-    @State private var showDetail = false
+//    @State private var goToResult = false
+//    @State private var eanCode = "3229820108605"
+//    @State private var showDetail = false
 
-    @StateObject var cardDetailManager = CardDetailManager()
-        
+    @StateObject private var cardDetailManager = CardDetailManager()
+    @StateObject private var searchManager = SearchManager()
+    
     var body: some View {
         TabView {
             SearchView()
@@ -24,16 +25,18 @@ struct NUTabView: View {
                     Label("Menu", systemImage: "list.dash")
                 }
         }
-        .overlay(
-            Group {
-                if let cardDetailView = cardDetailManager.cardDetailView {
-                    cardDetailView
-                }
-            }
-            .padding(.top)
-            .ignoresSafeArea()
-        )
+//        .overlay(
+//            Group {
+//                if let cardDetailView = cardDetailManager.cardDetailView,
+//                   !searchManager.showResult {
+//                    cardDetailView
+//                }
+//            }
+//            .padding(.top)
+//            .ignoresSafeArea()
+//        )
         .environmentObject(cardDetailManager)
+        .environmentObject(searchManager)
     }
 }
 

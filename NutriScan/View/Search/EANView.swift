@@ -9,16 +9,18 @@ import SwiftUI
 
 struct EANView: View {
     @EnvironmentObject var cardDetailManager : CardDetailManager
-
-    @State var eanCode = ""
-//    let search: () -> ()
+    
+    @Binding var eanCode: String
+//    @Binding var showResult: Bool
+    
+    let search: () -> ()
     
     let firstParagraph: some View = VStack(alignment: .leading) {
         Text("Recherchez un produit après avoir soit renseigné ")
             + Text("un code EAN13 à treize chiffres,")
             .font(NUBodyTextEmphasisFont)
             + Text(" soit renseigné ")
-            + Text("pressez le bouton de recherche.")
+            + Text("un code EAN8 à huit chiffres.")
             .font(NUBodyTextEmphasisFont)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
@@ -31,8 +33,8 @@ struct EANView: View {
             + Text("sous le code à barres")
             .font(NUBodyTextEmphasisFont)
             + Text(" du produit. Une fois le code tapé, ")
-            + Text("un code EAN8 à huit chiffres.")
-            .font(NUBodyTextEmphasisFont)
+            + Text("pressez le bouton de recherche.")
+           .font(NUBodyTextEmphasisFont)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     .font(NUBodyTextFont)
@@ -86,7 +88,7 @@ struct EANView: View {
                 .disabled(eanCode.isEmpty)
                 
                 Button(action: {
-                    print("EANVIEW ~> search button")
+                    search()
                 }, label: {
                     Text("Rechercher")
                         .padding(.vertical, 10)
@@ -119,6 +121,6 @@ struct EANView_Previews: PreviewProvider {
     static func search() {}
     
     static var previews: some View {
-        EANView()
+        EANView(eanCode: .constant(""), search: {})
     }
 }

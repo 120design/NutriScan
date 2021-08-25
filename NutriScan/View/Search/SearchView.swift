@@ -9,13 +9,10 @@ import SwiftUI
 
 struct SearchView: View {
     @EnvironmentObject var cardDetailManager: CardDetailManager
-    
+    @EnvironmentObject var searchManager: SearchManager
+
     @Namespace private var eanNamespace
     @Namespace private var scanNamespace
-    
-    @State var goToResult = false
-    @State var eanCode = "3229820108605"
-    @State var showDetail = false
     
     @ViewBuilder
     private var eanCardView: some View {
@@ -25,13 +22,13 @@ struct SearchView: View {
         )
     }
     
-    @ViewBuilder
-    private var cardDetailView: some View {
-        CardDetailView(
-            namespace: eanNamespace,
-            cardType: .eanButton
-        )
-    }
+//    @ViewBuilder
+//    private var cardDetailView: some View {
+//        CardDetailView(
+//            namespace: eanNamespace,
+//            cardType: .eanButton
+//        )
+//    }
     
     let firstParagraph: some View =
         HStack {
@@ -107,13 +104,14 @@ struct SearchView: View {
                         cardDetailManager
                             .cardDetailView?
                             .cardType == .eanButton
+                            && !searchManager.showResult
                             ? 0
                             : 1
                     )
                     
                     NavigationLink(
-                        destination: SearchResultView(eanCode: eanCode),
-                        isActive: $goToResult,
+                        destination: SearchResultView(),
+                        isActive: $searchManager.showResult,
                         label: {
                             EmptyView()
                         }
@@ -124,30 +122,6 @@ struct SearchView: View {
             .foregroundColor(.nuSecondaryColor)
         }
         .nuNavigationBar()
-//        .overlay(
-//            Group {
-//                if showScanDetail {
-//                    CardDetailView(
-//                        showDetail: $showScanDetail,
-//                        eanCode: $eanCode,
-//                        goToResult: $goToResult,
-//                        namespace: scanNamespace,
-//                        cardType: .scanButton
-//                    )
-//                }
-//                if showEanDetail {
-//                    CardDetailView(
-//                        showDetail: $showEanDetail,
-//                        eanCode: $eanCode,
-//                        goToResult: $goToResult,
-//                        namespace: eanNamespace,
-//                        cardType: .eanButton
-//                    )
-//                }
-//            }
-//            .padding(.top)
-//            .ignoresSafeArea()
-//        )
     }
 }
 
@@ -156,6 +130,7 @@ struct SearchView_Previews: PreviewProvider {
     
     static var previews: some View {
         SearchView()
+            .environmentObject(CardDetailManager())
             .previewDevice("iPhone SE (1st generation)")
     }
 }
