@@ -25,16 +25,16 @@ struct NUTabView: View {
                     Label("Menu", systemImage: "list.dash")
                 }
         }
-//        .overlay(
-//            Group {
-//                if let cardDetailView = cardDetailManager.cardDetailView,
-//                   !searchManager.showResult {
-//                    cardDetailView
-//                }
-//            }
-//            .padding(.top)
-//            .ignoresSafeArea()
-//        )
+        .overlay(
+            Group {
+                if let cardDetailView = cardDetailManager.cardDetailView,
+                   !searchManager.showResult {
+                    cardDetailView
+                }
+            }
+            .padding(.top)
+            .ignoresSafeArea()
+        )
         .environmentObject(cardDetailManager)
         .environmentObject(searchManager)
     }
