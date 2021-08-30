@@ -8,12 +8,13 @@
 import SwiftUI
 
 class SearchManager: ObservableObject {
+    @Published var showCardDetail = false
     @Published var eanCode = "3229820108605"
     @Published var foundProduct: NUProduct?
     @Published var showResult = false
     @Published private(set) var currentlyResearching = false
     
-    func getProduct(from eanCode: String) {
+    func getProduct() {
         // Reprise de la View à intégrer ici
         //        guard eanCode.count == 8 || eanCode.count == 13 else {
         //            return
@@ -21,7 +22,7 @@ class SearchManager: ObservableObject {
         //        eanCode = eanCode
         //        goToResult = true
         //        showDetail = false
-        
+
         currentlyResearching = true
         
         OFFService.shared.getProduct(from: eanCode) { result in
@@ -33,7 +34,8 @@ class SearchManager: ObservableObject {
                     // TODO: Traiter les erreurs
                     print("SearchManager ~> getProduct.failure")
                 }
-                
+
+                self.showCardDetail = false
                 self.showResult = true
                 self.currentlyResearching = false
             }

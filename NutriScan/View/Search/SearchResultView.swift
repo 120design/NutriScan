@@ -9,9 +9,8 @@ import SwiftUI
 
 struct SearchResultView: View {
     @EnvironmentObject var searchManager: SearchManager
-    @EnvironmentObject var cardDetailManager: CardDetailManager
-
-    @Namespace private var namespace
+    
+    @State var showCardDetail = false
     
     @ViewBuilder
     private var foundParagraph: some View {
@@ -36,18 +35,25 @@ struct SearchResultView: View {
                 if let product = searchManager.foundProduct {
                     foundParagraph
                     Button (action: {
-                        cardDetailManager
-                            .setCardDetailView(
-                                namespace: namespace,
-                                cardType: .product(product)
-                            )
+                        showCardDetail = true
                     }, label: {
                         CardView(
-                            namespace: namespace,
                             cardType: .product(product)
                         )
                     })
-//                    .opacity(showDetail ? 0 : 1)
+                    .opacity(
+                        showCardDetail
+                            ? 0
+                            : 1
+                    )
+                    .offset(
+                        x: 0,
+                        y: showCardDetail
+                            ? 300
+                            : 0
+                    )
+                    .animation(.spring())
+
                 } else {
                     Text("...")
                         .foregroundColor(.white)
@@ -55,39 +61,19 @@ struct SearchResultView: View {
                 
                 Spacer()
             }
-//            .onAppear(perform: getProduct)
         }
         .navigationTitle("Résultat")
         .foregroundColor(.nuSecondaryColor)
-        .onAppear{
-            cardDetailManager
-                .cardDetailView = nil
+        .fullScreenCover(isPresented: $showCardDetail) {
+            if let product = searchManager.foundProduct {
+                CardDetailView(
+                    showDetail: $showCardDetail,
+                    cardType: .product(product)
+                )
+                .background(NUBackgroundClearView())
+            }
         }
-//        .overlay(
-//            Group {
-//                if showDetail,
-//                   let product = product {
-//                    CardDetailView(
-//                        showDetail: $showDetail,
-//                        eanCode: $fakeEanCode,
-//                        goToResult: $goToResult,
-//                        namespace: namespace,
-//                        cardType: .product(product)
-//                    )
-//                }
-//            }
-//            .padding(.top)
-//            .ignoresSafeArea()
-//        )
     }
-    
-//    private func getProduct() {
-//        //        guard let eanCode = eanCode else {
-//        //            print("PAS DE CODE EAN !")
-//        //            return
-//        //        }
-//
-//    }
 }
 
 struct SearchResultView_Previews: PreviewProvider {

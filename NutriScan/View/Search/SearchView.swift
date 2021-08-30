@@ -8,27 +8,9 @@
 import SwiftUI
 
 struct SearchView: View {
-    @EnvironmentObject var cardDetailManager: CardDetailManager
-    @EnvironmentObject var searchManager: SearchManager
-
-    @Namespace private var eanNamespace
-    @Namespace private var scanNamespace
+    @StateObject private var searchManager = SearchManager()
     
-    @ViewBuilder
-    private var eanCardView: some View {
-        CardView(
-            namespace: eanNamespace,
-            cardType: .eanButton
-        )
-    }
-    
-//    @ViewBuilder
-//    private var cardDetailView: some View {
-//        CardDetailView(
-//            namespace: eanNamespace,
-//            cardType: .eanButton
-//        )
-//    }
+    @State private var cardDetailType = CardView.CardType.scanButton
     
     let firstParagraph: some View =
         HStack {
@@ -67,23 +49,25 @@ struct SearchView: View {
                     secondaryParagraph
                     
                     Button(action: {
-                        cardDetailManager
-                            .setCardDetailView(
-                                namespace: scanNamespace,
-                                cardType: .scanButton
-                            )
+                        cardDetailType = .scanButton
+                        searchManager.showCardDetail = true
                     }, label: {
                         CardView(
-                            namespace: scanNamespace,
                             cardType: .scanButton
                         )
                     })
                     .opacity(
-                        cardDetailManager
-                            .cardDetailView?
-                            .cardType == .scanButton
+                        cardDetailType == .scanButton
+                            && searchManager.showCardDetail
                             ? 0
                             : 1
+                    )
+                   .offset(
+                        x: 0,
+                        y: cardDetailType == .scanButton
+                            && searchManager.showCardDetail
+                            ? 300
+                            : 0
                     )
                     
                     Text("ou")
@@ -92,22 +76,27 @@ struct SearchView: View {
                         .modifier(NUStrongLabelModifier())
                     
                     Button(action: {
-                        cardDetailManager
-                            .setCardDetailView(
-                                namespace: eanNamespace,
-                                cardType: .eanButton
-                            )
+                        cardDetailType = .eanButton
+                        searchManager.showCardDetail = true
                     }, label: {
-                        eanCardView
+                        CardView(
+                            cardType: .eanButton
+                        )
                     })
                     .opacity(
-                        cardDetailManager
-                            .cardDetailView?
-                            .cardType == .eanButton
-                            && !searchManager.showResult
+                        cardDetailType == .eanButton
+                            && searchManager.showCardDetail
                             ? 0
                             : 1
                     )
+                    .offset(
+                        x: 0,
+                        y: cardDetailType == .eanButton
+                            && searchManager.showCardDetail
+                            ? 300
+                            : 0
+                    )
+                    .animation(.spring())
                     
                     NavigationLink(
                         destination: SearchResultView(),
@@ -120,8 +109,17 @@ struct SearchView: View {
             }
             .navigationTitle("Recherche")
             .foregroundColor(.nuSecondaryColor)
+            .fullScreenCover(isPresented: $searchManager.showCardDetail) {
+                CardDetailView(
+                    showDetail: $searchManager.showCardDetail,
+                    cardType: cardDetailType
+                )
+                .background(NUBackgroundClearView())
+                .environmentObject(searchManager)
+            }
         }
         .nuNavigationBar()
+        .environmentObject(searchManager)
     }
 }
 
@@ -130,7 +128,6 @@ struct SearchView_Previews: PreviewProvider {
     
     static var previews: some View {
         SearchView()
-            .environmentObject(CardDetailManager())
             .previewDevice("iPhone SE (1st generation)")
     }
 }

@@ -8,14 +8,11 @@
 import SwiftUI
 
 struct CardDetailView: View {
-    @EnvironmentObject var cardDetailManager : CardDetailManager
     @EnvironmentObject var searchManager: SearchManager
     
-    let namespace: Namespace.ID
-    
-    @State var appear = false
-    
-    @State var yTranslation = CGSize.zero.height
+    @Binding var showDetail: Bool
+    @State private var appear = false
+    @State private var yTranslation = CGSize.zero.height
     
     let cardType: CardView.CardType
     
@@ -26,10 +23,7 @@ struct CardDetailView: View {
             //            ScanView()
             Text("CardDetailView.scanbutton")
         case .eanButton:
-            EANView(
-                eanCode: $searchManager.eanCode,
-                search: search
-            )
+            EANView()
         case .product(let product):
             ProductView(product: product)
         }
@@ -44,16 +38,10 @@ struct CardDetailView: View {
         return 28
     }
     
-    private func search() {
-        searchManager
-            .getProduct(from: searchManager.eanCode)
-    }
-    
     var body: some View {
         VStack {
             CardHeaderView(cardType: cardType)
-                .matchedGeometryEffect(id: "header", in: namespace)
-                .padding([.top, .horizontal])
+                .padding(.horizontal)
             if searchManager.currentlyResearching {
                 Spacer()
                 ProgressView("Recherche en cours")
@@ -65,20 +53,16 @@ struct CardDetailView: View {
             } else {
                 cardContentView
                     .opacity(appear ? 1 : 0)
-                    .animation(.spring())
             }
         }
-        .padding(.vertical)
-        .animation(.spring())
+        .padding(.top)
         .background(
             RoundedRectangle(
                 cornerRadius: getBackgroundCornerRadius(),
                 style: .continuous
             )
             .fill(cardType.backgroundColor)
-            .matchedGeometryEffect(id: "container", in: namespace)
             .ignoresSafeArea()
-            .animation(.spring())
         )
         .overlay(
             Image(systemName: "xmark.circle.fill")
@@ -89,17 +73,18 @@ struct CardDetailView: View {
                     maxHeight: pictureWidth,
                     alignment: .top
                 )
-                .padding(.top)
                 .foregroundColor(.nuPrimaryColor)
                 .padding([.top,.trailing])
-                .opacity(appear ? 1 : 0)
-                .animation(.spring())
+                .opacity(
+                    withAnimation(.spring(), {
+                        appear ? 1 : 0
+                    })
+                )
                 .onTapGesture {
-                    cardDetailManager.cardDetailView = nil
+                    showDetail = false
                 },
             alignment: .topTrailing
         )
-        .scaleEffect(1 - self.yTranslation / 3000)
         .offset(x: 0, y: yTranslation)
         .gesture(
             DragGesture()
@@ -111,14 +96,14 @@ struct CardDetailView: View {
                 }
                 .onEnded { value in
                     if self.yTranslation > 50 {
-                        cardDetailManager.cardDetailView = nil
+                        showDetail = false
                         return
                     }
                     self.yTranslation = CGSize.zero.height
                 }
         )
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 appear = true
             }
         }
@@ -128,14 +113,12 @@ struct CardDetailView: View {
     }
 }
 
-struct DetailView_Previews: PreviewProvider {
-    @Namespace static var namespace
-    
+struct DetailView_Previews: PreviewProvider {    
     static var previews: some View {
         CardDetailView(
-            namespace: namespace,
-            cardType: .eanButton
+            showDetail: .constant(true), cardType: .eanButton
         )
+        .environmentObject(SearchManager())
     }
 }
 

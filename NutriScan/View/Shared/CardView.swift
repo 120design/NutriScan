@@ -9,14 +9,11 @@ import SwiftUI
 import Kingfisher
 
 struct CardView: View {
-    var namespace: Namespace.ID
-    
     let cardType: CardType
     
     var body: some View {
         return VStack {
             CardHeaderView(cardType: cardType)
-                .matchedGeometryEffect(id: "header", in: namespace)
         }
         .padding()
         .background(
@@ -25,11 +22,9 @@ struct CardView: View {
                 style: .continuous
             )
             .fill(cardType.backgroundColor)
-            .matchedGeometryEffect(id: "container", in: namespace)
         )
         .nuShadowModifier(color: cardType.backgroundColor)
         .padding()
-        .animation(.spring())
     }
     
     enum CardType: Equatable {
@@ -55,14 +50,13 @@ struct NUCardView_Previews: PreviewProvider {
     
     static var previews: some View {
         CardView(
-            namespace: namespace,
             cardType: .eanButton
         )
         .previewLayout(.fixed(width: 375, height: 200))
         
-        CardView(namespace: namespace, cardType: .eanButton)
+        CardView(cardType: .eanButton)
             .previewDevice("iPhone SE (1st generation)")
-        CardView(namespace: namespace, cardType: .eanButton)
+        CardView(cardType: .eanButton)
             .previewDevice("iPhone 11")
     }
 }
