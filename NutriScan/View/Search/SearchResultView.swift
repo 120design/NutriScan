@@ -17,10 +17,10 @@ struct SearchResultView: View {
         HStack {
             Text("NutriScan a trouvé dans ")
                 + Text("la base de données d’Open Food Facts")
-                .font(NUBodyTextEmphasisFont)
+                .font(nuBodyMediumItalicFont)
                 + Text(" ce produit correspondant ")
                 + Text("au code EAN \(searchManager.eanCode)")
-                .font(NUBodyTextEmphasisFont)
+                .font(nuBodyMediumItalicFont)
                 + Text(" :")
         }
         .modifier(NUTextBodyModifier())

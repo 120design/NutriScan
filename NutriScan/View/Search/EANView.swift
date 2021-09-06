@@ -13,26 +13,26 @@ struct EANView: View {
     let firstParagraph: some View = VStack(alignment: .leading) {
         Text("Recherchez un produit après avoir soit renseigné ")
             + Text("un code EAN13 à treize chiffres,")
-            .font(NUBodyTextEmphasisFont)
+            .font(nuBodyBoldItalicFont)
             + Text(" soit renseigné ")
             + Text("un code EAN8 à huit chiffres.")
-            .font(NUBodyTextEmphasisFont)
+            .font(nuBodyBoldItalicFont)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    .font(NUBodyTextFont)
+    .font(nuBodyBookTextFont)
     .foregroundColor(.nuPrimaryColor)
     .padding([.leading, .trailing])
     
     let secondParagraph: some View = VStack(alignment: .leading) {
         Text("Ce code est généralement inscrit ")
             + Text("sous le code à barres")
-            .font(NUBodyTextEmphasisFont)
+            .font(nuBodyBoldItalicFont)
             + Text(" du produit. Une fois le code tapé, ")
             + Text("pressez le bouton de recherche.")
-           .font(NUBodyTextEmphasisFont)
+           .font(nuBodyBoldItalicFont)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    .font(NUBodyTextFont)
+    .font(nuBodyBookTextFont)
     .foregroundColor(.nuPrimaryColor)
     .padding([.leading, .trailing])
     .padding(.top, 8)
@@ -112,10 +112,9 @@ struct EANView: View {
     }
 }
 
-struct EANView_Previews: PreviewProvider {
-    static func search() {}
-    
+struct EANView_Previews: PreviewProvider {    
     static var previews: some View {
         EANView()
+            .environmentObject(SearchManager())
     }
 }

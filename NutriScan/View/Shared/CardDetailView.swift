@@ -20,8 +20,7 @@ struct CardDetailView: View {
     private var cardContentView: some View {
         switch cardType {
         case .scanButton:
-            //            ScanView()
-            Text("CardDetailView.scanbutton")
+            ScanView()
         case .eanButton:
             EANView()
         case .product(let product):

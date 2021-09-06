@@ -13,7 +13,7 @@ import Kingfisher
 struct NUTextBodyModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(NUBodyTextFont)
+            .font(nuBodyLightTextFont)
             .shadow(
                 color: .nuSecondaryColor,
                 radius: 4,
@@ -56,17 +56,44 @@ struct NUStrongLabelModifier: ViewModifier {
     }
 }
 
-let NUBodyTextFont: Font = .custom(
+let nuBodyLightTextFont: Font = .custom(
     lightFontName,
     size: 16
 )
 
-let NUBodyTextEmphasisFont: Font = .custom(
+let nuBodyBookTextFont: Font = .custom(
+    bookFontName,
+    size: 16
+)
+
+let nuBodyMediumItalicFont: Font = .custom(
     mediumItalicFontName,
     size: 16
 )
 
+let nuBodyBoldItalicFont: Font = .custom(
+    boldItalicFontName,
+    size: 16
+)
+
+let nuTitleBoldItalicFont: Font = .custom(
+    boldItalicFontName,
+    size: 20
+)
+
+let nuProductDetailTextMediumItalicFont: Font = .custom(
+    mediumItalicFontName,
+    size: 12
+)
+
+let nuProductDetailTextLightFont: Font = .custom(
+    lightFontName,
+    size: 12
+)
+
 let boldFontName = "OperatorMono-Bold"
+let boldItalicFontName = "OperatorMono-BoldItalic"
+let bookFontName = "OperatorMono-Book"
 let mediumFontName = "OperatorMono-Medium"
 let mediumItalicFontName = "OperatorMono-MediumItalic"
 let lightFontName = "OperatorMono-Light"
@@ -77,6 +104,17 @@ struct NUSmoothCornersModifier: ViewModifier {
     var cornerRadius: CGFloat = 20
     func body(content: Content) -> some View {
         content
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: cornerRadius,
+                    style: .continuous
+                )
+            )
+    }
+}
+extension View {
+    func nuSmoothCornersModifier(cornerRadius: CGFloat = 20) -> some View {
+        self
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: cornerRadius,
@@ -116,6 +154,31 @@ extension View {
     }
 }
 
+extension View {
+    func nuShadowTextModifier(color: Color) -> some View {
+        self
+            .shadow(
+                color: color,
+                radius: 4,
+                x: 0,
+                y: 0
+            )
+    }
+}
+
+extension View {
+    func nuProductDetailCardTitleModifier(color: Color) -> some View {
+        self
+            .font(nuTitleBoldItalicFont)
+            .foregroundColor(color)
+            .shadow(
+                color: color,
+                radius: 8,
+                x: 0,
+                y: 0
+            )
+    }
+}
 
 struct NUPrimaryShadowModifier: ViewModifier {
     func body(content: Content) -> some View {

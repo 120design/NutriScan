@@ -10,8 +10,7 @@ import CarBode
 import AVFoundation
 
 struct ScanView: View {
-    @Binding var eanCode: String
-    let search: () -> ()
+    @EnvironmentObject var searchManager: SearchManager
     
     @State var torchIsOn = false
     
@@ -25,8 +24,8 @@ struct ScanView: View {
                     torchLightIsOn: $torchIsOn,
                     scanInterval: .constant(5.0)
                 ) {
-                    self.eanCode = $0.value
-                    self.search()
+                    self.searchManager.eanCode = $0.value
+                    self.searchManager.getProduct()
                 }
                 onDraw: {
                     //line width
@@ -96,6 +95,7 @@ struct ScanView_Previews: PreviewProvider {
     static func search () {}
     
     static var previews: some View {
-        ScanView(eanCode: .constant(""), search: search)
+        ScanView()
+            .environmentObject(SearchManager())
     }
 }

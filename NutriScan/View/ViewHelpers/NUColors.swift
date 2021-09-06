@@ -23,4 +23,10 @@ extension Color {
     public static var nuQuinaryColor: Color {
         return Color("NUQuinaryColor")
     }
+    public static var nuSenaryColor: Color {
+        return Color("NUSenaryColor")
+    }
+    public static var nuSeptenaryColor: Color {
+        return Color("NUSeptenaryColor")
+    }
 }

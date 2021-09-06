@@ -39,6 +39,10 @@
 		2FE94C17259916AF00595F71 /* NUProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE94C16259916AF00595F71 /* NUProduct.swift */; };
 		2FEA7DB126C7DB020089AAA8 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEA7DB026C7DB020089AAA8 /* CardView.swift */; };
 		2FEA7DB326C91FA10089AAA8 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEA7DB226C91FA10089AAA8 /* CardDetailView.swift */; };
+		2FFC029326E3D93900334FA5 /* OperatorMono-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FFC029226E3D93900334FA5 /* OperatorMono-Book.otf */; };
+		2FFC029526E3DE7C00334FA5 /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFC029426E3DE7C00334FA5 /* RingView.swift */; };
+		2FFC029726E3EBEB00334FA5 /* ProductNutrimentsRingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFC029626E3EBEB00334FA5 /* ProductNutrimentsRingsView.swift */; };
+		2FFC029926E64F2E00334FA5 /* Nutriments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFC029826E64F2E00334FA5 /* Nutriments.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +78,10 @@
 		2FE94C16259916AF00595F71 /* NUProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUProduct.swift; sourceTree = "<group>"; };
 		2FEA7DB026C7DB020089AAA8 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		2FEA7DB226C91FA10089AAA8 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
+		2FFC029226E3D93900334FA5 /* OperatorMono-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-Book.otf"; sourceTree = "<group>"; };
+		2FFC029426E3DE7C00334FA5 /* RingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingView.swift; sourceTree = "<group>"; };
+		2FFC029626E3EBEB00334FA5 /* ProductNutrimentsRingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductNutrimentsRingsView.swift; sourceTree = "<group>"; };
+		2FFC029826E64F2E00334FA5 /* Nutriments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nutriments.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,13 +106,6 @@
 				2F09F8CE259677FD005F97FA /* SearchResultView.swift */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		2F09F8C32596647E005F97FA /* Scan */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Scan;
 			sourceTree = "<group>";
 		};
 		2F55894D26D41A3400CEA23E /* ViewModel */ = {
@@ -134,6 +135,7 @@
 				2FE3E22F2590D59D00CF5AB0 /* Preview Content */,
 				2FD776E326C46AC7003B03E2 /* OperatorMono-Bold.otf */,
 				2FD776E726C46AC8003B03E2 /* OperatorMono-BoldItalic.otf */,
+				2FFC029226E3D93900334FA5 /* OperatorMono-Book.otf */,
 				2FD776E626C46AC8003B03E2 /* OperatorMono-Light.otf */,
 				2FD776E426C46AC8003B03E2 /* OperatorMono-Medium.otf */,
 				2FD776E526C46AC8003B03E2 /* OperatorMono-MediumItalic.otf */,
@@ -185,7 +187,6 @@
 				2F55894E26D41AD000CEA23E /* NUTabView.swift */,
 				2FEA7DAF26C7DADF0089AAA8 /* Shared */,
 				2F09F8AC25960E54005F97FA /* Search */,
-				2F09F8C32596647E005F97FA /* Scan */,
 				2FE3E23A2590D5FC00CF5AB0 /* History */,
 				2FD776DE26C465C5003B03E2 /* ViewHelpers */,
 			);
@@ -246,8 +247,9 @@
 		2FE94C092599131D00595F71 /* SharedEntities */ = {
 			isa = PBXGroup;
 			children = (
-				2FE94C0D259914E700595F71 /* NovaGroup.swift */,
+				2FFC029826E64F2E00334FA5 /* Nutriments.swift */,
 				2FE94C122599152900595F71 /* NutriScore.swift */,
+				2FE94C0D259914E700595F71 /* NovaGroup.swift */,
 			);
 			path = SharedEntities;
 			sourceTree = "<group>";
@@ -259,6 +261,8 @@
 				2F50B67826CAF19A0064B060 /* CardHeaderView.swift */,
 				2FEA7DB226C91FA10089AAA8 /* CardDetailView.swift */,
 				2F8F348B26D17256007C4634 /* ProductView.swift */,
+				2FFC029426E3DE7C00334FA5 /* RingView.swift */,
+				2FFC029626E3EBEB00334FA5 /* ProductNutrimentsRingsView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -329,6 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FE3E2312590D59D00CF5AB0 /* Preview Assets.xcassets in Resources */,
+				2FFC029326E3D93900334FA5 /* OperatorMono-Book.otf in Resources */,
 				2FD776EA26C46AC8003B03E2 /* OperatorMono-MediumItalic.otf in Resources */,
 				2FD776E926C46AC8003B03E2 /* OperatorMono-Medium.otf in Resources */,
 				2FD776EB26C46AC8003B03E2 /* OperatorMono-Light.otf in Resources */,
@@ -351,12 +356,14 @@
 				2F09F8B1259612FA005F97FA /* SearchView.swift in Sources */,
 				2F55894F26D41AD000CEA23E /* NUTabView.swift in Sources */,
 				2F8F347F26CEB444007C4634 /* NUButtonStyle.swift in Sources */,
+				2FFC029926E64F2E00334FA5 /* Nutriments.swift in Sources */,
 				2FE94C17259916AF00595F71 /* NUProduct.swift in Sources */,
 				2F55895126D42A5300CEA23E /* SearchManager.swift in Sources */,
 				2F6B91F426DD62540046A906 /* NUBackgroundClearView.swift in Sources */,
 				2F8F347D26CEB17B007C4634 /* EANView.swift in Sources */,
 				2F09F8CF259677FD005F97FA /* SearchResultView.swift in Sources */,
 				2FEA7DB126C7DB020089AAA8 /* CardView.swift in Sources */,
+				2FFC029526E3DE7C00334FA5 /* RingView.swift in Sources */,
 				2FD776EF26C5A5A0003B03E2 /* NUModifiers.swift in Sources */,
 				2FEA7DB326C91FA10089AAA8 /* CardDetailView.swift in Sources */,
 				2F8F348C26D17256007C4634 /* ProductView.swift in Sources */,
@@ -365,6 +372,7 @@
 				2FD776E226C46894003B03E2 /* NUNavigationBar.swift in Sources */,
 				2FE94C0B259913A400595F71 /* OFFData.swift in Sources */,
 				2F8F347926CE5C68007C4634 /* NUHaptics.swift in Sources */,
+				2FFC029726E3EBEB00334FA5 /* ProductNutrimentsRingsView.swift in Sources */,
 				2FE94C132599152900595F71 /* NutriScore.swift in Sources */,
 				2F8F347B26CEB083007C4634 /* ScanView.swift in Sources */,
 				2F50B67926CAF19A0064B060 /* CardHeaderView.swift in Sources */,

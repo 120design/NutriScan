@@ -16,10 +16,10 @@ struct SearchView: View {
         HStack {
             Text("Rercherchez un produit ")
                 + Text("en scannant son code à barres")
-                .font(NUBodyTextEmphasisFont)
+                .font(nuBodyMediumItalicFont)
                 + Text(" ou ")
                 + Text("en tapant le numéro EAN")
-                .font(NUBodyTextEmphasisFont)
+                .font(nuBodyMediumItalicFont)
                 + Text(" à huit ou treize chiffres inscrit sous son code à barres.")
         }
         .modifier(NUTextBodyModifier())
@@ -30,10 +30,10 @@ struct SearchView: View {
         HStack {
             Text("NutriScan interrogera alors ")
                 + Text("la base de données d’Open Food Facts,")
-                .font(NUBodyTextEmphasisFont)
+                .font(nuBodyMediumItalicFont)
                 + Text(" un projet citoyen à but non lucratif créé par des milliers de volontaires à travers le monde recensant ")
                 + Text("plus de 700\u{00a0}000 produits.")
-                .font(NUBodyTextEmphasisFont)
+                .font(nuBodyMediumItalicFont)
         }
         .modifier(NUTextBodyModifier())
         .frame(maxWidth: .infinity)

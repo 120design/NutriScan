@@ -75,7 +75,9 @@ struct OFFService {
             
             let name = offProduct.product_name_fr ?? offProduct.product_name
             
-            let novaGroup = offProduct.nutriments?.nova_group ?? nil
+            let nutriments = offProduct.nutriments
+            
+            let novaGroup = offProduct.nova_group
             
             let nutriScore = offProduct.nutriscore_grade ?? nil
             
@@ -85,6 +87,7 @@ struct OFFService {
                 id: id,
                 name: name,
                 imageURL: image_url,
+                nutriments: nutriments,
                 nutriScore: nutriScore,
                 novaGroup: novaGroup
             )

@@ -18,23 +18,14 @@ struct OFFData: Decodable {
             let selected_images: OFFImagesLanguages?
         }
 
-        struct OFFNutriments: Decodable {
-            private enum CodingKeys: String, CodingKey {
-                case nova_group = "nova-group"
-                case fiber_value
-            }
-
-            let fiber_value: Float?
-            let nova_group: NovaGroup?
-        }
-
         let _id: String
         let product_name: String
         let product_name_fr: String?
         let selectedImages: OFFSelectedImages?
-        let nutriments: OFFNutriments?
+        let nutriments: Nutriments?
         let nutriscore_grade: NutriScore?
         let image_url: String?
+        let nova_group: NovaGroup?
     }
 
     let status: Int

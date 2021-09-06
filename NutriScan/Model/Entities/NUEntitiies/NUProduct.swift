@@ -7,10 +7,11 @@
 
 import Foundation
 
-struct NUProduct: Equatable {
+struct NUProduct: Equatable {    
     let id: String
     let name: String
     let imageURL: String?
+    let nutriments: Nutriments?
     let nutriScore: NutriScore?
     let novaGroup: NovaGroup?
 }
