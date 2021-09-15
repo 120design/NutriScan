@@ -9,7 +9,7 @@ import SwiftUI
 
 class SearchManager: ObservableObject {
     @Published var showCardDetail = false
-    @Published var eanCode = ""
+    @Published var eanCode = "7613035239562"
     @Published var foundProduct: NUProduct?
     @Published var showResult = false
     @Published private(set) var currentlyResearching = false

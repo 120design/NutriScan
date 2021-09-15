@@ -7,6 +7,16 @@
 
 import Foundation
 
-enum NutriScore: String, Decodable {
-    case a = "a", b = "b", c = "c", d = "d", e = "e"
+struct NutriScore: Decodable, Equatable {
+    enum Grade: String, Decodable {
+        case a = "a", b = "b", c = "c", d = "d", e = "e"
+    }
+    
+    var pictoName: String {
+        "NutriscoreLandscape\(self.grade.rawValue.uppercased())"
+    }
+    
+    let negative_points: Int
+    let positive_points: Int
+    let grade: Grade
 }

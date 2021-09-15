@@ -68,6 +68,7 @@ struct EANView: View {
                             )
                         )
                 )
+                .padding(.bottom, 5)
                 .animation(nil)
             HStack {
                 Button(action: {

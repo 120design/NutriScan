@@ -23,7 +23,7 @@ struct ProductView: View {
     
     private func getInfoHstack(
         title: String,
-        value: CGFloat,
+        value: String,
         color: Color
     ) -> some View {
         Group {
@@ -32,7 +32,7 @@ struct ProductView: View {
             HStack {
                 Text("\(title) :")
                     .font(nuProductDetailTextMediumItalicFont)
-                Text(getStringFrom(cgFloat: value))
+                Text(value)
                 Spacer()
             }
             .font(nuProductDetailTextLightFont)
@@ -73,31 +73,31 @@ struct ProductView: View {
                         
                         getInfoHstack(
                             title: "Protéines",
-                            value: getRounded(cgFloat: proteins_100g),
+                            value: getStringFrom(cgFloat: (getRounded(cgFloat: proteins_100g))),
                             color: .nuSenaryColor
                         )
                         
                         getInfoHstack(
                             title: "Glucides",
-                            value: getRounded(cgFloat: carbohydrates_100g),
+                            value: getStringFrom(cgFloat: (getRounded(cgFloat: carbohydrates_100g))),
                             color: .nuSeptenaryColor
                         )
                         
                         getInfoHstack(
                             title: "Lipides",
-                            value: getRounded(cgFloat: fat_100g),
+                            value: getStringFrom(cgFloat: (getRounded(cgFloat: fat_100g))),
                             color: .nuTertiaryColor
                         )
                         
                         getInfoHstack(
                             title: "Fibres",
-                            value: getRounded(cgFloat: fiber_100g),
+                            value: getStringFrom(cgFloat: (getRounded(cgFloat: fiber_100g))),
                             color: .nuSecondaryColor
                         )
                         
                         getInfoHstack(
                             title: "Sel",
-                            value: getRounded(cgFloat: salt_100g),
+                            value: getStringFrom(cgFloat: (getRounded(cgFloat: salt_100g))),
                             color: .nuQuaternaryColor
                         )
                    }
@@ -107,8 +107,41 @@ struct ProductView: View {
                 .frame(maxWidth: .infinity)
                 .background(Color.nuPrimaryColor)
                 .nuSmoothCornersModifier()
-                .nuShadowModifier(color: .nuPrimaryColor)
-                .padding()
+                .padding([.top, .horizontal])
+            }
+            if let nutrisCore = product.nutriScore {
+                HStack(alignment: .top, spacing: 16.0) {
+                    Image(nutrisCore.pictoName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 144)
+                    
+                    VStack(alignment: .leading, spacing: 3) {
+                        HStack {
+                            Text("Nutri-score")
+                                .nuProductDetailCardTitleModifier(color: .nuQuaternaryColor)
+                            Spacer()
+                        }
+                        
+                        getInfoHstack(
+                            title: "Points positifs",
+                            value: String(nutrisCore.positive_points),
+                            color: .nuSecondaryColor
+                        )
+                        
+                        getInfoHstack(
+                            title: "Points négatifs",
+                            value: String(nutrisCore.negative_points),
+                            color: .nuTertiaryColor
+                        )
+                   }
+                    .frame(maxWidth: .infinity)
+                }
+                .padding(10.0)
+                .frame(maxWidth: .infinity)
+                .background(Color.nuPrimaryColor)
+                .nuSmoothCornersModifier()
+                .padding([.top, .horizontal])
             }
         }
     }
@@ -134,3 +167,37 @@ struct ProductView_Previews: PreviewProvider {
         ProductView(product: product)
     }
 }
+
+
+struct ProductInfoCard<Content: View>: View {
+    let pictoView: Content
+    let infosView: Content
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 16.0) {
+            pictoView
+            infosView
+            .frame(maxWidth: .infinity)
+        }
+        .padding(10.0)
+        .frame(maxWidth: .infinity)
+        .background(Color.nuPrimaryColor)
+        .nuSmoothCornersModifier()
+        .nuShadowModifier(color: .nuPrimaryColor)
+        .padding()
+    }
+}
+
+//struct ProductNutrimentsInfoCard: View {
+//    let nutriments: Nutriments
+//
+//    var proteins_100g: CGFloat {CGFloat(nutriments.proteins_100g ?? 0)}
+//    var carbohydrates_100g: CGFloat {CGFloat(nutriments.carbohydrates_100g ?? 0)}
+//    var fat_100g: CGFloat {CGFloat(nutriments.fat_100g ?? 0)}
+//    var fiber_100g: CGFloat {CGFloat(nutriments.fiber_100g ?? 0)}
+//    var salt_100g: CGFloat {CGFloat(nutriments.salt_100g ?? 0)}
+//
+//    var body: some View {
+//        ProductInfoCard(pictoView: <#T##_#>, infosView: <#T##_#>)
+//    }
+//}
