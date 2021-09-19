@@ -91,6 +91,16 @@ let nuProductDetailTextLightFont: Font = .custom(
     size: 12
 )
 
+let nuProductInfoTextFont: Font = .custom(
+    bookFontName,
+    size: 12
+)
+
+let nuProductInfoTextBoldItalicFont: Font = .custom(
+    boldItalicFontName,
+    size: 12
+)
+
 let boldFontName = "OperatorMono-Bold"
 let boldItalicFontName = "OperatorMono-BoldItalic"
 let bookFontName = "OperatorMono-Book"
@@ -258,5 +268,19 @@ extension KFImage {
             .foregroundColor(.nuTertiaryColor)
             .background(Color.nuPrimaryColor)
             .modifier(NUSmoothCornersModifier())
+    }
+}
+
+// MARK: Infor card
+
+extension View {
+    func nuProductInfoCardModifier() -> some View {
+        self
+            .padding(10.0)
+            .frame(maxWidth: .infinity)
+            .background(Color.nuPrimaryColor)
+            .nuSmoothCornersModifier()
+            .padding(.horizontal)
+            .padding(.top, 5)
     }
 }

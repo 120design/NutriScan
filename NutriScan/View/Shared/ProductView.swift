@@ -43,6 +43,54 @@ struct ProductView: View {
         }
     }
     
+    @ViewBuilder
+    private var nutriscoreExplanation1: some View {
+        VStack(alignment: .leading) {
+            Text("Le Nutri-score attribue ")
+                + Text("des points négatifs")
+                .font(nuProductInfoTextBoldItalicFont)
+                + Text(" et ")
+                + Text("des points positifs")
+                .font(nuProductInfoTextBoldItalicFont)
+                + Text(" aux différents nutriments qui composent un aliment.")
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .font(nuProductInfoTextFont)
+        .foregroundColor(.nuSecondaryColor)
+        .padding(.top, 5)
+    }
+
+    private let nutriscoreExplanation2Text = Text("Le score")
+        .font(nuProductInfoTextBoldItalicFont)
+        + Text(" est le nombre résultant de la différence entre les points négatifs et les points positifs. Ce score est ensuite traduit en une lettre allant de ")
+        + Text("A pour les produits de meilleure qualité nutritionnelle")
+        .font(nuProductInfoTextBoldItalicFont)
+        + Text(" à ")
+        + Text("E pour les produits de moins bonne qualité nutritionnelle.")
+        .font(nuProductInfoTextBoldItalicFont)
+
+    @ViewBuilder
+    private var nutriscoreExplanation2: some View {
+        VStack(alignment: .leading) {
+            nutriscoreExplanation2Text
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .font(nuProductInfoTextFont)
+        .foregroundColor(.nuSecondaryColor)
+        .padding(.top, 5)
+    }
+
+    @ViewBuilder
+    private var nutriscoreExplanation3: some View {
+        VStack(alignment: .leading) {
+            Text("Plus le score est bas, plus sa lettre se rapproche de A. Plus il élevé, plus sa lettre se rapproche du E.")
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .font(nuProductInfoTextFont)
+        .foregroundColor(.nuSecondaryColor)
+        .padding(.top, 5)
+    }
+
     private func getRounded(cgFloat: CGFloat) -> CGFloat {
         round((cgFloat * 10) / 10)
     }
@@ -103,45 +151,49 @@ struct ProductView: View {
                    }
                     .frame(maxWidth: .infinity)
                 }
-                .padding(10.0)
-                .frame(maxWidth: .infinity)
-                .background(Color.nuPrimaryColor)
-                .nuSmoothCornersModifier()
-                .padding([.top, .horizontal])
+                .nuProductInfoCardModifier()
             }
             if let nutrisCore = product.nutriScore {
-                HStack(alignment: .top, spacing: 16.0) {
-                    Image(nutrisCore.pictoName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 144)
+                VStack {
+                    HStack(alignment: .top, spacing: 16.0) {
+                        Image(nutrisCore.pictoName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 144)
+                        
+                        VStack(alignment: .leading, spacing: 3) {
+                            HStack {
+                                Text("Nutri-score")
+                                    .nuProductDetailCardTitleModifier(color: .nuQuaternaryColor)
+                                Spacer()
+                            }
+                            
+                            getInfoHstack(
+                                title: "Points positifs",
+                                value: String(nutrisCore.positive_points),
+                                color: .nuSecondaryColor
+                            )
+                            
+                            getInfoHstack(
+                                title: "Points négatifs",
+                                value: String(nutrisCore.negative_points),
+                                color: .nuTertiaryColor
+                            )
+                            
+                            getInfoHstack(
+                                title: "Score",
+                                value: String(nutrisCore.score),
+                                color: .nuQuaternaryColor
+                            )
+                       }
+                        .frame(maxWidth: .infinity)
+                    }
                     
-                    VStack(alignment: .leading, spacing: 3) {
-                        HStack {
-                            Text("Nutri-score")
-                                .nuProductDetailCardTitleModifier(color: .nuQuaternaryColor)
-                            Spacer()
-                        }
-                        
-                        getInfoHstack(
-                            title: "Points positifs",
-                            value: String(nutrisCore.positive_points),
-                            color: .nuSecondaryColor
-                        )
-                        
-                        getInfoHstack(
-                            title: "Points négatifs",
-                            value: String(nutrisCore.negative_points),
-                            color: .nuTertiaryColor
-                        )
-                   }
-                    .frame(maxWidth: .infinity)
+                    nutriscoreExplanation1
+                    nutriscoreExplanation2
+                    nutriscoreExplanation3
                 }
-                .padding(10.0)
-                .frame(maxWidth: .infinity)
-                .background(Color.nuPrimaryColor)
-                .nuSmoothCornersModifier()
-                .padding([.top, .horizontal])
+                .nuProductInfoCardModifier()
             }
         }
     }

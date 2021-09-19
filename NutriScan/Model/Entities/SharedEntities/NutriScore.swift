@@ -16,6 +16,7 @@ struct NutriScore: Decodable, Equatable {
         "NutriscoreLandscape\(self.grade.rawValue.uppercased())"
     }
     
+    let score: Int
     let negative_points: Int
     let positive_points: Int
     let grade: Grade

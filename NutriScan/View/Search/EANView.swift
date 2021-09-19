@@ -102,7 +102,6 @@ struct EANView: View {
             Color
                 .nuPrimaryColor
                 .modifier(NUSmoothCornersModifier(cornerRadius: 28))
-                .modifier(NUPrimaryShadowModifier())
         )
         .padding()
         
