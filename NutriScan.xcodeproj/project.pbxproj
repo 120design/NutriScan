@@ -32,6 +32,7 @@
 		2FE3E22E2590D59D00CF5AB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE3E22D2590D59D00CF5AB0 /* Assets.xcassets */; };
 		2FE3E2312590D59D00CF5AB0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE3E2302590D59D00CF5AB0 /* Preview Assets.xcassets */; };
 		2FE3E23C2590D66300CF5AB0 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE3E23B2590D66300CF5AB0 /* HistoryView.swift */; };
+		2FE8789926F7C8030064A9FE /* EcoScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE8789826F7C8030064A9FE /* EcoScore.swift */; };
 		2FE94C0425990F6900595F71 /* OFFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE94C0325990F6900595F71 /* OFFService.swift */; };
 		2FE94C0B259913A400595F71 /* OFFData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE94C0A259913A400595F71 /* OFFData.swift */; };
 		2FE94C0E259914E700595F71 /* NovaGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE94C0D259914E700595F71 /* NovaGroup.swift */; };
@@ -71,6 +72,7 @@
 		2FE3E2302590D59D00CF5AB0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2FE3E2322590D59D00CF5AB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FE3E23B2590D66300CF5AB0 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		2FE8789826F7C8030064A9FE /* EcoScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoScore.swift; sourceTree = "<group>"; };
 		2FE94C0325990F6900595F71 /* OFFService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OFFService.swift; sourceTree = "<group>"; };
 		2FE94C0A259913A400595F71 /* OFFData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OFFData.swift; sourceTree = "<group>"; };
 		2FE94C0D259914E700595F71 /* NovaGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NovaGroup.swift; path = NutriScan/Model/Entities/SharedEntities/NovaGroup.swift; sourceTree = SOURCE_ROOT; };
@@ -249,6 +251,7 @@
 			children = (
 				2FFC029826E64F2E00334FA5 /* Nutriments.swift */,
 				2FE94C122599152900595F71 /* NutriScore.swift */,
+				2FE8789826F7C8030064A9FE /* EcoScore.swift */,
 				2FE94C0D259914E700595F71 /* NovaGroup.swift */,
 			);
 			path = SharedEntities;
@@ -366,6 +369,7 @@
 				2FFC029526E3DE7C00334FA5 /* RingView.swift in Sources */,
 				2FD776EF26C5A5A0003B03E2 /* NUModifiers.swift in Sources */,
 				2FEA7DB326C91FA10089AAA8 /* CardDetailView.swift in Sources */,
+				2FE8789926F7C8030064A9FE /* EcoScore.swift in Sources */,
 				2F8F348C26D17256007C4634 /* ProductView.swift in Sources */,
 				2FE3E23C2590D66300CF5AB0 /* HistoryView.swift in Sources */,
 				2FE3E22A2590D59A00CF5AB0 /* NutriScanApp.swift in Sources */,

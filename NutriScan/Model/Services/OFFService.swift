@@ -83,13 +83,16 @@ struct OFFService {
             
             let image_url = offProduct.image_url ?? nil
             
+            let ecoScore = offProduct.ecoscore_data ?? nil
+            
             let product = NUProduct(
                 id: id,
                 name: name,
                 imageURL: image_url,
                 nutriments: nutriments,
                 nutriScore: nutriScore,
-                novaGroup: novaGroup
+                novaGroup: novaGroup,
+                ecoScore: ecoScore
             )
             
             // Return the NUProduct

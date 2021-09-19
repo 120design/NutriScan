@@ -52,7 +52,7 @@ struct ProductView: View {
                 + Text(" et ")
                 + Text("des points positifs")
                 .font(nuProductInfoTextBoldItalicFont)
-                + Text(" aux différents nutriments qui composent un aliment.")
+                + Text(" aux différents nutriments qui composent un produit.")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .font(nuProductInfoTextFont)
@@ -83,7 +83,7 @@ struct ProductView: View {
     @ViewBuilder
     private var nutriscoreExplanation3: some View {
         VStack(alignment: .leading) {
-            Text("Plus le score est bas, plus sa lettre se rapproche de A. Plus il élevé, plus sa lettre se rapproche du E.")
+            Text("Plus le score est bas, plus sa lettre se rapproche de A. Plus il est élevé, plus sa lettre se rapproche du E.")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .font(nuProductInfoTextFont)
@@ -153,6 +153,7 @@ struct ProductView: View {
                 }
                 .nuProductInfoCardModifier()
             }
+            
             if let nutrisCore = product.nutriScore {
                 VStack {
                     HStack(alignment: .top, spacing: 16.0) {
@@ -195,6 +196,48 @@ struct ProductView: View {
                 }
                 .nuProductInfoCardModifier()
             }
+            
+            if let ecoScore = product.ecoScore {
+                VStack {
+                    HStack(alignment: .top, spacing: 16.0) {
+                        Image(ecoScore.pictoName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 144)
+                        
+                        VStack(alignment: .leading, spacing: 3) {
+                            HStack {
+                                Text("Eco-score")
+                                    .nuProductDetailCardTitleModifier(color: .nuQuaternaryColor)
+                                Spacer()
+                            }
+                            
+                            Group {
+                                Text("Le calcul de l'Eco-score s’appuie sur l’Analyse du Cycle de Vie (ACV) de la catégorie du produit pour lequel le calcul est effectué.")
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.top, 5)
+                                
+                                Text("Il mobilise également cinq indicateurs complémentaires pour former un score sur 100. Ce score est affiché sous forme de lettres, de A à E.")
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.top, 5)
+                                
+                                Text("Les ACV sont effectuées par l’Ademe  (l’Agence de la transition écologique) pour évaluer l’impacts environnementaux de 2 500 catégories de produits.")
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.top, 5)
+                                
+                            }
+                       }
+                        .frame(maxWidth: .infinity)
+                    }
+                    Text("Les cinq indicateurs qui complètent l’ACV pour calculer l’Eco-score sont : le système de production, l’approvisionnement local, la politique environnementale du pays de production, la circularité de l’emballage (recyclabilité, réduction des emballages, intégration de matière première recyclée, etc.), les espèces menacées par la surpêche et la déforestation induite par la production.")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, 5)
+
+                }
+                .font(nuProductInfoTextFont)
+                .foregroundColor(.nuSecondaryColor)
+                .nuProductInfoCardModifier()
+            }
         }
     }
 }
@@ -212,7 +255,8 @@ struct ProductView_Previews: PreviewProvider {
             salt_100g: 25.12
         ),
         nutriScore: nil,
-        novaGroup: nil
+        novaGroup: nil,
+        ecoScore: nil
     )
     
     static var previews: some View {

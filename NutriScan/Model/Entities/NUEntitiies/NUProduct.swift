@@ -14,4 +14,5 @@ struct NUProduct: Equatable {
     let nutriments: Nutriments?
     let nutriScore: NutriScore?
     let novaGroup: NovaGroup?
+    let ecoScore: EcoScore?
 }

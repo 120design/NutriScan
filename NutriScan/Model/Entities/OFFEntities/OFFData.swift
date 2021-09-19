@@ -26,6 +26,7 @@ struct OFFData: Decodable {
         let nutriscore_data: NutriScore?
         let image_url: String?
         let nova_group: NovaGroup?
+        let ecoscore_data: EcoScore?
     }
 
     let status: Int
