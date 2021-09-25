@@ -17,7 +17,7 @@ struct EcoScore: Decodable, Equatable {
     }
     
     var pictoName: String {
-        "EcoScore\(self.grade.rawValue.uppercased())"
+        "EcoScore\(self.grade_value.rawValue.uppercased())"
     }
     
     struct Adjustments: Decodable, Equatable {
@@ -55,6 +55,7 @@ struct EcoScore: Decodable, Equatable {
         }
         struct OriginsOfIngredients: Decodable, Equatable {
             let transportation_value: Int?
+            let transportation_value_fr: Int?
             let epi_value: Int?
         }
         struct Packaging: Decodable, Equatable {
@@ -69,25 +70,106 @@ struct EcoScore: Decodable, Equatable {
         private let packaging: Packaging
         private let threatened_species: ThreatenedSpecies
 
-        var production_system_value: String { "+\(production_system.value ?? 0)" }
-        var transportation_value: String{ "+\(origins_of_ingredients.transportation_value ?? 0)" }
+        var production_system_value: String {
+            if let value = production_system.value {
+                if value == 0 || value == 1 { return "+\(value) pt" }
+                
+                return "+ \(value) pts"
+            }
+            return "+0 pt"
+        }
+
+        var transportation_value: String {
+            var value: Int?
+            
+            if let commonValue = origins_of_ingredients.transportation_value {
+                value = commonValue
+            }
+            
+            if let frenchValue = origins_of_ingredients.transportation_value_fr {
+                value = frenchValue
+            }
+            
+            if let value = value {
+                if value == 0 || value == 1 { return "+\(value) pt" }
+                
+                return "+\(value) pts"
+            }
+            
+            return "+0 pt"
+        }
+
         var epi_value: String {
             if let value = origins_of_ingredients.epi_value {
-                if value == 0 { return "+0" }
-                else { return String(value) }
+                if value == 0 || value == 1 { return "+\(value) pt" }
+                
+                if value == -1 { return "\(value) pt" }
+                
+                if value == 1 { return "+\(value) pt" }
+                
+                if value < 1 { return "\(value) pts" }
+                
+                else { return "+\(value) pts" }
             }
-            return "+0"
+            return "+0 pt"
         }
-        var packaging_value: String { "-\(packaging.value ?? 0)" }
-        var threatened_species_value: String { "-\(threatened_species.value ?? 0)" }
+
+        var packaging_value: String {
+            if let value = packaging.value {
+                if value == 0 { return "-0 pt" }
+                
+                if value == -1 { return "\(value) pt" }
+                
+                return "\(value) pts"
+            }
+            return "-0 pt"
+        }
+
+        var threatened_species_value: String {
+            if let value = threatened_species.value {
+                if value == 0 { return "-0 pt" }
+                
+                if value == 1 { return "\(value) pt" }
+                
+                return "\(value) pts"
+            }
+            return "-0 pt"
+        }
     }
     
-    let score: Int
-    let grade: Grade
-    private let agribalyse: Agribalyse
-    var acvScore: Int { agribalyse.score }
-    let adjustments: Adjustments?
+    private let score: Int
+    private let score_fr: Int?
     
+    var score_value: String {
+        var value = score
+        
+        if let score_fr = score_fr {
+            value = score_fr
+        }
+        
+        if (value == 0
+            || value == 1
+            || value == -1
+        ) { return "\(value) pt/100" }
+        
+        return "\(value) pts/100"
+    }
+    
+    private let grade: Grade
+    private let grade_fr: Grade?
+    
+    var grade_value: Grade {
+        var value = grade
+        
+        if let grade_fr = grade_fr { value = grade_fr }
+        
+        return value
+    }
+    
+    private let agribalyse: Agribalyse
+    
+    var agribalyse_score: Int { agribalyse.score }
+    let adjustments: Adjustments?
 }
 //"ecoscore_data": {
 //    "agribalyse": {

@@ -52,6 +52,7 @@ struct CardHeaderView: View {
             Text("Taper un code EAN13 ou EAN8")
         case .product(let product):
             Text(product.name)
+                .lineLimit(3)
         }
     }
     

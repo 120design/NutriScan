@@ -13,6 +13,7 @@ struct CardDetailView: View {
     @Binding var showDetail: Bool
     @State private var appear = false
     @State private var yTranslation = CGSize.zero.height
+    @State private var isDraggable = false
     
     let cardType: CardView.CardType
     
@@ -24,7 +25,8 @@ struct CardDetailView: View {
         case .eanButton:
             EANView()
         case .product(let product):
-            ProductView(product: product)
+            ProductView(product: product, parentIsDraggable: $isDraggable)
+                .padding(.bottom)
         }
     }
     

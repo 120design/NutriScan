@@ -10,6 +10,8 @@ import SwiftUI
 struct ProductView: View {
     let product: NUProduct
     
+    @Binding var parentIsDraggable: Bool
+    
     private func getStringFrom(cgFloat: CGFloat) -> String {
         "\(String(format: "%.1f", cgFloat).replacingOccurrences(of: ".", with: ",")) g/100g"
     }
@@ -141,13 +143,13 @@ struct ProductView: View {
                         getInfoHstack(
                             title: "Fibres",
                             value: getStringFrom(cgFloat: (getRounded(cgFloat: fiber_100g))),
-                            color: .nuSecondaryColor
+                            color: .nuQuaternaryColor
                         )
                         
                         getInfoHstack(
                             title: "Sel",
                             value: getStringFrom(cgFloat: (getRounded(cgFloat: salt_100g))),
-                            color: .nuQuaternaryColor
+                            color: .nuSecondaryColor
                         )
                    }
                     .frame(maxWidth: .infinity)
@@ -176,20 +178,20 @@ struct ProductView: View {
                             }
                             
                             getInfoHstack(
+                                title: "Points négatifs",
+                                value: String(nutrisCore.negative_points),
+                                color: .nuTertiaryColor
+                            )
+
+                            getInfoHstack(
                                 title: "Points positifs",
                                 value: String(nutrisCore.positive_points),
                                 color: .nuSecondaryColor
                             )
                             
                             getInfoHstack(
-                                title: "Points négatifs",
-                                value: String(nutrisCore.negative_points),
-                                color: .nuTertiaryColor
-                            )
-                            
-                            getInfoHstack(
-                                title: "Score",
-                                value: "\(nutrisCore.score) point\(nutrisCore.score < -1 && nutrisCore.score > 1 ? "s" : "")",
+                                title: "Score final",
+                                value: "\(nutrisCore.score) point\(nutrisCore.score < -1 || nutrisCore.score > 1 ? "s" : "")",
                                 color: .nuQuaternaryColor
                             )
                        }
@@ -234,48 +236,55 @@ struct ProductView: View {
                             
                             getInfoHstack(
                                 title: "Score de départ",
-                                value: "\(ecoScore.acvScore) pts/100",
-                                color: .nuSecondaryColor
-                            )
-
-                            getInfoHstack(
-                                title: "Système de prod.",
-                                value: "\(ecoScore.adjustments?.production_system_value ?? "+0")",
+                                value: "\(ecoScore.agribalyse_score) pts/100",
                                 color: .nuTertiaryColor
                             )
 
                             getInfoHstack(
+                                title: "Système de prod.",
+                                value: "\(ecoScore.adjustments?.production_system_value ?? "+0 pt")",
+                                color: .nuSecondaryColor
+                            )
+
+                            getInfoHstack(
                                 title: "Transport",
-                                value: "\(ecoScore.adjustments?.transportation_value ?? "+0")",
+                                value: "\(ecoScore.adjustments?.transportation_value ?? "+0 pt")",
                                 color: .nuQuaternaryColor
                             )
 
                             getInfoHstack(
                                 title: "Politique env.",
-                                value: "\(ecoScore.adjustments?.epi_value ?? "+0")",
+                                value: "\(ecoScore.adjustments?.epi_value ?? "+0 pt")",
                                 color: .nuSenaryColor
                             )
 
                             getInfoHstack(
                                 title: "Emballage",
-                                value: "\(ecoScore.adjustments?.threatened_species_value ?? "-0")",
+                                value: "\(ecoScore.adjustments?.packaging_value ?? "-0 pt")",
                                 color: .nuSeptenaryColor
                             )
 
                             getInfoHstack(
                                 title: "Esp. menacées",
-                                value: "\(ecoScore.adjustments?.threatened_species_value ?? "-0")",
-                                color: .nuQuaternaryColor
+                                value: "\(ecoScore.adjustments?.threatened_species_value ?? "-0 pt")",
+                                color: .nuTertiaryColor
                             )
 
                             getInfoHstack(
-                                title: "Score ajusté",
-                                value: "\(ecoScore.score) pts/100",
-                                color: .nuSecondaryColor
+                                title: "Score final",
+                                value: ecoScore.score_value,
+                                color: .nuQuaternaryColor
                             )
                        }
                         .frame(maxWidth: .infinity)
                     }
+                    
+                    VStack(alignment: .leading) {
+                        Text("Ce calcul de l’Eco-score est celui d’un produit consommé en France, le bonus accordé pour le transport pouvant varier d’un pays de consommation à un autre.")
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 5)
+
 //                    Text("Le calcul de l'Eco-score s’appuie sur l’Analyse du Cycle de Vie (ACV) de la catégorie du produit pour lequel le calcul est effectué.")
 //                        .frame(maxWidth: .infinity, alignment: .leading)
 //                        .padding(.top, 5)
@@ -297,6 +306,15 @@ struct ProductView: View {
                 .nuProductInfoCardModifier()
             }
         }
+        .gesture(
+            DragGesture()
+                .onChanged { _ in
+                    self.parentIsDraggable = false
+                }
+                .onEnded { _ in
+                    self.parentIsDraggable = true
+                }
+        )
     }
 }
 
@@ -318,7 +336,7 @@ struct ProductView_Previews: PreviewProvider {
     )
     
     static var previews: some View {
-        ProductView(product: product)
+        ProductView(product: product, parentIsDraggable: .constant(true))
     }
 }
 
