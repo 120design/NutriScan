@@ -62,7 +62,7 @@ struct ProductView: View {
 
     private let nutriscoreExplanation2Text = Text("Le score")
         .font(nuProductInfoTextBoldItalicFont)
-        + Text(" est le nombre résultant de la différence entre les points négatifs et les points positifs. Ce score est ensuite traduit en une lettre allant de ")
+        + Text(" résulte de la différence entre les points négatifs et les points positifs. Ce score est ensuite traduit en une lettre allant de ")
         + Text("A pour les produits de meilleure qualité nutritionnelle")
         .font(nuProductInfoTextBoldItalicFont)
         + Text(" à ")
@@ -112,6 +112,7 @@ struct ProductView: View {
                         fiber_100g: fiber_100g,
                         salt_100g: round((salt_100g * 10) / 10)
                     )
+                    
                     VStack(alignment: .leading, spacing: 3) {
                         HStack {
                             Text("Nutriments")
@@ -157,11 +158,16 @@ struct ProductView: View {
             if let nutrisCore = product.nutriScore {
                 VStack {
                     HStack(alignment: .top, spacing: 16.0) {
-                        Image(nutrisCore.pictoName)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 144)
-                        
+                        VStack {
+                            Image(nutrisCore.pictoName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: pictureWidth)
+                            
+                            Spacer()
+                        }
+                        .frame(maxHeight: .infinity)
+
                         VStack(alignment: .leading, spacing: 3) {
                             HStack {
                                 Text("Nutri-score")
@@ -183,28 +189,42 @@ struct ProductView: View {
                             
                             getInfoHstack(
                                 title: "Score",
-                                value: String(nutrisCore.score),
+                                value: "\(nutrisCore.score) point\(nutrisCore.score < -1 && nutrisCore.score > 1 ? "s" : "")",
                                 color: .nuQuaternaryColor
                             )
                        }
                         .frame(maxWidth: .infinity)
                     }
                     
-                    nutriscoreExplanation1
-                    nutriscoreExplanation2
-                    nutriscoreExplanation3
+//                    nutriscoreExplanation1
+//                    nutriscoreExplanation2
+//                    nutriscoreExplanation3
+                    
+                    VStack(alignment: .leading) {
+                        Text("Le Nutri-score résulte de la différence entre ses points négatifs et ses points positifs. Plus il est bas, meilleures sont les qualités nutritionnelles du produit.")
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 5)
                 }
+                .font(nuProductInfoTextFont)
+                .foregroundColor(.nuSecondaryColor)
                 .nuProductInfoCardModifier()
             }
             
             if let ecoScore = product.ecoScore {
                 VStack {
                     HStack(alignment: .top, spacing: 16.0) {
-                        Image(ecoScore.pictoName)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 144)
-                        
+                        VStack {
+                            Image(ecoScore.pictoName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: pictureWidth)
+                            
+                            Spacer()
+                        }
+                        .frame(maxHeight: .infinity)
+
+
                         VStack(alignment: .leading, spacing: 3) {
                             HStack {
                                 Text("Eco-score")
@@ -212,26 +232,64 @@ struct ProductView: View {
                                 Spacer()
                             }
                             
-                            Group {
-                                Text("Le calcul de l'Eco-score s’appuie sur l’Analyse du Cycle de Vie (ACV) de la catégorie du produit pour lequel le calcul est effectué.")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.top, 5)
-                                
-                                Text("Il mobilise également cinq indicateurs complémentaires pour former un score sur 100. Ce score est affiché sous forme de lettres, de A à E.")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.top, 5)
-                                
-                                Text("Les ACV sont effectuées par l’Ademe  (l’Agence de la transition écologique) pour évaluer l’impacts environnementaux de 2 500 catégories de produits.")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.top, 5)
-                                
-                            }
+                            getInfoHstack(
+                                title: "Score de départ",
+                                value: "\(ecoScore.acvScore) pts/100",
+                                color: .nuSecondaryColor
+                            )
+
+                            getInfoHstack(
+                                title: "Système de prod.",
+                                value: "\(ecoScore.adjustments?.production_system_value ?? "+0")",
+                                color: .nuTertiaryColor
+                            )
+
+                            getInfoHstack(
+                                title: "Transport",
+                                value: "\(ecoScore.adjustments?.transportation_value ?? "+0")",
+                                color: .nuQuaternaryColor
+                            )
+
+                            getInfoHstack(
+                                title: "Politique env.",
+                                value: "\(ecoScore.adjustments?.epi_value ?? "+0")",
+                                color: .nuSenaryColor
+                            )
+
+                            getInfoHstack(
+                                title: "Emballage",
+                                value: "\(ecoScore.adjustments?.threatened_species_value ?? "-0")",
+                                color: .nuSeptenaryColor
+                            )
+
+                            getInfoHstack(
+                                title: "Esp. menacées",
+                                value: "\(ecoScore.adjustments?.threatened_species_value ?? "-0")",
+                                color: .nuQuaternaryColor
+                            )
+
+                            getInfoHstack(
+                                title: "Score ajusté",
+                                value: "\(ecoScore.score) pts/100",
+                                color: .nuSecondaryColor
+                            )
                        }
                         .frame(maxWidth: .infinity)
                     }
-                    Text("Les cinq indicateurs qui complètent l’ACV pour calculer l’Eco-score sont : le système de production, l’approvisionnement local, la politique environnementale du pays de production, la circularité de l’emballage (recyclabilité, réduction des emballages, intégration de matière première recyclée, etc.), les espèces menacées par la surpêche et la déforestation induite par la production.")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 5)
+//                    Text("Le calcul de l'Eco-score s’appuie sur l’Analyse du Cycle de Vie (ACV) de la catégorie du produit pour lequel le calcul est effectué.")
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                        .padding(.top, 5)
+//
+//                    Text("Il mobilise également cinq indicateurs complémentaires pour former un score sur 100. Ce score est affiché sous forme de lettres, de A à E.")
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                        .padding(.top, 5)
+//
+//                    Text("Les ACV sont effectuées par l’Ademe  (l’Agence de la transition écologique) pour évaluer l’impacts environnementaux de 2 500 catégories de produits.")
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                        .padding(.top, 5)
+//                    Text("Les cinq indicateurs qui complètent l’ACV pour calculer l’Eco-score sont : le système de production, l’approvisionnement local, la politique environnementale du pays de production, la circularité de l’emballage (recyclabilité, réduction des emballages, intégration de matière première recyclée, etc.), les espèces menacées par la surpêche et la déforestation induite par la production.")
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                        .padding(.top, 5)
 
                 }
                 .font(nuProductInfoTextFont)

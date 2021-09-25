@@ -30,9 +30,9 @@ class SearchManager: ObservableObject {
                 switch result {
                 case .success(let foundProduct):
                     self.foundProduct = foundProduct
-                case .failure(_):
+                case .failure(let error):
                     // TODO: Traiter les erreurs
-                    print("SearchManager ~> getProduct.failure")
+                    print("SearchManager ~> getProduct.failure ~> error ~>", error)
                 }
 
                 self.showCardDetail = false

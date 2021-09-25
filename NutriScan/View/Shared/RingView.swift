@@ -12,7 +12,7 @@ struct RingView: View {
     let percent: CGFloat
     let color: Color
     
-    let lineWidth: CGFloat = 12
+    var lineWidth: CGFloat { 8 * pictureWidth / 100 }
     
     var body: some View {
         ZStack {

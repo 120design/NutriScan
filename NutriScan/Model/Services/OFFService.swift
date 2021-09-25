@@ -30,11 +30,11 @@ struct OFFService {
             // HTTP request error handling
             if let error = error as? URLError {
                 if error.code == URLError.Code.notConnectedToInternet {
-                    print("ERROR BECAUSE NOT CONNECTED TO INTERNET")
+                    print("OFFSERVICE ~> ERROR BECAUSE NOT CONNECTED TO INTERNET")
                     completion(.failure(.connection))
                     return
                 } else {
-                    print("UNDEFINED REQUEST ERROR")
+                    print("OFFSERVICE ~> UNDEFINED REQUEST ERROR")
                     completion(.failure(.undefined))
                     return
                 }
@@ -42,12 +42,12 @@ struct OFFService {
             
             // Getting HTTP response
             guard let response = response as? HTTPURLResponse else {
-                print("ERROR WITH THE RESPONSE")
+                print("OFFSERVICE ~> ERROR WITH THE RESPONSE")
                 completion(.failure(.response))
                 return
             }
             guard response.statusCode == 200 else {
-                print("ERROR WITH THE RESPONSE'S STATUS CODE", response.statusCode)
+                print("OFFSERVICE ~> ERROR WITH THE RESPONSE'S STATUS CODE", response.statusCode)
                 completion(.failure(.statusCode))
                 return
             }
@@ -56,7 +56,7 @@ struct OFFService {
             guard let data = data,
                   let offData = try? JSONDecoder().decode(OFFData.self, from: data)
             else {
-                print("ERROR WITH THE DATA")
+                print("OFFSERVICE ~> ERROR WITH THE DATA")
                 completion(.failure(.data))
                 return
             }
@@ -65,7 +65,7 @@ struct OFFService {
             guard offData.status == 1,
                   let offProduct = offData.product
             else {
-                print("NO PRODUCT FOUND")
+                print("OFFSERVICE ~> NO PRODUCT FOUND")
                 completion(.failure(.noProductFound))
                 return
             }
@@ -84,7 +84,7 @@ struct OFFService {
             let image_url = offProduct.image_url ?? nil
             
             let ecoScore = offProduct.ecoscore_data ?? nil
-            
+                        
             let product = NUProduct(
                 id: id,
                 name: name,

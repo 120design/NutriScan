@@ -55,8 +55,15 @@ struct SearchResultView: View {
                     .animation(.spring())
 
                 } else {
-                    Text("...")
-                        .foregroundColor(.white)
+                    VStack {
+                        Spacer()
+                        ProgressView("Recherche en cours")
+                            .progressViewStyle(
+                                CircularProgressViewStyle(tint: .nuQuaternaryColor)
+                            )
+                            .foregroundColor(.nuQuaternaryColor)
+                        Spacer()
+                    }
                 }
                 
                 Spacer()
