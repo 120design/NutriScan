@@ -23,7 +23,7 @@ struct ProductView: View {
             .nuShadowTextModifier(color: .nuQuaternaryColor)
     }
     
-    private func getInfoHstack(
+    func getInfoHstack(
         title: String,
         value: String,
         color: Color
@@ -49,28 +49,28 @@ struct ProductView: View {
     private var nutriscoreExplanation1: some View {
         VStack(alignment: .leading) {
             Text("Le Nutri-score attribue ")
-                + Text("des points négatifs")
+            + Text("des points négatifs")
                 .font(nuProductInfoTextBoldItalicFont)
-                + Text(" et ")
-                + Text("des points positifs")
+            + Text(" et ")
+            + Text("des points positifs")
                 .font(nuProductInfoTextBoldItalicFont)
-                + Text(" aux différents nutriments qui composent un produit.")
+            + Text(" aux différents nutriments qui composent un produit.")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .font(nuProductInfoTextFont)
         .foregroundColor(.nuSecondaryColor)
         .padding(.top, 5)
     }
-
+    
     private let nutriscoreExplanation2Text = Text("Le score")
         .font(nuProductInfoTextBoldItalicFont)
-        + Text(" résulte de la différence entre les points négatifs et les points positifs. Ce score est ensuite traduit en une lettre allant de ")
-        + Text("A pour les produits de meilleure qualité nutritionnelle")
+    + Text(" résulte de la différence entre les points négatifs et les points positifs. Ce score est ensuite traduit en une lettre allant de ")
+    + Text("A pour les produits de meilleure qualité nutritionnelle")
         .font(nuProductInfoTextBoldItalicFont)
-        + Text(" à ")
-        + Text("E pour les produits de moins bonne qualité nutritionnelle.")
+    + Text(" à ")
+    + Text("E pour les produits de moins bonne qualité nutritionnelle.")
         .font(nuProductInfoTextBoldItalicFont)
-
+    
     @ViewBuilder
     private var nutriscoreExplanation2: some View {
         VStack(alignment: .leading) {
@@ -81,7 +81,7 @@ struct ProductView: View {
         .foregroundColor(.nuSecondaryColor)
         .padding(.top, 5)
     }
-
+    
     @ViewBuilder
     private var nutriscoreExplanation3: some View {
         VStack(alignment: .leading) {
@@ -92,7 +92,7 @@ struct ProductView: View {
         .foregroundColor(.nuSecondaryColor)
         .padding(.top, 5)
     }
-
+    
     private func getRounded(cgFloat: CGFloat) -> CGFloat {
         round((cgFloat * 10) / 10)
     }
@@ -151,10 +151,18 @@ struct ProductView: View {
                             value: getStringFrom(cgFloat: (getRounded(cgFloat: salt_100g))),
                             color: .nuSecondaryColor
                         )
-                   }
+                    }
                     .frame(maxWidth: .infinity)
                 }
                 .nuProductInfoCardModifier()
+                
+                if let energy_kj_100g = nutriments.energy_kj_100g,
+                   let energy_kcal_100g = nutriments.energy_kcal_100g {
+                    ProductEnergyInformations(
+                        energy_kj_100g: energy_kj_100g,
+                        energy_kcal_100g: energy_kcal_100g
+                    )
+                }
             }
             
             if let nutrisCore = product.nutriScore {
@@ -169,7 +177,7 @@ struct ProductView: View {
                             Spacer()
                         }
                         .frame(maxHeight: .infinity)
-
+                        
                         VStack(alignment: .leading, spacing: 3) {
                             HStack {
                                 Text("Nutri-score")
@@ -182,7 +190,7 @@ struct ProductView: View {
                                 value: String(nutrisCore.negative_points),
                                 color: .nuTertiaryColor
                             )
-
+                            
                             getInfoHstack(
                                 title: "Points positifs",
                                 value: String(nutrisCore.positive_points),
@@ -194,13 +202,13 @@ struct ProductView: View {
                                 value: "\(nutrisCore.score) point\(nutrisCore.score < -1 || nutrisCore.score > 1 ? "s" : "")",
                                 color: .nuQuaternaryColor
                             )
-                       }
+                        }
                         .frame(maxWidth: .infinity)
                     }
                     
-//                    nutriscoreExplanation1
-//                    nutriscoreExplanation2
-//                    nutriscoreExplanation3
+                    //                    nutriscoreExplanation1
+                    //                    nutriscoreExplanation2
+                    //                    nutriscoreExplanation3
                     
                     VStack(alignment: .leading) {
                         Text("Le Nutri-score résulte de la différence entre ses points négatifs et ses points positifs. Plus il est bas, meilleures sont les qualités nutritionnelles du produit.")
@@ -225,8 +233,8 @@ struct ProductView: View {
                             Spacer()
                         }
                         .frame(maxHeight: .infinity)
-
-
+                        
+                        
                         VStack(alignment: .leading, spacing: 3) {
                             HStack {
                                 Text("Eco-score")
@@ -239,43 +247,43 @@ struct ProductView: View {
                                 value: "\(ecoScore.agribalyse_score) pts/100",
                                 color: .nuTertiaryColor
                             )
-
+                            
                             getInfoHstack(
                                 title: "Système de prod.",
                                 value: "\(ecoScore.adjustments?.production_system_value ?? "+0 pt")",
                                 color: .nuSecondaryColor
                             )
-
+                            
                             getInfoHstack(
                                 title: "Transport",
                                 value: "\(ecoScore.adjustments?.transportation_value ?? "+0 pt")",
                                 color: .nuQuaternaryColor
                             )
-
+                            
                             getInfoHstack(
                                 title: "Politique env.",
                                 value: "\(ecoScore.adjustments?.epi_value ?? "+0 pt")",
                                 color: .nuSenaryColor
                             )
-
+                            
                             getInfoHstack(
                                 title: "Emballage",
                                 value: "\(ecoScore.adjustments?.packaging_value ?? "-0 pt")",
                                 color: .nuSeptenaryColor
                             )
-
+                            
                             getInfoHstack(
                                 title: "Esp. menacées",
                                 value: "\(ecoScore.adjustments?.threatened_species_value ?? "-0 pt")",
                                 color: .nuTertiaryColor
                             )
-
+                            
                             getInfoHstack(
                                 title: "Score final",
                                 value: ecoScore.score_value,
                                 color: .nuQuaternaryColor
                             )
-                       }
+                        }
                         .frame(maxWidth: .infinity)
                     }
                     
@@ -284,22 +292,22 @@ struct ProductView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 5)
-
-//                    Text("Le calcul de l'Eco-score s’appuie sur l’Analyse du Cycle de Vie (ACV) de la catégorie du produit pour lequel le calcul est effectué.")
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .padding(.top, 5)
-//
-//                    Text("Il mobilise également cinq indicateurs complémentaires pour former un score sur 100. Ce score est affiché sous forme de lettres, de A à E.")
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .padding(.top, 5)
-//
-//                    Text("Les ACV sont effectuées par l’Ademe  (l’Agence de la transition écologique) pour évaluer l’impacts environnementaux de 2 500 catégories de produits.")
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .padding(.top, 5)
-//                    Text("Les cinq indicateurs qui complètent l’ACV pour calculer l’Eco-score sont : le système de production, l’approvisionnement local, la politique environnementale du pays de production, la circularité de l’emballage (recyclabilité, réduction des emballages, intégration de matière première recyclée, etc.), les espèces menacées par la surpêche et la déforestation induite par la production.")
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .padding(.top, 5)
-
+                    
+                    //                    Text("Le calcul de l'Eco-score s’appuie sur l’Analyse du Cycle de Vie (ACV) de la catégorie du produit pour lequel le calcul est effectué.")
+                    //                        .frame(maxWidth: .infinity, alignment: .leading)
+                    //                        .padding(.top, 5)
+                    //
+                    //                    Text("Il mobilise également cinq indicateurs complémentaires pour former un score sur 100. Ce score est affiché sous forme de lettres, de A à E.")
+                    //                        .frame(maxWidth: .infinity, alignment: .leading)
+                    //                        .padding(.top, 5)
+                    //
+                    //                    Text("Les ACV sont effectuées par l’Ademe  (l’Agence de la transition écologique) pour évaluer l’impacts environnementaux de 2 500 catégories de produits.")
+                    //                        .frame(maxWidth: .infinity, alignment: .leading)
+                    //                        .padding(.top, 5)
+                    //                    Text("Les cinq indicateurs qui complètent l’ACV pour calculer l’Eco-score sont : le système de production, l’approvisionnement local, la politique environnementale du pays de production, la circularité de l’emballage (recyclabilité, réduction des emballages, intégration de matière première recyclée, etc.), les espèces menacées par la surpêche et la déforestation induite par la production.")
+                    //                        .frame(maxWidth: .infinity, alignment: .leading)
+                    //                        .padding(.top, 5)
+                    
                 }
                 .font(nuProductInfoTextFont)
                 .foregroundColor(.nuSecondaryColor)
@@ -328,7 +336,9 @@ struct ProductView_Previews: PreviewProvider {
             carbohydrates_100g: 8.5,
             proteins_100g: 8.5,
             fat_100g: 4.2,
-            salt_100g: 25.12
+            salt_100g: 25.12,
+            energy_kj_100g: 100,
+            energy_kcal_100g: 100
         ),
         nutriScore: nil,
         novaGroup: nil,
@@ -349,7 +359,7 @@ struct ProductInfoCard<Content: View>: View {
         HStack(alignment: .top, spacing: 16.0) {
             pictoView
             infosView
-            .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity)
         }
         .padding(10.0)
         .frame(maxWidth: .infinity)
@@ -373,3 +383,77 @@ struct ProductInfoCard<Content: View>: View {
 //        ProductInfoCard(pictoView: <#T##_#>, infosView: <#T##_#>)
 //    }
 //}
+
+struct ProductEnergyInformations: View {
+    let energy_kj_100g: Int
+    let energy_kcal_100g: Int
+    
+    private var separatorView: some View {
+        Capsule()
+            .fill(Color.nuQuaternaryColor)
+            .frame(height: 0.5)
+            .nuShadowTextModifier(color: .nuQuaternaryColor)
+    }
+    
+    private func getInfoHstack(
+        title: String,
+        value: String,
+        color: Color
+    ) -> some View {
+        Group {
+            separatorView
+            
+            HStack {
+                Text("\(title) :")
+                    .font(nuProductDetailTextMediumItalicFont)
+                Text(value)
+                Spacer()
+            }
+            .font(nuProductDetailTextLightFont)
+            .padding(.vertical, 4)
+            .foregroundColor(color)
+            .nuShadowTextModifier(color: color)
+            .frame(maxWidth: .infinity)
+        }
+    }
+
+    
+    var body: some View {
+        VStack {
+            HStack(alignment: .top, spacing: 16.0) {
+                VStack {
+                    Image(systemName: "bolt.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: pictureWidth)
+                        .foregroundColor(.nuSecondaryColor)
+                    
+                    Spacer()
+                }
+                .frame(maxHeight: .infinity)
+                
+                VStack(alignment: .leading, spacing: 3) {
+                    HStack {
+                        Text("Énergie pour 100 g")
+                            .nuProductDetailCardTitleModifier(color: .nuQuaternaryColor)
+                        Spacer()
+                    }
+                    
+                    getInfoHstack(
+                        title: "Kilojoules",
+                        value: "\(energy_kj_100g) kJ",
+                        color: .nuSecondaryColor
+                    )
+                    
+                    getInfoHstack(
+                        title: "Kilocalories",
+                        value: "\(energy_kcal_100g) kcal",
+                        color: .nuTertiaryColor
+                    )
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
+        .nuProductInfoCardModifier()
+    }
+}
