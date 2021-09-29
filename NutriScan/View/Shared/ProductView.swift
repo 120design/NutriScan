@@ -33,6 +33,9 @@ struct ProductView: View {
             if let ecoScore = product.ecoScore {
                 ProductEcoScoreInformationsView(ecoScore: ecoScore)
             }
+            if let novaGroup = product.novaGroup {
+                ProductNovaGroupInformationsView(novaGroup: novaGroup)
+            }
         }
         .gesture(
             DragGesture()
@@ -330,6 +333,49 @@ struct ProductEnergyInformationsView: View {
                     color: .nuTertiaryColor
                 )
             },
+            
+            bottomContent: nil
+        )
+    }
+}
+
+struct ProductNovaGroupInformationsView: View {
+    let novaGroup: NovaGroup
+    
+    var body: some View {
+        ProductCardInformationsView(
+            cardTitle: "Classification Nova",
+
+            leftContent: Image(novaGroup.pictoName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: pictureWidth),
+            
+            rightContent: Group {
+                Capsule()
+                    .fill(Color.nuQuaternaryColor)
+                    .frame(height: 0.5)
+                    .nuShadowTextModifier(color: .nuQuaternaryColor)
+                
+                HStack {
+                    Text("\(novaGroup.groupName) :")
+                        .font(nuProductDetailTextMediumItalicFont)
+                    Spacer()
+                }
+                .padding(.top, 4)
+                .nuShadowTextModifier(color: .nuSecondaryColor)
+                .frame(maxWidth: .infinity)
+                
+                HStack {
+                    Text(novaGroup.caption)
+                    Spacer()
+                }
+                .font(nuProductDetailTextLightFont)
+                .padding(.top, 2)
+                .nuShadowTextModifier(color: .nuSecondaryColor)
+                .frame(maxWidth: .infinity)
+            }
+                .foregroundColor(.nuSecondaryColor),
             
             bottomContent: nil
         )
