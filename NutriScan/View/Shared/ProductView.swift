@@ -16,20 +16,16 @@ struct ProductView: View {
         "\(String(format: "%.1f", cgFloat).replacingOccurrences(of: ".", with: ",")) g/100g"
     }
     
-    private var separatorView: some View {
-        Capsule()
-            .fill(Color.nuQuaternaryColor)
-            .frame(height: 0.5)
-            .nuShadowTextModifier(color: .nuQuaternaryColor)
-    }
-    
     func getInfoHstack(
         title: String,
         value: String,
         color: Color
     ) -> some View {
         Group {
-            separatorView
+            Capsule()
+                .fill(Color.nuQuaternaryColor)
+                .frame(height: 0.5)
+                .nuShadowTextModifier(color: .nuQuaternaryColor)
             
             HStack {
                 Text("\(title) :")
@@ -158,7 +154,7 @@ struct ProductView: View {
                 
                 if let energy_kj_100g = nutriments.energy_kj_100g,
                    let energy_kcal_100g = nutriments.energy_kcal_100g {
-                    ProductEnergyInformations(
+                    ProductEnergyInformationsView(
                         energy_kj_100g: energy_kj_100g,
                         energy_kcal_100g: energy_kcal_100g
                     )
@@ -205,10 +201,6 @@ struct ProductView: View {
                         }
                         .frame(maxWidth: .infinity)
                     }
-                    
-                    //                    nutriscoreExplanation1
-                    //                    nutriscoreExplanation2
-                    //                    nutriscoreExplanation3
                     
                     VStack(alignment: .leading) {
                         Text("Le Nutri-score résulte de la différence entre ses points négatifs et ses points positifs. Plus il est bas, meilleures sont les qualités nutritionnelles du produit.")
@@ -292,22 +284,6 @@ struct ProductView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 5)
-                    
-                    //                    Text("Le calcul de l'Eco-score s’appuie sur l’Analyse du Cycle de Vie (ACV) de la catégorie du produit pour lequel le calcul est effectué.")
-                    //                        .frame(maxWidth: .infinity, alignment: .leading)
-                    //                        .padding(.top, 5)
-                    //
-                    //                    Text("Il mobilise également cinq indicateurs complémentaires pour former un score sur 100. Ce score est affiché sous forme de lettres, de A à E.")
-                    //                        .frame(maxWidth: .infinity, alignment: .leading)
-                    //                        .padding(.top, 5)
-                    //
-                    //                    Text("Les ACV sont effectuées par l’Ademe  (l’Agence de la transition écologique) pour évaluer l’impacts environnementaux de 2 500 catégories de produits.")
-                    //                        .frame(maxWidth: .infinity, alignment: .leading)
-                    //                        .padding(.top, 5)
-                    //                    Text("Les cinq indicateurs qui complètent l’ACV pour calculer l’Eco-score sont : le système de production, l’approvisionnement local, la politique environnementale du pays de production, la circularité de l’emballage (recyclabilité, réduction des emballages, intégration de matière première recyclée, etc.), les espèces menacées par la surpêche et la déforestation induite par la production.")
-                    //                        .frame(maxWidth: .infinity, alignment: .leading)
-                    //                        .padding(.top, 5)
-                    
                 }
                 .font(nuProductInfoTextFont)
                 .foregroundColor(.nuSecondaryColor)
@@ -350,110 +326,86 @@ struct ProductView_Previews: PreviewProvider {
     }
 }
 
-
-struct ProductInfoCard<Content: View>: View {
-    let pictoView: Content
-    let infosView: Content
+struct ProductInformationRowView: View {
+    let title: String
+    let value: String
+    let color: Color
     
     var body: some View {
-        HStack(alignment: .top, spacing: 16.0) {
-            pictoView
-            infosView
-                .frame(maxWidth: .infinity)
-        }
-        .padding(10.0)
-        .frame(maxWidth: .infinity)
-        .background(Color.nuPrimaryColor)
-        .nuSmoothCornersModifier()
-        .nuShadowModifier(color: .nuPrimaryColor)
-        .padding()
-    }
-}
-
-//struct ProductNutrimentsInfoCard: View {
-//    let nutriments: Nutriments
-//
-//    var proteins_100g: CGFloat {CGFloat(nutriments.proteins_100g ?? 0)}
-//    var carbohydrates_100g: CGFloat {CGFloat(nutriments.carbohydrates_100g ?? 0)}
-//    var fat_100g: CGFloat {CGFloat(nutriments.fat_100g ?? 0)}
-//    var fiber_100g: CGFloat {CGFloat(nutriments.fiber_100g ?? 0)}
-//    var salt_100g: CGFloat {CGFloat(nutriments.salt_100g ?? 0)}
-//
-//    var body: some View {
-//        ProductInfoCard(pictoView: <#T##_#>, infosView: <#T##_#>)
-//    }
-//}
-
-struct ProductEnergyInformations: View {
-    let energy_kj_100g: Int
-    let energy_kcal_100g: Int
-    
-    private var separatorView: some View {
         Capsule()
             .fill(Color.nuQuaternaryColor)
             .frame(height: 0.5)
             .nuShadowTextModifier(color: .nuQuaternaryColor)
-    }
-    
-    private func getInfoHstack(
-        title: String,
-        value: String,
-        color: Color
-    ) -> some View {
-        Group {
-            separatorView
-            
-            HStack {
-                Text("\(title) :")
-                    .font(nuProductDetailTextMediumItalicFont)
-                Text(value)
-                Spacer()
-            }
-            .font(nuProductDetailTextLightFont)
-            .padding(.vertical, 4)
-            .foregroundColor(color)
-            .nuShadowTextModifier(color: color)
-            .frame(maxWidth: .infinity)
+        
+        HStack {
+            Text("\(title) :")
+                .font(nuProductDetailTextMediumItalicFont)
+            Text(value)
+            Spacer()
         }
+        .font(nuProductDetailTextLightFont)
+        .padding(.vertical, 4)
+        .foregroundColor(color)
+        .nuShadowTextModifier(color: color)
+        .frame(maxWidth: .infinity)
     }
+}
 
+struct ProductCardInformationsView<LeftContent: View, RightContent: View>: View {
+    let leftContent: LeftContent
+    let rightContent: RightContent
     
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 16.0) {
                 VStack {
-                    Image(systemName: "bolt.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: pictureWidth)
-                        .foregroundColor(.nuSecondaryColor)
+                    leftContent
                     
                     Spacer()
                 }
                 .frame(maxHeight: .infinity)
                 
                 VStack(alignment: .leading, spacing: 3) {
-                    HStack {
-                        Text("Énergie pour 100 g")
-                            .nuProductDetailCardTitleModifier(color: .nuQuaternaryColor)
-                        Spacer()
-                    }
-                    
-                    getInfoHstack(
-                        title: "Kilojoules",
-                        value: "\(energy_kj_100g) kJ",
-                        color: .nuSecondaryColor
-                    )
-                    
-                    getInfoHstack(
-                        title: "Kilocalories",
-                        value: "\(energy_kcal_100g) kcal",
-                        color: .nuTertiaryColor
-                    )
+                    rightContent
                 }
                 .frame(maxWidth: .infinity)
             }
         }
         .nuProductInfoCardModifier()
+    }
+}
+
+struct ProductEnergyInformationsView: View {
+    let energy_kj_100g: Int
+    let energy_kcal_100g: Int
+    
+    var body: some View {
+        ProductCardInformationsView(
+            leftContent: Image(systemName: "bolt.circle.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: pictureWidth)
+                .foregroundColor(.nuSecondaryColor),
+            
+            rightContent: Group {
+                HStack {
+                    Text("Énergie pour 100 g")
+                        .nuProductDetailCardTitleModifier(color: .nuQuaternaryColor)
+                    Spacer()
+                }
+                
+                ProductInformationRowView(
+                    title: "Kilojoules",
+                    value: "\(energy_kj_100g) kJ",
+                    color: .nuSecondaryColor
+                )
+                
+                ProductInformationRowView(
+                    title: "Kilocalories",
+                    value: "\(energy_kcal_100g) kcal",
+                    color: .nuTertiaryColor
+                )
+            }
+        )
     }
 }
