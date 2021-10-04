@@ -46,7 +46,7 @@ struct SearchView: View {
                 NUBackgroundView()
                 ScrollView {
                     firstParagraph
-                    secondaryParagraph
+//                    secondaryParagraph
                     
                     Button(action: {
                         cardDetailType = .scanButton
