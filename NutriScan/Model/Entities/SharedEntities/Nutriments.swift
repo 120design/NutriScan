@@ -8,14 +8,6 @@
 import Foundation
 
 struct Nutriments: Decodable, Equatable {
-//    static func ==(lhs: Nutriments, rhs: Nutriments) -> Bool {
-//        return lhs.fiber_100g == rhs.fiber_100g
-//            && lhs.carbohydrates_100g == rhs.carbohydrates_100g
-//            && lhs.proteins_100g == rhs.proteins_100g
-//            && lhs.fat_100g == rhs.fat_100g
-//            && lhs.salt_100g == rhs.salt_100g
-//    }
-    
     private enum CodingKeys: String, CodingKey {
         case fiber_100g,
              carbohydrates_100g,

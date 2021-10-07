@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct NutriScanApp: App {
+    let storageManager = StorageManager.shared
+    
     var body: some Scene {
         WindowGroup {
             NUTabView()
+                .environment(\.managedObjectContext, storageManager.persistentContainer.viewContext)
         }
     }
 }

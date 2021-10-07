@@ -10,7 +10,10 @@
 		2F09F8B1259612FA005F97FA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F09F8B0259612FA005F97FA /* SearchView.swift */; };
 		2F09F8B525961A93005F97FA /* CarBode in Frameworks */ = {isa = PBXBuildFile; productRef = 2F09F8B425961A93005F97FA /* CarBode */; };
 		2F09F8CF259677FD005F97FA /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F09F8CE259677FD005F97FA /* SearchResultView.swift */; };
+		2F1EA64F270C3FED004354C4 /* NutriScan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2F1EA64D270C3FED004354C4 /* NutriScan.xcdatamodeld */; };
 		2F39D9DC26FF3A8F00B7738B /* EmptyDictionaryRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39D9DB26FF3A8F00B7738B /* EmptyDictionaryRepresentable.swift */; };
+		2F471839270CDB6D006BDF7E /* CDGrades.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F471838270CDB6D006BDF7E /* CDGrades.swift */; };
+		2F47183B270DDE44006BDF7E /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F47183A270DDE44006BDF7E /* StorageManager.swift */; };
 		2F50B67926CAF19A0064B060 /* CardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F50B67826CAF19A0064B060 /* CardHeaderView.swift */; };
 		2F55894A26D19D2300CEA23E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2F55894926D19D2300CEA23E /* Kingfisher */; };
 		2F55894F26D41AD000CEA23E /* NUTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F55894E26D41AD000CEA23E /* NUTabView.swift */; };
@@ -50,7 +53,10 @@
 /* Begin PBXFileReference section */
 		2F09F8B0259612FA005F97FA /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		2F09F8CE259677FD005F97FA /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
+		2F1EA64E270C3FED004354C4 /* NutriScan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NutriScan.xcdatamodel; sourceTree = "<group>"; };
 		2F39D9DB26FF3A8F00B7738B /* EmptyDictionaryRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDictionaryRepresentable.swift; sourceTree = "<group>"; };
+		2F471838270CDB6D006BDF7E /* CDGrades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDGrades.swift; sourceTree = "<group>"; };
+		2F47183A270DDE44006BDF7E /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		2F50B67826CAF19A0064B060 /* CardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardHeaderView.swift; sourceTree = "<group>"; };
 		2F55894E26D41AD000CEA23E /* NUTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NUTabView.swift; sourceTree = "<group>"; };
 		2F55895026D42A5300CEA23E /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
@@ -110,6 +116,16 @@
 				2F09F8CE259677FD005F97FA /* SearchResultView.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		2F1EA650270C5E98004354C4 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				2F47183A270DDE44006BDF7E /* StorageManager.swift */,
+				2F1EA64D270C3FED004354C4 /* NutriScan.xcdatamodeld */,
+				2F471838270CDB6D006BDF7E /* CDGrades.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		2F55894D26D41A3400CEA23E /* ViewModel */ = {
@@ -210,6 +226,7 @@
 			children = (
 				2FE94C0125990EF800595F71 /* Entities */,
 				2FE94C0225990F0100595F71 /* Services */,
+				2F1EA650270C5E98004354C4 /* CoreData */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -364,6 +381,7 @@
 				2F55894F26D41AD000CEA23E /* NUTabView.swift in Sources */,
 				2F8F347F26CEB444007C4634 /* NUButtonStyle.swift in Sources */,
 				2FFC029926E64F2E00334FA5 /* Nutriments.swift in Sources */,
+				2F471839270CDB6D006BDF7E /* CDGrades.swift in Sources */,
 				2FE94C17259916AF00595F71 /* NUProduct.swift in Sources */,
 				2F55895126D42A5300CEA23E /* SearchManager.swift in Sources */,
 				2F6B91F426DD62540046A906 /* NUBackgroundClearView.swift in Sources */,
@@ -372,10 +390,12 @@
 				2FEA7DB126C7DB020089AAA8 /* CardView.swift in Sources */,
 				2FFC029526E3DE7C00334FA5 /* RingView.swift in Sources */,
 				2FD776EF26C5A5A0003B03E2 /* NUModifiers.swift in Sources */,
+				2F1EA64F270C3FED004354C4 /* NutriScan.xcdatamodeld in Sources */,
 				2FEA7DB326C91FA10089AAA8 /* CardDetailView.swift in Sources */,
 				2FE8789926F7C8030064A9FE /* EcoScore.swift in Sources */,
 				2F8F348C26D17256007C4634 /* ProductView.swift in Sources */,
 				2FE3E23C2590D66300CF5AB0 /* HistoryView.swift in Sources */,
+				2F47183B270DDE44006BDF7E /* StorageManager.swift in Sources */,
 				2FE3E22A2590D59A00CF5AB0 /* NutriScanApp.swift in Sources */,
 				2FD776E226C46894003B03E2 /* NUNavigationBar.swift in Sources */,
 				2FE94C0B259913A400595F71 /* OFFData.swift in Sources */,
@@ -604,6 +624,19 @@
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		2F1EA64D270C3FED004354C4 /* NutriScan.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2F1EA64E270C3FED004354C4 /* NutriScan.xcdatamodel */,
+			);
+			currentVersion = 2F1EA64E270C3FED004354C4 /* NutriScan.xcdatamodel */;
+			path = NutriScan.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2FE3E21E2590D59A00CF5AB0 /* Project object */;
 }
