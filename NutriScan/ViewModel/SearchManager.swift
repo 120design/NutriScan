@@ -10,9 +10,21 @@ import SwiftUI
 class SearchManager: ObservableObject {
     @Published var showCardDetail = false
     @Published var eanCode = "7613035239562"
-    @Published var foundProduct: NUProduct?
+    @Published var foundProduct: NUProduct? {
+        didSet {
+            if let foundProduct = foundProduct {
+                storageManager.create(product: foundProduct)
+            }
+        }
+    }
     @Published var showResult = false
     @Published private(set) var currentlyResearching = false
+        
+    private let storageManager: StorageManagerProtocol
+    
+    init(storageManager: StorageManagerProtocol = StorageManager.shared) {
+        self.storageManager = storageManager
+    }
     
     func getProduct() {
         // Reprise de la View à intégrer ici
@@ -33,6 +45,7 @@ class SearchManager: ObservableObject {
                 case .failure(let error):
                     // TODO: Traiter les erreurs
                     print("SearchManager ~> getProduct.failure ~> error ~>", error)
+                    return
                 }
 
                 self.showCardDetail = false
@@ -44,6 +57,6 @@ class SearchManager: ObservableObject {
     
     // Annuler la recherche quand on ferme la CardDetailView avant d’avoir reçu la réponse d’OFF
     func cancelRequest() {
-        
+        OFFService.shared.cancelRequest(with: eanCode)
     }
 }

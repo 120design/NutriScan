@@ -30,6 +30,14 @@ struct CardDetailView: View {
         }
     }
     
+    private func cancelRequest() {
+        if cardType == .scanButton
+            || cardType == .eanButton {
+            print("CardDetailView ~> CANCEL REQUEST")
+            searchManager.cancelRequest()
+        }
+    }
+    
     private func getBackgroundCornerRadius() -> CGFloat {
         if appear {
             return yTranslation < 56
@@ -83,6 +91,7 @@ struct CardDetailView: View {
                 )
                 .onTapGesture {
                     showDetail = false
+                    cancelRequest()
                 },
             alignment: .topTrailing
         )
@@ -98,6 +107,7 @@ struct CardDetailView: View {
                 .onEnded { value in
                     if self.yTranslation > 50 {
                         showDetail = false
+                        cancelRequest()
                         return
                     }
                     self.yTranslation = CGSize.zero.height

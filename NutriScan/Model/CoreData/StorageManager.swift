@@ -8,16 +8,16 @@
 import Foundation
 import CoreData
 
-protocol CoreDataStorageProtocol {
-//    func saveWeather(_ weather: WeatherHTTPData)
-//    func getWeatherOfCity(id: Int64) -> WeatherHTTPData?
+protocol StorageManagerProtocol {
+    func create(product nuProduct: NUProduct)
+    func getAllProducts() -> [NUProduct]?
 }
 
 enum StorageType {
     case persistent, inMemory
 }
 
-class StorageManager: CoreDataStorageProtocol {
+class StorageManager: StorageManagerProtocol {
     static let shared = StorageManager()
     
     static var preview: StorageManager = {

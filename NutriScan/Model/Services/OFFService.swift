@@ -20,24 +20,33 @@ struct OFFService {
              response,
              statusCode,
              data,
-             noProductFound
+             noProductFound,
+             cancelledRequest
     }
     
     func getProduct(from eanCode: String, completion: @escaping (Result<NUProduct, OFFError>) -> Void) {
-        let productURL = URL(string: offApi + eanCode)!
+        guard let productURL = URL(string: offApi + eanCode) else {
+            print("OFFSERVICE ~> BAD URL")
+            completion(.failure(.undefined))
+            return
+        }
+        
         let task = URLSession.shared.dataTask(with: productURL) { data, response, error in
-            
             // HTTP request error handling
             if let error = error as? URLError {
                 if error.code == URLError.Code.notConnectedToInternet {
                     print("OFFSERVICE ~> ERROR BECAUSE NOT CONNECTED TO INTERNET")
                     completion(.failure(.connection))
                     return
-                } else {
-                    print("OFFSERVICE ~> UNDEFINED REQUEST ERROR")
-                    completion(.failure(.undefined))
+                } else if error.code == URLError.Code.cancelled {
+                    print("OFFSERVICE ~> CANCELLED REQUEST")
+                    completion(.failure(.cancelledRequest))
                     return
-                }
+                } else {
+                   print("OFFSERVICE ~> UNDEFINED REQUEST ERROR ~>", error)
+                   completion(.failure(.undefined))
+                   return
+               }
             }
             
             // Getting HTTP response
@@ -100,4 +109,17 @@ struct OFFService {
         }
         task.resume()
     }
+    
+    func cancelRequest(with eanCode: String) {
+        guard let url = URL(string: offApi + eanCode) else {
+            return
+        }
+        
+        URLSession.shared.getAllTasks { tasks in
+          tasks
+            .filter { $0.state == .running }
+            .filter { $0.originalRequest?.url == url }.first?
+            .cancel()
+        }
+      }
 }

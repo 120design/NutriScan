@@ -34,6 +34,7 @@ struct SearchResultView: View {
             VStack {
                 if let product = searchManager.foundProduct {
                     foundParagraph
+                    
                     Button (action: {
                         showCardDetail = true
                     }, label: {
