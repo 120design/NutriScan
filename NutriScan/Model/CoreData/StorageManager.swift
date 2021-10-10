@@ -18,6 +18,8 @@ enum StorageType {
 }
 
 class StorageManager: StorageManagerProtocol {
+    let maxHistory = 5
+    
     static let shared = StorageManager()
     
     static var preview: StorageManager = {
@@ -59,7 +61,7 @@ class StorageManager: StorageManagerProtocol {
             cdEcoScore.grade = 4
             cdEcoScore.grade_fr = 4
             cdEcoScore.agribalyse = cdAgribalyse
-
+            
             let cdProduct = CDProduct(context: context)
             cdProduct.id = "7613035239562"
             cdProduct.name = "Nesquik"
@@ -112,12 +114,12 @@ class StorageManager: StorageManagerProtocol {
             print("CoreDataStore ~> saveContext ~> No change to save")
         }
     }
-        
+    
     func create(product nuProduct: NUProduct) {
         deleteProduct(with: nuProduct.id)
         
         let cdProduct = CDProduct(context: context)
-
+        
         var cdNutriments: CDNutriments
         var cdEcoScore: CDEcoScore
         var cdNutriScore: CDNutriScore
@@ -294,7 +296,8 @@ class StorageManager: StorageManagerProtocol {
             cdProduct.nutriScore = cdNutriScore
         }
         
-        saveContext()
+//        saveContext()
+        saveInHistory(cdProduct: cdProduct)
     }
     
     func getAllProducts() -> [NUProduct] {
@@ -308,6 +311,41 @@ class StorageManager: StorageManagerProtocol {
         return cdProducts.compactMap { NUProduct(from: $0) }
     }
     
+    func saveInHistory(cdProduct: CDProduct) {
+        let cdHistory: CDHistory
+        
+        let request: NSFetchRequest<CDHistory> = CDHistory.fetchRequest()
+        
+        if let cdHistories = try? context.fetch(request),
+           !cdHistories.isEmpty  {
+            cdHistory = cdHistories[0]
+        } else {
+            cdHistory = CDHistory(context: context)
+        }
+        
+        guard let cdHistoryProducts = cdHistory.products,
+              let productsArray = Array(cdHistoryProducts) as? [CDProduct],
+              !productsArray.isEmpty  else {
+                  cdHistory.products = [cdProduct]
+                  
+                  saveContext()
+                  
+                  return
+              }
+        
+        let maxRangeToAdd = productsArray.count < maxHistory - 2  ? productsArray.count - 1 : maxHistory - 2
+        cdHistory.products = NSOrderedSet(array: [cdProduct] + productsArray[0...maxRangeToAdd])
+        
+        let minRangeToDelete = productsArray.count < maxHistory - 1  ? productsArray.count : maxHistory - 1
+        let productsToDelete = productsArray[minRangeToDelete...]
+        
+        productsToDelete.forEach { cdProduct in
+            deleteProduct(with: cdProduct.id ?? "")
+        }
+        
+        saveContext()
+    }
+        
     private func deleteProduct(with id: String) {
         let request: NSFetchRequest<CDProduct> = CDProduct.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id)
@@ -321,26 +359,6 @@ class StorageManager: StorageManagerProtocol {
             context.delete(cdProduct)
         }
     }
-    
-//    func deleteCurrentGame() {
-//        let request: NSFetchRequest<CDGame> = CDGame.fetchRequest()
-//        guard let cdGames = try? context.fetch(request),
-//              !cdGames.isEmpty else { return }
-//        cdGames.forEach { (cdGame) in
-//            context.delete(cdGame)
-//        }
-//        saveContext()
-//    }
-    
-//    private func fetchCDTask(with taskId: UUID) -> CDTask? {
-//        let fetchRequest: NSFetchRequest<CDTask> = CDTask.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "id == %@", taskId as CVarArg)
-//        fetchRequest.fetchLimit = 1
-//        guard let fetchResult = try? context.fetch(fetchRequest) else {
-//            return nil
-//        }
-//        return fetchResult.first
-//    }
 }
 
 extension NUProduct {
@@ -414,7 +432,7 @@ extension NUProduct {
             var grade: EcoScore.Grade
             var grade_fr: EcoScore.Grade?
             var adjustments: EcoScore.Adjustments?
-
+            
             switch cdEcoScore.grade {
             case 1:
                 grade = .a
@@ -450,12 +468,12 @@ extension NUProduct {
                 typealias OriginsOfIngredients = EcoScore.Adjustments.OriginsOfIngredients
                 typealias Packaging = EcoScore.Adjustments.Packaging
                 typealias ThreatenedSpecies = EcoScore.Adjustments.ThreatenedSpecies
-
+                
                 var production_system: ProductionSystem
                 var origins_of_ingredients: OriginsOfIngredients
                 var packaging: Packaging
                 var threatened_species: ThreatenedSpecies
-
+                
                 if let cdProductionSystem = cdAdjustments.production_system {
                     production_system = ProductionSystem(value: Int(cdProductionSystem.value))
                 } else {
@@ -487,7 +505,7 @@ extension NUProduct {
                 } else {
                     threatened_species = ThreatenedSpecies(value: nil)
                 }
-
+                
                 adjustments = EcoScore.Adjustments(
                     production_system: production_system,
                     origins_of_ingredients: origins_of_ingredients,
