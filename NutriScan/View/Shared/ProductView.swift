@@ -26,13 +26,25 @@ struct ProductView: View {
                 }
             }
             
-            if let nutriScore = product.nutriScore {
-                ProductNutriScoreInformationsView(nutriScore: nutriScore)
+            if let nutriScore = product.nutriScore,
+               let score = nutriScore.score,
+               let negative_points = nutriScore.negative_points,
+               let positive_points = nutriScore.positive_points,
+               let pictoNmae = nutriScore.pictoName
+            {
+                ProductNutriScoreInformationsView(
+                    score: score,
+                    negative_points: negative_points,
+                    positive_points: positive_points,
+                    pictoName: pictoNmae
+                )
             }
-//            
-//            if let ecoScore = product.ecoScore {
-//                ProductEcoScoreInformationsView(ecoScore: ecoScore)
-//            }
+            
+            if let ecoScore = product.ecoScore,
+               let pictoName = ecoScore.pictoName
+            {
+                ProductEcoScoreInformationsView(ecoScore: ecoScore, pictoName: pictoName)
+            }
             if let novaGroup = product.novaGroup {
                 ProductNovaGroupInformationsView(novaGroup: novaGroup)
             }
@@ -207,14 +219,17 @@ struct ProductNutrimentsInformationsView: View {
 }
 
 struct ProductNutriScoreInformationsView: View {
-    let nutriScore: NutriScore
+    let score: Int
+    let negative_points: Int
+    let positive_points: Int
+    let pictoName: String
     
     var body: some View {
         
         return ProductCardInformationsView(
             cardTitle: "Nutri-score",
 
-            leftContent: Image(nutriScore.pictoName)
+            leftContent: Image(pictoName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: pictureWidth),
@@ -222,19 +237,19 @@ struct ProductNutriScoreInformationsView: View {
             rightContent: Group {
                 ProductInformationRowView(
                     title: "Points négatifs",
-                    value: String(nutriScore.negative_points),
+                    value: String(negative_points),
                     color: .nuTertiaryColor
                 )
                 
                 ProductInformationRowView(
                     title: "Points positifs",
-                    value: String(nutriScore.positive_points),
+                    value: String(positive_points),
                     color: .nuSecondaryColor
                 )
                 
                 ProductInformationRowView(
                     title: "Score final",
-                    value: "\(nutriScore.score) point\(nutriScore.score < -1 || nutriScore.score > 1 ? "s" : "")",
+                    value: "\(score) point\(score < -1 || score > 1 ? "s" : "")",
                     color: .nuQuaternaryColor
                 )
             },
@@ -246,13 +261,14 @@ struct ProductNutriScoreInformationsView: View {
 
 struct ProductEcoScoreInformationsView: View {
     let ecoScore: EcoScore
+    let pictoName: String
     
     var body: some View {
         
         return ProductCardInformationsView(
             cardTitle: "Eco-score",
 
-            leftContent: Image(ecoScore.pictoName)
+            leftContent: Image(pictoName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: pictureWidth),

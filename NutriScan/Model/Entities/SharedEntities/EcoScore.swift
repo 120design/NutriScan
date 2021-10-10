@@ -16,8 +16,9 @@ struct EcoScore: Decodable, Equatable {
         case a = "a", b = "b", c = "c", d = "d", e = "e"
     }
     
-    var pictoName: String {
-        "EcoScore\(self.grade_value.rawValue.uppercased())"
+    var pictoName: String? {
+        guard let grade_value = self.grade_value else { return nil }
+        return "EcoScore\(grade_value.rawValue.uppercased())"
     }
     
     struct Adjustments: Decodable, Equatable {        
@@ -129,8 +130,8 @@ struct EcoScore: Decodable, Equatable {
     let grade: Grade?
     let grade_fr: Grade?
     
-    var grade_value: Grade {
-        var value = grade ?? .e
+    var grade_value: Grade? {
+        var value = grade
         
         if let grade_fr = grade_fr { value = grade_fr }
         

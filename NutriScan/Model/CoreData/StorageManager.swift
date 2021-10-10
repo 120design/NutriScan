@@ -277,14 +277,19 @@ class StorageManager: StorageManagerProtocol {
             cdProduct.ecoScore = cdEcoScore
         }
 
-        if let nutriScore = nuProduct.nutriScore {
+        if let nutriScore = nuProduct.nutriScore,
+           let score = nutriScore.score,
+           let negative_points = nutriScore.negative_points,
+           let positive_points = nutriScore.positive_points,
+           let grade = nutriScore.grade
+        {
             cdNutriScore = CDNutriScore(context: context)
 
-            cdNutriScore.score = Int16(nutriScore.score)
-            cdNutriScore.negative_points = Int16(nutriScore.negative_points)
-            cdNutriScore.positive_points = Int16(nutriScore.positive_points)
+            cdNutriScore.score = Int16(score)
+            cdNutriScore.negative_points = Int16(negative_points)
+            cdNutriScore.positive_points = Int16(positive_points)
 
-            switch nutriScore.grade {
+            switch grade {
             case .a:
                 cdNutriScore.grade = 1
             case .b:
@@ -344,7 +349,9 @@ class StorageManager: StorageManagerProtocol {
         let productsToDelete = productsArray[minRangeToDelete...]
         
         productsToDelete.forEach { cdProduct in
-            deleteProduct(with: cdProduct.id ?? "")
+            if let id = cdProduct.id {
+                deleteProduct(with: id)
+            }
         }
         
         saveContext()
@@ -392,7 +399,7 @@ extension NUProduct {
         }
         
         if let cdNutriScore = cdProduct.nutriScore {
-            var grade: NutriScore.Grade
+            var grade: NutriScore.Grade?
             
             switch cdNutriScore.grade {
             case 1:
@@ -406,7 +413,7 @@ extension NUProduct {
             case 5:
                 grade = .e
             default:
-                grade = .e
+                grade = nil
             }
             
             self.nutriScore = NutriScore(
@@ -433,7 +440,7 @@ extension NUProduct {
         }
         
         if let cdEcoScore = cdProduct.ecoScore {
-            var grade: EcoScore.Grade
+            var grade: EcoScore.Grade?
             var grade_fr: EcoScore.Grade?
             var adjustments: EcoScore.Adjustments?
             
@@ -449,7 +456,7 @@ extension NUProduct {
             case 5:
                 grade = .e
             default:
-                grade = .e
+                grade = nil
             }
             
             switch cdEcoScore.grade_fr {
