@@ -31,6 +31,9 @@ struct OFFService {
             return
         }
         
+        print("-------------------------------")
+        print("OFFService ~> getProduct")
+
         let task = URLSession.shared.dataTask(with: productURL) { data, response, error in
             // HTTP request error handling
             if let error = error as? URLError {
@@ -85,14 +88,25 @@ struct OFFService {
             let name = offProduct.product_name_fr ?? offProduct.product_name
             
             let nutriments = offProduct.nutriments
-            
+//
             let novaGroup = offProduct.nova_group
-            
+//
             let nutriScore = offProduct.nutriscore_data ?? nil
             
             let image_url = offProduct.image_url ?? nil
             
-            let ecoScore = offProduct.ecoscore_data ?? nil
+            var ecoScore: EcoScore?
+            
+            if let offEcoScore = offProduct.ecoscore_data,
+               let _ = offEcoScore.score,
+               let _ = offEcoScore.grade,
+               let offAgribalyse = offEcoScore.agribalyse,
+               let _ = offAgribalyse.score,
+               let _ = offEcoScore.adjustments {
+                ecoScore = offEcoScore
+            } else {
+                ecoScore = nil
+            }
                 
             let product = NUProduct(
                 id: id,

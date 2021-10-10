@@ -11,7 +11,6 @@
 		2F09F8B525961A93005F97FA /* CarBode in Frameworks */ = {isa = PBXBuildFile; productRef = 2F09F8B425961A93005F97FA /* CarBode */; };
 		2F09F8CF259677FD005F97FA /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F09F8CE259677FD005F97FA /* SearchResultView.swift */; };
 		2F1EA64F270C3FED004354C4 /* NutriScan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2F1EA64D270C3FED004354C4 /* NutriScan.xcdatamodeld */; };
-		2F39D9DC26FF3A8F00B7738B /* EmptyDictionaryRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39D9DB26FF3A8F00B7738B /* EmptyDictionaryRepresentable.swift */; };
 		2F471839270CDB6D006BDF7E /* CDGrades.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F471838270CDB6D006BDF7E /* CDGrades.swift */; };
 		2F47183B270DDE44006BDF7E /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F47183A270DDE44006BDF7E /* StorageManager.swift */; };
 		2F50B67926CAF19A0064B060 /* CardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F50B67826CAF19A0064B060 /* CardHeaderView.swift */; };
@@ -55,7 +54,6 @@
 		2F09F8B0259612FA005F97FA /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		2F09F8CE259677FD005F97FA /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		2F1EA64E270C3FED004354C4 /* NutriScan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NutriScan.xcdatamodel; sourceTree = "<group>"; };
-		2F39D9DB26FF3A8F00B7738B /* EmptyDictionaryRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDictionaryRepresentable.swift; sourceTree = "<group>"; };
 		2F471838270CDB6D006BDF7E /* CDGrades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDGrades.swift; sourceTree = "<group>"; };
 		2F47183A270DDE44006BDF7E /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		2F50B67826CAF19A0064B060 /* CardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardHeaderView.swift; sourceTree = "<group>"; };
@@ -274,7 +272,6 @@
 				2FFC029826E64F2E00334FA5 /* Nutriments.swift */,
 				2FE94C122599152900595F71 /* NutriScore.swift */,
 				2FE8789826F7C8030064A9FE /* EcoScore.swift */,
-				2F39D9DB26FF3A8F00B7738B /* EmptyDictionaryRepresentable.swift */,
 				2FE94C0D259914E700595F71 /* NovaGroup.swift */,
 			);
 			path = SharedEntities;
@@ -378,7 +375,6 @@
 			files = (
 				2FE94C0E259914E700595F71 /* NovaGroup.swift in Sources */,
 				2FE94C0425990F6900595F71 /* OFFService.swift in Sources */,
-				2F39D9DC26FF3A8F00B7738B /* EmptyDictionaryRepresentable.swift in Sources */,
 				2FD776E026C46628003B03E2 /* NUColors.swift in Sources */,
 				2F09F8B1259612FA005F97FA /* SearchView.swift in Sources */,
 				2F55894F26D41AD000CEA23E /* NUTabView.swift in Sources */,

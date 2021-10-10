@@ -144,10 +144,10 @@ class StorageManager: StorageManagerProtocol {
                 cdProduct.novaGroup = 4
             }
         }
-        
+
         if let nutriments = nuProduct.nutriments {
             cdNutriments = CDNutriments(context: context)
-            
+
             if let fiber_100g = nutriments.fiber_100g {
                 cdNutriments.fiber_100g = fiber_100g
             }
@@ -169,22 +169,28 @@ class StorageManager: StorageManagerProtocol {
             if let energy_kcal_100g = nutriments.energy_kcal_100g {
                 cdNutriments.energy_kcal_100g = Int16(energy_kcal_100g)
             }
-            
+
             cdProduct.nutriments = cdNutriments
         }
         
-        if let ecoScore = nuProduct.ecoScore {
+        if let ecoScore = nuProduct.ecoScore,
+           let score = ecoScore.score,
+           let grade = ecoScore.grade,
+           let agribalyse = ecoScore.agribalyse,
+           let agribalyseScore = agribalyse.score,
+           let adjustments = ecoScore.adjustments
+        {
             cdEcoScore = CDEcoScore(context: context)
-            
+
             var cdAdjustments: CDAdjustments
-            
-            cdEcoScore.score = Int16(ecoScore.score)
-            
+
+            cdEcoScore.score = Int16(score)
+
             if let score_fr = ecoScore.score_fr {
                 cdEcoScore.score_fr = Int16(score_fr)
             }
-            
-            switch ecoScore.grade {
+
+            switch grade {
             case .a:
                 cdEcoScore.grade = 1
             case .b:
@@ -196,7 +202,7 @@ class StorageManager: StorageManagerProtocol {
             case .e:
                 cdEcoScore.grade = 5
             }
-            
+
             if let grade_fr = ecoScore.grade_fr {
                 switch grade_fr {
                 case .a:
@@ -211,75 +217,73 @@ class StorageManager: StorageManagerProtocol {
                     cdEcoScore.grade = 5
                 }
             }
-            
+
             let cdAgribalyse = CDAgribalyse(context: context)
-            cdAgribalyse.score = Int16(ecoScore.agribalyse.score)
+            cdAgribalyse.score = Int16(agribalyseScore)
             cdEcoScore.agribalyse = cdAgribalyse
+
+            cdAdjustments = CDAdjustments(context: context)
             
-            if let adjustments = ecoScore.adjustments {
-                cdAdjustments = CDAdjustments(context: context)
+            var cdProductionSystem: CDProductionSystem
+            var cdOriginsOfIngredients: CDOriginsOfIngredients
+            var cdPackaging: CDPackaging
+            var cdThreatenedSpecies: CDThreatnenedSpecies
+            
+            if let value = adjustments.production_system.value {
+                cdProductionSystem = CDProductionSystem(context: context)
+                cdProductionSystem.value = Int16(value)
                 
-                var cdProductionSystem: CDProductionSystem
-                var cdOriginsOfIngredients: CDOriginsOfIngredients
-                var cdPackaging: CDPackaging
-                var cdThreatenedSpecies: CDThreatnenedSpecies
+                cdAdjustments.production_system = cdProductionSystem
+            }
+            
+            if adjustments.origins_of_ingredients.transportation_value != nil
+                || adjustments.origins_of_ingredients.transportation_value_fr != nil
+                || adjustments.origins_of_ingredients.epi_value != nil {
+                cdOriginsOfIngredients = CDOriginsOfIngredients(context: context)
                 
-                if let value = adjustments.production_system.value {
-                    cdProductionSystem = CDProductionSystem(context: context)
-                    cdProductionSystem.value = Int16(value)
-                    
-                    cdAdjustments.production_system = cdProductionSystem
+                let origins_of_ingredients = adjustments.origins_of_ingredients
+                
+                if let transportation_value = origins_of_ingredients.transportation_value {
+                    cdOriginsOfIngredients.transportation_value = Int16(transportation_value)
                 }
                 
-                if adjustments.origins_of_ingredients.transportation_value != nil
-                    || adjustments.origins_of_ingredients.transportation_value_fr != nil
-                    || adjustments.origins_of_ingredients.epi_value != nil {
-                    cdOriginsOfIngredients = CDOriginsOfIngredients(context: context)
-                    
-                    let origins_of_ingredients = adjustments.origins_of_ingredients
-                    
-                    if let transportation_value = origins_of_ingredients.transportation_value {
-                        cdOriginsOfIngredients.transportation_value = Int16(transportation_value)
-                    }
-                    
-                    if let transportation_value_fr = origins_of_ingredients.transportation_value_fr {
-                        cdOriginsOfIngredients.transportation_value_fr = Int16(transportation_value_fr)
-                    }
-                    
-                    if let epi_value = origins_of_ingredients.epi_value {
-                        cdOriginsOfIngredients.epi_value = Int16(epi_value)
-                    }
-                    
-                    cdAdjustments.origins_of_ingredients = cdOriginsOfIngredients
+                if let transportation_value_fr = origins_of_ingredients.transportation_value_fr {
+                    cdOriginsOfIngredients.transportation_value_fr = Int16(transportation_value_fr)
                 }
                 
+                if let epi_value = origins_of_ingredients.epi_value {
+                    cdOriginsOfIngredients.epi_value = Int16(epi_value)
+                }
+                
+                cdAdjustments.origins_of_ingredients = cdOriginsOfIngredients
+
                 if let value = adjustments.packaging.value {
                     cdPackaging = CDPackaging(context: context)
                     cdPackaging.value = Int16(value)
-                    
+
                     cdAdjustments.packaging = cdPackaging
                 }
-                
+
                 if let value = adjustments.threatened_species.value {
                     cdThreatenedSpecies = CDThreatnenedSpecies(context: context)
                     cdThreatenedSpecies.value = Int16(value)
-                    
+
                     cdAdjustments.threatened_species = cdThreatenedSpecies
                 }
-                
+
                 cdEcoScore.adjustments = cdAdjustments
             }
-            
+
             cdProduct.ecoScore = cdEcoScore
         }
-        
+
         if let nutriScore = nuProduct.nutriScore {
             cdNutriScore = CDNutriScore(context: context)
-            
+
             cdNutriScore.score = Int16(nutriScore.score)
             cdNutriScore.negative_points = Int16(nutriScore.negative_points)
             cdNutriScore.positive_points = Int16(nutriScore.positive_points)
-            
+
             switch nutriScore.grade {
             case .a:
                 cdNutriScore.grade = 1
@@ -292,7 +296,7 @@ class StorageManager: StorageManagerProtocol {
             case .e:
                 cdNutriScore.grade = 5
             }
-            
+
             cdProduct.nutriScore = cdNutriScore
         }
         
@@ -333,7 +337,7 @@ class StorageManager: StorageManagerProtocol {
                   return
               }
         
-        let maxRangeToAdd = productsArray.count < maxHistory - 2  ? productsArray.count - 1 : maxHistory - 2
+        let maxRangeToAdd = productsArray.count < maxHistory - 1  ? productsArray.count - 1 : maxHistory - 2
         cdHistory.products = NSOrderedSet(array: [cdProduct] + productsArray[0...maxRangeToAdd])
         
         let minRangeToDelete = productsArray.count < maxHistory - 1  ? productsArray.count : maxHistory - 1

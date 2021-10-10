@@ -9,7 +9,7 @@ import Foundation
 
 struct EcoScore: Decodable, Equatable {
     struct Agribalyse: Decodable, Equatable {
-        let score: Int
+        let score: Int?
     }
     
     enum Grade: String, Decodable {
@@ -108,11 +108,11 @@ struct EcoScore: Decodable, Equatable {
         }
     }
     
-    let score: Int
+    let score: Int?
     let score_fr: Int?
     
     var score_value: String {
-        var value = score
+        var value = score ?? 0
         
         if let score_fr = score_fr {
             value = score_fr
@@ -126,19 +126,19 @@ struct EcoScore: Decodable, Equatable {
         return "\(value) pts/100"
     }
     
-    let grade: Grade
+    let grade: Grade?
     let grade_fr: Grade?
     
     var grade_value: Grade {
-        var value = grade
+        var value = grade ?? .e
         
         if let grade_fr = grade_fr { value = grade_fr }
         
         return value
     }
     
-    let agribalyse: Agribalyse
+    let agribalyse: Agribalyse?
     
-    var agribalyse_score: Int { agribalyse.score }
+    var agribalyse_score: Int { agribalyse?.score ?? 0 }
     let adjustments: Adjustments?
 }

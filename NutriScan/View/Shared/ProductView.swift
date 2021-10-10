@@ -29,10 +29,10 @@ struct ProductView: View {
             if let nutriScore = product.nutriScore {
                 ProductNutriScoreInformationsView(nutriScore: nutriScore)
             }
-            
-            if let ecoScore = product.ecoScore {
-                ProductEcoScoreInformationsView(ecoScore: ecoScore)
-            }
+//            
+//            if let ecoScore = product.ecoScore {
+//                ProductEcoScoreInformationsView(ecoScore: ecoScore)
+//            }
             if let novaGroup = product.novaGroup {
                 ProductNovaGroupInformationsView(novaGroup: novaGroup)
             }
