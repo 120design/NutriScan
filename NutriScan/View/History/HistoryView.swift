@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct HistoryView: View {
-    @FetchRequest(
-        entity: CDProduct.entity(),
-        sortDescriptors: []
-    ) var products: FetchedResults<CDProduct>
+    @StateObject private var historyViewModel = HistoryViewModel()
     
     var body: some View {
         NavigationView {
@@ -20,11 +17,14 @@ struct HistoryView: View {
 //                    Text("Consultez ici l’historique de vos dix dernières recherches de produits. Pour sauvegarder plus de produits, ajoutez-les à vos favoris !")
 //                }
 //            }
-            List(products, id: \.id) { product in
-                Text(product.name ?? "Pas de nom")
+            List(historyViewModel.products, id: \.id) { product in
+                Text(product.name)
             }
             .navigationTitle("Historique")
             .padding()
+            .onAppear {
+                historyViewModel.getAllProducts()
+            }
         }
     }
 }

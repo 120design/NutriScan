@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
-    @StateObject private var searchManager = SearchManager()
+    @StateObject private var searchViewModel = SearchViewModel()
     
     @State private var cardDetailType = CardView.CardType.scanButton
     
@@ -50,7 +50,7 @@ struct SearchView: View {
                     
                     Button(action: {
                         cardDetailType = .scanButton
-                        searchManager.showCardDetail = true
+                        searchViewModel.showCardDetail = true
                     }, label: {
                         CardView(
                             cardType: .scanButton
@@ -58,14 +58,14 @@ struct SearchView: View {
                     })
                     .opacity(
                         cardDetailType == .scanButton
-                            && searchManager.showCardDetail
+                            && searchViewModel.showCardDetail
                             ? 0
                             : 1
                     )
                    .offset(
                         x: 0,
                         y: cardDetailType == .scanButton
-                            && searchManager.showCardDetail
+                            && searchViewModel.showCardDetail
                             ? 300
                             : 0
                     )
@@ -77,7 +77,7 @@ struct SearchView: View {
                     
                     Button(action: {
                         cardDetailType = .eanButton
-                        searchManager.showCardDetail = true
+                        searchViewModel.showCardDetail = true
                     }, label: {
                         CardView(
                             cardType: .eanButton
@@ -85,14 +85,14 @@ struct SearchView: View {
                     })
                     .opacity(
                         cardDetailType == .eanButton
-                            && searchManager.showCardDetail
+                            && searchViewModel.showCardDetail
                             ? 0
                             : 1
                     )
                     .offset(
                         x: 0,
                         y: cardDetailType == .eanButton
-                            && searchManager.showCardDetail
+                            && searchViewModel.showCardDetail
                             ? 300
                             : 0
                     )
@@ -100,7 +100,7 @@ struct SearchView: View {
                     
                     NavigationLink(
                         destination: SearchResultView(),
-                        isActive: $searchManager.showResult,
+                        isActive: $searchViewModel.showResult,
                         label: {
                             EmptyView()
                         }
@@ -109,17 +109,17 @@ struct SearchView: View {
             }
             .navigationTitle("Recherche")
             .foregroundColor(.nuSecondaryColor)
-            .fullScreenCover(isPresented: $searchManager.showCardDetail) {
+            .fullScreenCover(isPresented: $searchViewModel.showCardDetail) {
                 CardDetailView(
-                    showDetail: $searchManager.showCardDetail,
+                    showDetail: $searchViewModel.showCardDetail,
                     cardType: cardDetailType
                 )
                 .background(NUBackgroundClearView())
-                .environmentObject(searchManager)
+                .environmentObject(searchViewModel)
             }
         }
         .nuNavigationBar()
-        .environmentObject(searchManager)
+        .environmentObject(searchViewModel)
     }
 }
 

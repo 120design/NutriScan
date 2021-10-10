@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchResultView: View {
-    @EnvironmentObject var searchManager: SearchManager
+    @EnvironmentObject var searchViewModel: SearchViewModel
     
     @State var showCardDetail = false
     
@@ -19,7 +19,7 @@ struct SearchResultView: View {
                 + Text("la base de données d’Open Food Facts")
                 .font(nuBodyMediumItalicFont)
                 + Text(" ce produit correspondant ")
-                + Text("au code EAN \(searchManager.eanCode)")
+                + Text("au code EAN \(searchViewModel.eanCode)")
                 .font(nuBodyMediumItalicFont)
                 + Text(" :")
         }
@@ -32,7 +32,7 @@ struct SearchResultView: View {
         ZStack {
             NUBackgroundView()
             VStack {
-                if let product = searchManager.foundProduct {
+                if let product = searchViewModel.foundProduct {
                     foundParagraph
                     
                     Button (action: {
@@ -73,7 +73,7 @@ struct SearchResultView: View {
         .navigationTitle("Résultat")
         .foregroundColor(.nuSecondaryColor)
         .fullScreenCover(isPresented: $showCardDetail) {
-            if let product = searchManager.foundProduct {
+            if let product = searchViewModel.foundProduct {
                 CardDetailView(
                     showDetail: $showCardDetail,
                     cardType: .product(product)

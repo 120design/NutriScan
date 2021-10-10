@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EANView: View {
-    @EnvironmentObject var searchManager: SearchManager
+    @EnvironmentObject var searchViewModel: SearchViewModel
     
     let firstParagraph: some View = VStack(alignment: .leading) {
         Text("Recherchez un produit après avoir soit renseigné ")
@@ -39,14 +39,14 @@ struct EANView: View {
     
     var body: some View {
         VStack {
-            TextField("", text: $searchManager.eanCode)
+            TextField("", text: $searchViewModel.eanCode)
                 .padding(14)
                 .font(.system(size: 16))
                 .foregroundColor(.nuTertiaryColor)
                 .accentColor(.nuTertiaryColor)
                 .modifier(
                     NUPlaceholderStyleModifier(
-                        showPlaceHolder: searchManager.eanCode.isEmpty,
+                        showPlaceHolder: searchViewModel.eanCode.isEmpty,
                         placeholder: "Exemple : 8712100325953",
                         foregroundColor: .nuTertiaryColor
                     )
@@ -72,7 +72,7 @@ struct EANView: View {
                 .animation(nil)
             HStack {
                 Button(action: {
-                    searchManager.eanCode = ""
+                    searchViewModel.eanCode = ""
                 }, label: {
                     Text("Effacer")
                         .padding(.vertical, 10)
@@ -81,10 +81,10 @@ struct EANView: View {
                         .background(Color.nuTertiaryColor)
                         .modifier(NUSmoothCornersModifier(cornerRadius: 12))
                 })
-                .disabled(searchManager.eanCode.isEmpty)
+                .disabled(searchViewModel.eanCode.isEmpty)
                 
                 Button(action: {
-                    searchManager.getProduct()
+                    searchViewModel.getProduct()
                 }, label: {
                     Text("Rechercher")
                         .padding(.vertical, 10)
@@ -93,7 +93,7 @@ struct EANView: View {
                         .background(Color.nuSecondaryColor)
                         .modifier(NUSmoothCornersModifier(cornerRadius: 12))
                 })
-                .disabled(searchManager.eanCode.isEmpty)
+                .disabled(searchViewModel.eanCode.isEmpty)
             }
             .modifier(NUButtonLabelModifier())
         }
@@ -115,6 +115,6 @@ struct EANView: View {
 struct EANView_Previews: PreviewProvider {    
     static var previews: some View {
         EANView()
-            .environmentObject(SearchManager())
+            .environmentObject(SearchViewModel())
     }
 }

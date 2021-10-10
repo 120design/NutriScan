@@ -1,5 +1,5 @@
 //
-//  SearchManager.swift
+//  SearchViewModel.swift
 //  NutriScan
 //
 //  Created by Vincent Caronnet on 23/08/2021.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class SearchManager: ObservableObject {
+class SearchViewModel: ObservableObject {
     @Published var showCardDetail = false
     @Published var eanCode = "7613035239562"
     @Published var foundProduct: NUProduct? {
@@ -19,7 +19,7 @@ class SearchManager: ObservableObject {
     }
     @Published var showResult = false
     @Published private(set) var currentlyResearching = false
-        
+    
     private let storageManager: StorageManagerProtocol
     
     init(storageManager: StorageManagerProtocol = StorageManager.shared) {
@@ -45,6 +45,7 @@ class SearchManager: ObservableObject {
                 case .failure(let error):
                     // TODO: Traiter les erreurs
                     print("SearchManager ~> getProduct.failure ~> error ~>", error)
+                    self.currentlyResearching = false
                     return
                 }
 

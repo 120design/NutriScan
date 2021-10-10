@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CardDetailView: View {
-    @EnvironmentObject var searchManager: SearchManager
+    @EnvironmentObject var searchViewModel: SearchViewModel
     
     @Binding var showDetail: Bool
     @State private var appear = false
@@ -34,7 +34,7 @@ struct CardDetailView: View {
         if cardType == .scanButton
             || cardType == .eanButton {
             print("CardDetailView ~> CANCEL REQUEST")
-            searchManager.cancelRequest()
+            searchViewModel.cancelRequest()
         }
     }
     
@@ -51,7 +51,7 @@ struct CardDetailView: View {
         VStack {
             CardHeaderView(cardType: cardType)
                 .padding(.horizontal)
-            if searchManager.currentlyResearching {
+            if searchViewModel.currentlyResearching {
                 Spacer()
                 ProgressView("Recherche en cours")
                     .progressViewStyle(
@@ -129,7 +129,7 @@ struct DetailView_Previews: PreviewProvider {
         CardDetailView(
             showDetail: .constant(true), cardType: .eanButton
         )
-        .environmentObject(SearchManager())
+        .environmentObject(SearchViewModel())
     }
 }
 

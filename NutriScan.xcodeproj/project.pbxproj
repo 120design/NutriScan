@@ -17,7 +17,8 @@
 		2F50B67926CAF19A0064B060 /* CardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F50B67826CAF19A0064B060 /* CardHeaderView.swift */; };
 		2F55894A26D19D2300CEA23E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2F55894926D19D2300CEA23E /* Kingfisher */; };
 		2F55894F26D41AD000CEA23E /* NUTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F55894E26D41AD000CEA23E /* NUTabView.swift */; };
-		2F55895126D42A5300CEA23E /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F55895026D42A5300CEA23E /* SearchManager.swift */; };
+		2F55895126D42A5300CEA23E /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F55895026D42A5300CEA23E /* SearchViewModel.swift */; };
+		2F6A186C2712202A009A0BE8 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6A186B2712202A009A0BE8 /* HistoryViewModel.swift */; };
 		2F6B91F426DD62540046A906 /* NUBackgroundClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B91F326DD62540046A906 /* NUBackgroundClearView.swift */; };
 		2F8F347926CE5C68007C4634 /* NUHaptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F347826CE5C68007C4634 /* NUHaptics.swift */; };
 		2F8F347B26CEB083007C4634 /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F347A26CEB083007C4634 /* ScanView.swift */; };
@@ -59,7 +60,8 @@
 		2F47183A270DDE44006BDF7E /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		2F50B67826CAF19A0064B060 /* CardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardHeaderView.swift; sourceTree = "<group>"; };
 		2F55894E26D41AD000CEA23E /* NUTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NUTabView.swift; sourceTree = "<group>"; };
-		2F55895026D42A5300CEA23E /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
+		2F55895026D42A5300CEA23E /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		2F6A186B2712202A009A0BE8 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		2F6B91F326DD62540046A906 /* NUBackgroundClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUBackgroundClearView.swift; sourceTree = "<group>"; };
 		2F8F347826CE5C68007C4634 /* NUHaptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUHaptics.swift; sourceTree = "<group>"; };
 		2F8F347A26CEB083007C4634 /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
@@ -131,7 +133,8 @@
 		2F55894D26D41A3400CEA23E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				2F55895026D42A5300CEA23E /* SearchManager.swift */,
+				2F55895026D42A5300CEA23E /* SearchViewModel.swift */,
+				2F6A186B2712202A009A0BE8 /* HistoryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -383,11 +386,12 @@
 				2FFC029926E64F2E00334FA5 /* Nutriments.swift in Sources */,
 				2F471839270CDB6D006BDF7E /* CDGrades.swift in Sources */,
 				2FE94C17259916AF00595F71 /* NUProduct.swift in Sources */,
-				2F55895126D42A5300CEA23E /* SearchManager.swift in Sources */,
+				2F55895126D42A5300CEA23E /* SearchViewModel.swift in Sources */,
 				2F6B91F426DD62540046A906 /* NUBackgroundClearView.swift in Sources */,
 				2F8F347D26CEB17B007C4634 /* EANView.swift in Sources */,
 				2F09F8CF259677FD005F97FA /* SearchResultView.swift in Sources */,
 				2FEA7DB126C7DB020089AAA8 /* CardView.swift in Sources */,
+				2F6A186C2712202A009A0BE8 /* HistoryViewModel.swift in Sources */,
 				2FFC029526E3DE7C00334FA5 /* RingView.swift in Sources */,
 				2FD776EF26C5A5A0003B03E2 /* NUModifiers.swift in Sources */,
 				2F1EA64F270C3FED004354C4 /* NutriScan.xcdatamodeld in Sources */,

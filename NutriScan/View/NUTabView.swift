@@ -9,9 +9,6 @@ import SwiftUI
 import Combine
 
 struct NUTabView: View {
-    @Namespace private var scanNamespace
-    
-    
     var body: some View {
         TabView {
             SearchView()

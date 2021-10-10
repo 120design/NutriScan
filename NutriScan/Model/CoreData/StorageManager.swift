@@ -10,7 +10,7 @@ import CoreData
 
 protocol StorageManagerProtocol {
     func create(product nuProduct: NUProduct)
-    func getAllProducts() -> [NUProduct]?
+    func getAllProducts() -> [NUProduct]
 }
 
 enum StorageType {
@@ -114,6 +114,8 @@ class StorageManager: StorageManagerProtocol {
     }
         
     func create(product nuProduct: NUProduct) {
+        deleteProduct(with: nuProduct.id)
+        
         let cdProduct = CDProduct(context: context)
 
         var cdNutriments: CDNutriments
@@ -295,16 +297,50 @@ class StorageManager: StorageManagerProtocol {
         saveContext()
     }
     
-    func getAllProducts() -> [NUProduct]? {
+    func getAllProducts() -> [NUProduct] {
         let request: NSFetchRequest<CDProduct> = CDProduct.fetchRequest()
         
         guard let cdProducts = try? context.fetch(request),
               !cdProducts.isEmpty else {
-                  return nil
+                  return []
               }
         
         return cdProducts.compactMap { NUProduct(from: $0) }
     }
+    
+    private func deleteProduct(with id: String) {
+        let request: NSFetchRequest<CDProduct> = CDProduct.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id)
+        
+        guard let cdProducts = try? context.fetch(request),
+              !cdProducts.isEmpty else {
+                  return
+              }
+        
+        cdProducts.forEach { cdProduct in
+            context.delete(cdProduct)
+        }
+    }
+    
+//    func deleteCurrentGame() {
+//        let request: NSFetchRequest<CDGame> = CDGame.fetchRequest()
+//        guard let cdGames = try? context.fetch(request),
+//              !cdGames.isEmpty else { return }
+//        cdGames.forEach { (cdGame) in
+//            context.delete(cdGame)
+//        }
+//        saveContext()
+//    }
+    
+//    private func fetchCDTask(with taskId: UUID) -> CDTask? {
+//        let fetchRequest: NSFetchRequest<CDTask> = CDTask.fetchRequest()
+//        fetchRequest.predicate = NSPredicate(format: "id == %@", taskId as CVarArg)
+//        fetchRequest.fetchLimit = 1
+//        guard let fetchResult = try? context.fetch(fetchRequest) else {
+//            return nil
+//        }
+//        return fetchResult.first
+//    }
 }
 
 extension NUProduct {
