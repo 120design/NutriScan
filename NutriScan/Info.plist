@@ -22,6 +22,15 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Merci d’autoriser NutriScan à utiliser la caméra de votre téléphone pour scanner des codes à barres.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>OperatorMono-Bold.otf</string>
+		<string>OperatorMono-BoldItalic.otf</string>
+		<string>OperatorMono-Book.otf</string>
+		<string>OperatorMono-Light.otf</string>
+		<string>OperatorMono-Medium.otf</string>
+		<string>OperatorMono-MediumItalic.otf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -35,6 +44,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -45,15 +56,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>OperatorMono-Bold.otf</string>
-		<string>OperatorMono-BoldItalic.otf</string>
-		<string>OperatorMono-Book.otf</string>
-		<string>OperatorMono-Light.otf</string>
-		<string>OperatorMono-Medium.otf</string>
-		<string>OperatorMono-MediumItalic.otf</string>
 	</array>
 </dict>
 </plist>

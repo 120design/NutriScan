@@ -155,6 +155,7 @@ class StorageManager: StorageManagerProtocol {
                 cdNutriments.carbohydrates_100g = carbohydrates_100g
             }
             if let proteins_100g = nutriments.proteins_100g {
+                print("StorageManager ~> create ~> nuProduct.nutriments.proteins_100g", proteins_100g)
                 cdNutriments.proteins_100g = proteins_100g
             }
             if let fat_100g = nutriments.fat_100g {
@@ -387,6 +388,7 @@ extension NUProduct {
         self.imageURL = cdProduct.imageURL
         
         if let cdNutriments = cdProduct.nutriments {
+            
             self.nutriments = Nutriments(
                 fiber_100g: cdNutriments.fiber_100g,
                 carbohydrates_100g: cdNutriments.carbohydrates_100g,

@@ -15,6 +15,7 @@ struct NutriScanApp: App {
         WindowGroup {
             NUTabView()
                 .environment(\.managedObjectContext, storageManager.persistentContainer.viewContext)
+                .preferredColorScheme(.dark)
         }
     }
 }

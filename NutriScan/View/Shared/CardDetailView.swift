@@ -124,6 +124,7 @@ struct CardDetailView: View {
         .onDisappear {
             appear = false
         }
+        .preferredColorScheme(.light)
     }
 }
 
