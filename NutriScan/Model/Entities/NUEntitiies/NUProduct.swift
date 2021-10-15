@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NUProduct: Equatable {    
+struct NUProduct: Equatable, Identifiable {    
     let id: String
     let name: String
     let imageURL: String?

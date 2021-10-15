@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct CardDetailView: View {
-    @EnvironmentObject var searchViewModel: SearchViewModel
-    
     @Binding var showDetail: Bool
+    @State var currentlyResearching: Bool = false
+    
     @State private var appear = false
     @State private var yTranslation = CGSize.zero.height
     @State private var isDraggable = false
     
     let cardType: CardView.CardType
+    
+    var cancelHTTPRequest: (() -> ())? = nil
     
     @ViewBuilder
     private var cardContentView: some View {
@@ -32,9 +34,10 @@ struct CardDetailView: View {
     
     private func cancelRequest() {
         if cardType == .scanButton
-            || cardType == .eanButton {
-            print("CardDetailView ~> CANCEL REQUEST")
-            searchViewModel.cancelRequest()
+            || cardType == .eanButton,
+           let cancelHTTPRequest = cancelHTTPRequest
+        {
+            cancelHTTPRequest()
         }
     }
     
@@ -51,7 +54,7 @@ struct CardDetailView: View {
         VStack {
             CardHeaderView(cardType: cardType)
                 .padding(.horizontal)
-            if searchViewModel.currentlyResearching {
+            if currentlyResearching {
                 Spacer()
                 ProgressView("Recherche en cours")
                     .progressViewStyle(
@@ -127,7 +130,7 @@ struct CardDetailView: View {
 struct DetailView_Previews: PreviewProvider {    
     static var previews: some View {
         CardDetailView(
-            showDetail: .constant(true), cardType: .eanButton
+            showDetail: .constant(true),  cardType: .eanButton
         )
         .environmentObject(SearchViewModel())
     }

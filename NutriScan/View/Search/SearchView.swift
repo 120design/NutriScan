@@ -71,7 +71,7 @@ struct SearchView: View {
                     )
                     
                     Text("ou")
-                        .padding(.top, -10.0)
+                        .padding(.top, -5.0)
                         .padding(.bottom, -5.0)
                         .modifier(NUStrongLabelModifier())
                     
@@ -112,10 +112,15 @@ struct SearchView: View {
             .fullScreenCover(isPresented: $searchViewModel.showCardDetail) {
                 CardDetailView(
                     showDetail: $searchViewModel.showCardDetail,
-                    cardType: cardDetailType
+                    currentlyResearching: searchViewModel.currentlyResearching,
+                    cardType: cardDetailType,
+                    cancelHTTPRequest: cardDetailType == .scanButton
+                    || cardDetailType == .eanButton
+                    ? searchViewModel.cancelRequest
+                    : nil
                 )
-                .background(NUBackgroundClearView())
-                .environmentObject(searchViewModel)
+                    .background(NUBackgroundClearView())
+                    .environmentObject(searchViewModel)
             }
         }
         .nuNavigationBar()

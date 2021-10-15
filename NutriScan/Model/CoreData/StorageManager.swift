@@ -229,42 +229,43 @@ class StorageManager: StorageManagerProtocol {
             var cdPackaging: CDPackaging
             var cdThreatenedSpecies: CDThreatnenedSpecies
             
-            if let value = adjustments.production_system.value {
+            if let value = adjustments.production_system?.value {
                 cdProductionSystem = CDProductionSystem(context: context)
                 cdProductionSystem.value = Int16(value)
                 
                 cdAdjustments.production_system = cdProductionSystem
             }
             
-            if adjustments.origins_of_ingredients.transportation_value != nil
-                || adjustments.origins_of_ingredients.transportation_value_fr != nil
-                || adjustments.origins_of_ingredients.epi_value != nil {
+            if adjustments.origins_of_ingredients?.transportation_value != nil
+                || adjustments.origins_of_ingredients?.transportation_value_fr != nil
+                || adjustments.origins_of_ingredients?.epi_value != nil
+            {
                 cdOriginsOfIngredients = CDOriginsOfIngredients(context: context)
                 
                 let origins_of_ingredients = adjustments.origins_of_ingredients
                 
-                if let transportation_value = origins_of_ingredients.transportation_value {
+                if let transportation_value = origins_of_ingredients?.transportation_value {
                     cdOriginsOfIngredients.transportation_value = Int16(transportation_value)
                 }
                 
-                if let transportation_value_fr = origins_of_ingredients.transportation_value_fr {
+                if let transportation_value_fr = origins_of_ingredients?.transportation_value_fr {
                     cdOriginsOfIngredients.transportation_value_fr = Int16(transportation_value_fr)
                 }
                 
-                if let epi_value = origins_of_ingredients.epi_value {
+                if let epi_value = origins_of_ingredients?.epi_value {
                     cdOriginsOfIngredients.epi_value = Int16(epi_value)
                 }
                 
                 cdAdjustments.origins_of_ingredients = cdOriginsOfIngredients
 
-                if let value = adjustments.packaging.value {
+                if let value = adjustments.packaging?.value {
                     cdPackaging = CDPackaging(context: context)
                     cdPackaging.value = Int16(value)
 
                     cdAdjustments.packaging = cdPackaging
                 }
 
-                if let value = adjustments.threatened_species.value {
+                if let value = adjustments.threatened_species?.value {
                     cdThreatenedSpecies = CDThreatnenedSpecies(context: context)
                     cdThreatenedSpecies.value = Int16(value)
 
@@ -309,6 +310,7 @@ class StorageManager: StorageManagerProtocol {
         saveInHistory(cdProduct: cdProduct)
     }
     
+//    TODO: Récupérer l’historique au lieu de récupérer tous les produits
     func getAllProducts() -> [NUProduct] {
         let request: NSFetchRequest<CDProduct> = CDProduct.fetchRequest()
         

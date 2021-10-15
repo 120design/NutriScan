@@ -37,13 +37,13 @@ struct EcoScore: Decodable, Equatable {
             var value: Int?
         }
 
-        let production_system: ProductionSystem
-        let origins_of_ingredients: OriginsOfIngredients
-        let packaging: Packaging
-        let threatened_species: ThreatenedSpecies
+        let production_system: ProductionSystem?
+        let origins_of_ingredients: OriginsOfIngredients?
+        let packaging: Packaging?
+        let threatened_species: ThreatenedSpecies?
 
         var production_system_value: String {
-            if let value = production_system.value {
+            if let value = production_system?.value {
                 if value == 0 || value == 1 { return "+\(value) pt" }
                 
                 return "+ \(value) pts"
@@ -54,11 +54,11 @@ struct EcoScore: Decodable, Equatable {
         var transportation_value: String {
             var value: Int?
             
-            if let commonValue = origins_of_ingredients.transportation_value {
+            if let commonValue = origins_of_ingredients?.transportation_value {
                 value = commonValue
             }
             
-            if let frenchValue = origins_of_ingredients.transportation_value_fr {
+            if let frenchValue = origins_of_ingredients?.transportation_value_fr {
                 value = frenchValue
             }
             
@@ -72,7 +72,7 @@ struct EcoScore: Decodable, Equatable {
         }
 
         var epi_value: String {
-            if let value = origins_of_ingredients.epi_value {
+            if let value = origins_of_ingredients?.epi_value {
                 if value == 0 || value == 1 { return "+\(value) pt" }
                 
                 if value == -1 { return "\(value) pt" }
@@ -87,7 +87,7 @@ struct EcoScore: Decodable, Equatable {
         }
 
         var packaging_value: String {
-            if let value = packaging.value {
+            if let value = packaging?.value {
                 if value == 0 { return "-0 pt" }
                 
                 if value == -1 { return "\(value) pt" }
@@ -98,7 +98,7 @@ struct EcoScore: Decodable, Equatable {
         }
 
         var threatened_species_value: String {
-            if let value = threatened_species.value {
+            if let value = threatened_species?.value {
                 if value == 0 { return "-0 pt" }
                 
                 if value == 1 { return "\(value) pt" }
