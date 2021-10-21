@@ -25,6 +25,7 @@ struct OFFService {
     }
     
     func getProduct(from eanCode: String, completion: @escaping (Result<NUProduct, OFFError>) -> Void) {
+//        TODO: Utiliser ici URLComponent
         guard let productURL = URL(string: offApi + eanCode) else {
             print("OFFSERVICE ~> BAD URL")
             completion(.failure(.undefined))

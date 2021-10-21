@@ -10,7 +10,11 @@ import CoreData
 
 protocol StorageManagerProtocol {
     func create(product nuProduct: NUProduct)
-    func getAllProducts() -> [NUProduct]
+    func getHistoryProducts() -> [NUProduct]
+    func getFavoritesProducts() -> [NUProduct]
+    func productIsAFavorite(_ product: NUProduct) -> Bool
+    func saveInFavorites(product nuProduct: NUProduct)
+    func removeProductFromFavorites(_ nuProduct: NUProduct)
 }
 
 enum StorageType {
@@ -115,8 +119,10 @@ class StorageManager: StorageManagerProtocol {
         }
     }
     
+    // MARK: Create operations
+    
     func create(product nuProduct: NUProduct) {
-        deleteProduct(with: nuProduct.id)
+        deleteProduct(withID: nuProduct.id)
         
         let cdProduct = CDProduct(context: context)
         
@@ -144,10 +150,10 @@ class StorageManager: StorageManagerProtocol {
                 cdProduct.novaGroup = 4
             }
         }
-
+        
         if let nutriments = nuProduct.nutriments {
             cdNutriments = CDNutriments(context: context)
-
+            
             if let fiber_100g = nutriments.fiber_100g {
                 cdNutriments.fiber_100g = fiber_100g
             }
@@ -170,7 +176,7 @@ class StorageManager: StorageManagerProtocol {
             if let energy_kcal_100g = nutriments.energy_kcal_100g {
                 cdNutriments.energy_kcal_100g = Int16(energy_kcal_100g)
             }
-
+            
             cdProduct.nutriments = cdNutriments
         }
         
@@ -182,15 +188,15 @@ class StorageManager: StorageManagerProtocol {
            let adjustments = ecoScore.adjustments
         {
             cdEcoScore = CDEcoScore(context: context)
-
+            
             var cdAdjustments: CDAdjustments
-
+            
             cdEcoScore.score = Int16(score)
-
+            
             if let score_fr = ecoScore.score_fr {
                 cdEcoScore.score_fr = Int16(score_fr)
             }
-
+            
             switch grade {
             case .a:
                 cdEcoScore.grade = 1
@@ -203,7 +209,7 @@ class StorageManager: StorageManagerProtocol {
             case .e:
                 cdEcoScore.grade = 5
             }
-
+            
             if let grade_fr = ecoScore.grade_fr {
                 switch grade_fr {
                 case .a:
@@ -218,11 +224,11 @@ class StorageManager: StorageManagerProtocol {
                     cdEcoScore.grade = 5
                 }
             }
-
+            
             let cdAgribalyse = CDAgribalyse(context: context)
             cdAgribalyse.score = Int16(agribalyseScore)
             cdEcoScore.agribalyse = cdAgribalyse
-
+            
             cdAdjustments = CDAdjustments(context: context)
             
             var cdProductionSystem: CDProductionSystem
@@ -258,27 +264,27 @@ class StorageManager: StorageManagerProtocol {
                 }
                 
                 cdAdjustments.origins_of_ingredients = cdOriginsOfIngredients
-
+                
                 if let value = adjustments.packaging?.value {
                     cdPackaging = CDPackaging(context: context)
                     cdPackaging.value = Int16(value)
-
+                    
                     cdAdjustments.packaging = cdPackaging
                 }
-
+                
                 if let value = adjustments.threatened_species?.value {
                     cdThreatenedSpecies = CDThreatnenedSpecies(context: context)
                     cdThreatenedSpecies.value = Int16(value)
-
+                    
                     cdAdjustments.threatened_species = cdThreatenedSpecies
                 }
-
+                
                 cdEcoScore.adjustments = cdAdjustments
             }
-
+            
             cdProduct.ecoScore = cdEcoScore
         }
-
+        
         if let nutriScore = nuProduct.nutriScore,
            let score = nutriScore.score,
            let negative_points = nutriScore.negative_points,
@@ -286,11 +292,11 @@ class StorageManager: StorageManagerProtocol {
            let grade = nutriScore.grade
         {
             cdNutriScore = CDNutriScore(context: context)
-
+            
             cdNutriScore.score = Int16(score)
             cdNutriScore.negative_points = Int16(negative_points)
             cdNutriScore.positive_points = Int16(positive_points)
-
+            
             switch grade {
             case .a:
                 cdNutriScore.grade = 1
@@ -303,27 +309,14 @@ class StorageManager: StorageManagerProtocol {
             case .e:
                 cdNutriScore.grade = 5
             }
-
+            
             cdProduct.nutriScore = cdNutriScore
         }
         
-//        saveContext()
         saveInHistory(cdProduct: cdProduct)
     }
     
-//    TODO: Récupérer l’historique au lieu de récupérer tous les produits
-    func getAllProducts() -> [NUProduct] {
-        let request: NSFetchRequest<CDProduct> = CDProduct.fetchRequest()
-        
-        guard let cdProducts = try? context.fetch(request),
-              !cdProducts.isEmpty else {
-                  return []
-              }
-        
-        return cdProducts.compactMap { NUProduct(from: $0) }
-    }
-    
-    func saveInHistory(cdProduct: CDProduct) {
+    private func saveInHistory(cdProduct: CDProduct) {
         let cdHistory: CDHistory
         
         let request: NSFetchRequest<CDHistory> = CDHistory.fetchRequest()
@@ -351,27 +344,179 @@ class StorageManager: StorageManagerProtocol {
         let minRangeToDelete = productsArray.count < maxHistory - 1  ? productsArray.count : maxHistory - 1
         let productsToDelete = productsArray[minRangeToDelete...]
         
+        // TODO: Ne pas supprimer totalement les produits favoris mais ne les supprimer que de l’historique
         productsToDelete.forEach { cdProduct in
             if let id = cdProduct.id {
-                deleteProduct(with: id)
+                deleteProduct(withID: id)
             }
         }
         
         saveContext()
     }
+    
+    func saveInFavorites(product nuProduct: NUProduct) {
+        guard let cdProduct = getProduct(withID: nuProduct.id) else {
+            return
+        }
         
-    private func deleteProduct(with id: String) {
+        //        let cdFavorites: CDFavorites
+        //
+        //        let request: NSFetchRequest<CDFavorites> = CDFavorites.fetchRequest()
+        //
+        //        if let cdFavoritesValue = try? context.fetch(request),
+        //           !cdFavoritesValue.isEmpty {
+        //            cdFavorites = cdFavoritesValue[0]
+        //        } else {
+        //            cdFavorites = CDFavorites(context: context)
+        //        }
+        //
+        //        guard let cdFavoritesProducts = cdFavorites.products,
+        //              let productsArray = Array(cdFavoritesProducts) as? [CDProduct],
+        //              !productsArray.isEmpty else {
+        //                  cdFavorites.products = [cdProduct]
+        //
+        //                  saveContext()
+        //
+        //                  return
+        //              }
+        
+        //        cdFavorites.products = NSOrderedSet(array: [cdProduct] + productsArray)
+        //
+        //        print("StorageManager ~> saveInFavorites ~> cdFavorites ~>", cdFavorites)
+        //
+        //        saveContext()
+        
+        
+        let cdFavorites = getCDFavorites() ?? CDFavorites(context: context)
+        
+        guard let cdFavoritesProducts = cdFavorites.products,
+              let productsArray = Array(cdFavoritesProducts) as? [CDProduct],
+              !productsArray.isEmpty
+        else {
+            cdFavorites.products = [cdProduct]
+            saveContext()
+            return
+        }
+        
+        cdFavorites.products = NSOrderedSet(array: [cdProduct] + productsArray)
+        saveContext()
+    }
+    
+    
+    // MARK: Read operations
+    
+    private func getProduct(withID id: String) -> CDProduct? {
+        let request: NSFetchRequest<CDProduct> = CDProduct.fetchRequest()
+        request.fetchLimit = 1
+        
+        guard let cdProducts = try? context.fetch(request),
+              let cdProduct = cdProducts.first
+        else {
+            return nil
+        }
+        
+        return cdProduct
+    }
+    
+    func getHistoryProducts() -> [NUProduct] {
+        let request: NSFetchRequest<CDHistory> = CDHistory.fetchRequest()
+        
+        guard let cdHistory = try? context.fetch(request),
+              !cdHistory.isEmpty,
+              let cdProducts = cdHistory[0].products
+        else { return [] }
+        
+        return cdProducts.compactMap { cdProduct -> NUProduct?  in
+            guard let nuProduct = NUProduct(from: cdProduct as! CDProduct) else {
+                return nil
+            }
+            return nuProduct
+        }
+    }
+    
+    func getFavoritesProducts() -> [NUProduct] {
+        let request: NSFetchRequest<CDFavorites> = CDFavorites.fetchRequest()
+        
+        guard let cdFavorites = try? context.fetch(request),
+              !cdFavorites.isEmpty,
+              let cdProducts = cdFavorites[0].products
+        else { return [] }
+        
+        return cdProducts.compactMap { cdProduct -> NUProduct?  in
+            guard let nuProduct = NUProduct(from: cdProduct as! CDProduct) else {
+                return nil
+            }
+            return nuProduct
+        }
+    }
+    
+    func productIsAFavorite(_ product: NUProduct) -> Bool {
+        getFavoritesProducts().contains { $0.id == product.id }
+    }
+    
+    private func getCDFavorites() -> CDFavorites? {
+        let request: NSFetchRequest<CDFavorites> = CDFavorites.fetchRequest()
+        
+        if let cdFavorites = try? context.fetch(request),
+           !cdFavorites.isEmpty
+        {
+            return cdFavorites[0]
+        } else {
+            return nil
+        }
+    }
+    
+    private func getCDHistoryProducts() -> [CDProduct]? {
+        let request: NSFetchRequest<CDHistory> = CDHistory.fetchRequest()
+        
+        if let cdHistories = try? context.fetch(request),
+           !cdHistories.isEmpty,
+           let cdProducts = cdHistories[0].products,
+           let cdProductsArray = Array(cdProducts) as? [CDProduct]
+        {
+            return cdProductsArray
+        } else {
+            return nil
+        }
+    }
+    
+    
+    // MARK: Delete operations
+    
+    private func deleteProduct(withID id: String) {
         let request: NSFetchRequest<CDProduct> = CDProduct.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id)
         
         guard let cdProducts = try? context.fetch(request),
-              !cdProducts.isEmpty else {
-                  return
-              }
+              !cdProducts.isEmpty
+        else { return }
         
         cdProducts.forEach { cdProduct in
             context.delete(cdProduct)
         }
+    }
+    
+    func removeProductFromFavorites(_ nuProduct: NUProduct) {
+        let productID = nuProduct.id
+        
+        guard let cdProduct = getProduct(withID: productID)
+        else { return }
+        
+        guard let cdFavorites = getCDFavorites(),
+              let cdFavoritesProducts = cdFavorites.products,
+              let cdFavoritesProductsArray = Array(cdFavoritesProducts) as? [CDProduct],
+              !cdFavoritesProductsArray.isEmpty
+        else { return }
+        
+        if let cdHistoryProducts = getCDHistoryProducts(),
+           cdHistoryProducts.contains(where: { $0 == cdProduct})
+        {
+            cdFavorites.products = NSOrderedSet(array: cdFavoritesProductsArray.filter { $0 != cdProduct })
+        } else {
+            deleteProduct(withID: productID)
+        }
+        
+        saveContext()
     }
 }
 

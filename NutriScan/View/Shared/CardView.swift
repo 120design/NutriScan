@@ -24,7 +24,7 @@ struct CardView: View {
             .fill(cardType.backgroundColor)
         )
         .nuShadowModifier(color: cardType.backgroundColor)
-        .padding([.top, .horizontal])
+        .padding(.horizontal)
     }
     
     enum CardType: Equatable {

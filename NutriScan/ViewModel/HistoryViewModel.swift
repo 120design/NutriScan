@@ -16,7 +16,23 @@ class HistoryViewModel: ObservableObject {
         self.storageManager = storageManager
     }
     
-    func getAllProducts() {
-        products = storageManager.getAllProducts()
+    func getHistoryProducts() {
+        products = storageManager.getHistoryProducts()
+    }
+    
+    func addProductToFavorites(_ product: NUProduct) {
+        storageManager.saveInFavorites(product: product)
+        print("HistoryViewModel ~> addProductToFavorites ~> productIsAFavorite ~>", productIsAFavorite(product))
+        objectWillChange.send()
+    }
+    
+    func removeProductFromFavorites(_ product: NUProduct) {
+        storageManager.removeProductFromFavorites(product)
+        print("HistoryViewModel ~> removeProductFromFavorites ~> productIsAFavorite ~>", productIsAFavorite(product))
+        objectWillChange.send()
+    }
+    
+    func productIsAFavorite(_ product: NUProduct) -> Bool {
+        storageManager.productIsAFavorite(product)
     }
 }

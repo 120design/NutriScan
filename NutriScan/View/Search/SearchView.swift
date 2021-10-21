@@ -72,7 +72,7 @@ struct SearchView: View {
                     
                     Text("ou")
                         .padding(.top, -5.0)
-                        .padding(.bottom, -5.0)
+                        .padding(.bottom, -0.5)
                         .modifier(NUStrongLabelModifier())
                     
                     Button(action: {
@@ -96,7 +96,8 @@ struct SearchView: View {
                             ? 300
                             : 0
                     )
-                    .animation(.spring())
+                    .padding(.bottom)
+                    .animation(.spring(), value: searchViewModel.showCardDetail)
                     
                     NavigationLink(
                         destination: SearchResultView(),

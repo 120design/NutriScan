@@ -53,7 +53,7 @@ struct SearchResultView: View {
                             ? 300
                             : 0
                     )
-                    .animation(.spring())
+                    .animation(.spring(), value: showCardDetail)
 
                 } else {
                     VStack {

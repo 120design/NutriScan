@@ -17,13 +17,15 @@ struct HistoryView: View {
         NavigationView {
             ZStack {
                 NUBackgroundView()
-                ScrollView {
+                List {
                     HStack {
                         Text("Consultez ici l’historique de vos cinq dernières recherches de produits.")
                     }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                     .modifier(NUTextBodyModifier())
                     .frame(maxWidth: .infinity)
-                    .padding([.top, .leading, .trailing])
+                    .padding([.top])
                     
                     ForEach(historyViewModel.products) { product in
                         Button (action: {
@@ -43,16 +45,41 @@ struct HistoryView: View {
                             x: 0,
                             y: showCardDetail
                                 ? 300
-                                : 0
+                            : 0
                         )
-                        .animation(.spring())
+                        .animation(.spring(), value: showCardDetail)
+                        .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+                        .swipeActions {
+                            Button {
+                                historyViewModel.productIsAFavorite(product)
+                                ? historyViewModel.removeProductFromFavorites(product)
+                                : historyViewModel.addProductToFavorites(product)
+                            } label: {
+                                Label(
+                                    historyViewModel.productIsAFavorite(product)
+                                    ? "Retirer des favoris"
+                                    : "Ajouter aux favoris",
+                                    systemImage: historyViewModel.productIsAFavorite(product)
+                                    ? "heart.slash.fill"
+                                    : "arrow.down.heart.fill"
+                                )
+                            }
+                            .tint(
+                                historyViewModel.productIsAFavorite(product)
+                                ? .nuSecondaryColor
+                                : .nuTertiaryColor
+                            )
+                        }
                     }
-                }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+               }
+                .listStyle(.plain)
             }
             .navigationTitle("Historique")
             .foregroundColor(.nuSecondaryColor)
             .onAppear {
-                historyViewModel.getAllProducts()
+                historyViewModel.getHistoryProducts()
             }
             .fullScreenCover(isPresented: $showCardDetail) {
                 productToShow = nil

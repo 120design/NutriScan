@@ -69,7 +69,7 @@ struct EANView: View {
                         )
                 )
                 .padding(.bottom, 5)
-                .animation(nil)
+//                .animation(nil)
             HStack {
                 Button(action: {
                     searchViewModel.eanCode = ""
