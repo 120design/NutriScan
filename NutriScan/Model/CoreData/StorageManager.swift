@@ -15,6 +15,7 @@ protocol StorageManagerProtocol {
     func productIsAFavorite(_ product: NUProduct) -> Bool
     func saveInFavorites(product nuProduct: NUProduct)
     func removeProductFromFavorites(_ nuProduct: NUProduct)
+    func moveFavoritesProduct(from: IndexSet, to: Int)
 }
 
 enum StorageType {
@@ -161,7 +162,6 @@ class StorageManager: StorageManagerProtocol {
                 cdNutriments.carbohydrates_100g = carbohydrates_100g
             }
             if let proteins_100g = nutriments.proteins_100g {
-                print("StorageManager ~> create ~> nuProduct.nutriments.proteins_100g", proteins_100g)
                 cdNutriments.proteins_100g = proteins_100g
             }
             if let fat_100g = nutriments.fat_100g {
@@ -397,7 +397,7 @@ class StorageManager: StorageManagerProtocol {
             saveContext()
             return
         }
-        
+
         cdFavorites.products = NSOrderedSet(array: [cdProduct] + productsArray)
         saveContext()
     }
@@ -407,6 +407,7 @@ class StorageManager: StorageManagerProtocol {
     
     private func getProduct(withID id: String) -> CDProduct? {
         let request: NSFetchRequest<CDProduct> = CDProduct.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id)
         request.fetchLimit = 1
         
         guard let cdProducts = try? context.fetch(request),
@@ -478,6 +479,28 @@ class StorageManager: StorageManagerProtocol {
         } else {
             return nil
         }
+    }
+    
+    // MARK: Update operations
+    
+    func moveFavoritesProduct(from: IndexSet, to: Int) {
+        guard let cdFavorites = getCDFavorites()
+//                ,
+//            let cdFavoritesProducts = cdFavorites.products?.mutableCopy() as? NSMutableOrderedSet
+        else {
+            return
+        }
+
+        let cdFavoritesProducts = cdFavorites.mutableOrderedSetValue(forKey: "products")
+        let fromInt = from[from.startIndex]
+        
+        fromInt >= to
+        ? cdFavoritesProducts.moveObjects(at: from, to: to)
+        : cdFavoritesProducts.moveObjects(at: from, to: to - 1)
+        
+        cdFavorites.products = cdFavoritesProducts
+        
+        saveContext()
     }
     
     

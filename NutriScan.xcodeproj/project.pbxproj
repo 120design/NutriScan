@@ -34,6 +34,7 @@
 		2FD776EF26C5A5A0003B03E2 /* NUModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776EE26C5A5A0003B03E2 /* NUModifiers.swift */; };
 		2FDCC196272089A2002AED45 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDCC195272089A2002AED45 /* HistoryViewModel.swift */; };
 		2FDCC198272289C8002AED45 /* AlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDCC197272289C8002AED45 /* AlertViewModel.swift */; };
+		2FDCC19B2722E0B7002AED45 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDCC19A2722E0B7002AED45 /* FavoritesView.swift */; };
 		2FE3E22A2590D59A00CF5AB0 /* NutriScanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE3E2292590D59A00CF5AB0 /* NutriScanApp.swift */; };
 		2FE3E22E2590D59D00CF5AB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE3E22D2590D59D00CF5AB0 /* Assets.xcassets */; };
 		2FE3E2312590D59D00CF5AB0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE3E2302590D59D00CF5AB0 /* Preview Assets.xcassets */; };
@@ -78,6 +79,7 @@
 		2FD776EE26C5A5A0003B03E2 /* NUModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUModifiers.swift; sourceTree = "<group>"; };
 		2FDCC195272089A2002AED45 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		2FDCC197272289C8002AED45 /* AlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewModel.swift; sourceTree = "<group>"; };
+		2FDCC19A2722E0B7002AED45 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		2FE3E2262590D59A00CF5AB0 /* NutriScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NutriScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FE3E2292590D59A00CF5AB0 /* NutriScanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutriScanApp.swift; sourceTree = "<group>"; };
 		2FE3E22D2590D59D00CF5AB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -137,8 +139,8 @@
 			children = (
 				2F55895026D42A5300CEA23E /* SearchViewModel.swift */,
 				2FDCC195272089A2002AED45 /* HistoryViewModel.swift */,
-				2FDCC197272289C8002AED45 /* AlertViewModel.swift */,
 				2F6A186B2712202A009A0BE8 /* FavoritesViewModel.swift */,
+				2FDCC197272289C8002AED45 /* AlertViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -168,6 +170,14 @@
 				2FD776E526C46AC8003B03E2 /* OperatorMono-MediumItalic.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		2FDCC1992722E08A002AED45 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				2FDCC19A2722E0B7002AED45 /* FavoritesView.swift */,
+			);
+			path = Favorites;
 			sourceTree = "<group>";
 		};
 		2FE3E21D2590D59A00CF5AB0 = {
@@ -215,6 +225,7 @@
 				2FEA7DAF26C7DADF0089AAA8 /* Shared */,
 				2F09F8AC25960E54005F97FA /* Search */,
 				2FE3E23A2590D5FC00CF5AB0 /* History */,
+				2FDCC1992722E08A002AED45 /* Favorites */,
 				2FD776DE26C465C5003B03E2 /* ViewHelpers */,
 			);
 			path = View;
@@ -409,6 +420,7 @@
 				2FDCC198272289C8002AED45 /* AlertViewModel.swift in Sources */,
 				2F8F347926CE5C68007C4634 /* NUHaptics.swift in Sources */,
 				2FFC029726E3EBEB00334FA5 /* ProductNutrimentsRingsView.swift in Sources */,
+				2FDCC19B2722E0B7002AED45 /* FavoritesView.swift in Sources */,
 				2FE94C132599152900595F71 /* NutriScore.swift in Sources */,
 				2F8F347B26CEB083007C4634 /* ScanView.swift in Sources */,
 				2F50B67926CAF19A0064B060 /* CardHeaderView.swift in Sources */,

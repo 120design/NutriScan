@@ -19,6 +19,10 @@ struct NUTabView: View {
                 .tabItem {
                     Label("Historique", systemImage: "gobackward")
                 }
+            FavoritesView()
+                .tabItem {
+                    Label("Favoris", systemImage: "bookmark")
+                }
         }
         .accentColor(.nuTertiaryColor)
         .onAppear() {
