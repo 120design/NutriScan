@@ -33,6 +33,7 @@
 		2FD776EC26C46AC8003B03E2 /* OperatorMono-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FD776E726C46AC8003B03E2 /* OperatorMono-BoldItalic.otf */; };
 		2FD776EF26C5A5A0003B03E2 /* NUModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776EE26C5A5A0003B03E2 /* NUModifiers.swift */; };
 		2FDCC196272089A2002AED45 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDCC195272089A2002AED45 /* HistoryViewModel.swift */; };
+		2FDCC198272289C8002AED45 /* AlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDCC197272289C8002AED45 /* AlertViewModel.swift */; };
 		2FE3E22A2590D59A00CF5AB0 /* NutriScanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE3E2292590D59A00CF5AB0 /* NutriScanApp.swift */; };
 		2FE3E22E2590D59D00CF5AB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE3E22D2590D59D00CF5AB0 /* Assets.xcassets */; };
 		2FE3E2312590D59D00CF5AB0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FE3E2302590D59D00CF5AB0 /* Preview Assets.xcassets */; };
@@ -76,6 +77,7 @@
 		2FD776E726C46AC8003B03E2 /* OperatorMono-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-BoldItalic.otf"; sourceTree = "<group>"; };
 		2FD776EE26C5A5A0003B03E2 /* NUModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUModifiers.swift; sourceTree = "<group>"; };
 		2FDCC195272089A2002AED45 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
+		2FDCC197272289C8002AED45 /* AlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewModel.swift; sourceTree = "<group>"; };
 		2FE3E2262590D59A00CF5AB0 /* NutriScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NutriScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FE3E2292590D59A00CF5AB0 /* NutriScanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutriScanApp.swift; sourceTree = "<group>"; };
 		2FE3E22D2590D59D00CF5AB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			children = (
 				2F55895026D42A5300CEA23E /* SearchViewModel.swift */,
 				2FDCC195272089A2002AED45 /* HistoryViewModel.swift */,
+				2FDCC197272289C8002AED45 /* AlertViewModel.swift */,
 				2F6A186B2712202A009A0BE8 /* FavoritesViewModel.swift */,
 			);
 			path = ViewModel;
@@ -403,6 +406,7 @@
 				2FE3E22A2590D59A00CF5AB0 /* NutriScanApp.swift in Sources */,
 				2FD776E226C46894003B03E2 /* NUNavigationBar.swift in Sources */,
 				2FE94C0B259913A400595F71 /* OFFData.swift in Sources */,
+				2FDCC198272289C8002AED45 /* AlertViewModel.swift in Sources */,
 				2F8F347926CE5C68007C4634 /* NUHaptics.swift in Sources */,
 				2FFC029726E3EBEB00334FA5 /* ProductNutrimentsRingsView.swift in Sources */,
 				2FE94C132599152900595F71 /* NutriScore.swift in Sources */,

@@ -9,9 +9,28 @@ import SwiftUI
 
 struct HistoryView: View {
     @StateObject private var historyViewModel = HistoryViewModel()
+    @ObservedObject private var alertViewModel = AlertViewModel()
     
     @State private var showCardDetail = false
     @State private var productToShow: NUProduct? = nil
+    
+    private func handleFavorite(for product: NUProduct) {
+        let productIsAFavorite = historyViewModel.productIsAFavorite(product)
+        
+        productIsAFavorite
+        ? historyViewModel.removeProductFromFavorites(product)
+        : historyViewModel.addProductToFavorites(product)
+        
+        alertViewModel.title = productIsAFavorite
+        ? "Retrait du produit des favoris"
+        : "Ajout du produit aux favoris"
+        
+        alertViewModel.message = productIsAFavorite
+        ? "”\(product.name)” a été supprimé des favoris."
+        : "”\(product.name)” a été ajouté aux favoris."
+        
+        alertViewModel.isPresented = true
+    }
     
     var body: some View {
         NavigationView {
@@ -51,9 +70,7 @@ struct HistoryView: View {
                         .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
                         .swipeActions {
                             Button {
-                                historyViewModel.productIsAFavorite(product)
-                                ? historyViewModel.removeProductFromFavorites(product)
-                                : historyViewModel.addProductToFavorites(product)
+                                handleFavorite(for: product)
                             } label: {
                                 Label(
                                     historyViewModel.productIsAFavorite(product)
@@ -80,6 +97,9 @@ struct HistoryView: View {
             .foregroundColor(.nuSecondaryColor)
             .onAppear {
                 historyViewModel.getHistoryProducts()
+            }
+            .alert(isPresented: $alertViewModel.isPresented) {
+                Alert(viewModel: alertViewModel)
             }
             .fullScreenCover(isPresented: $showCardDetail) {
                 productToShow = nil
