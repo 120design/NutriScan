@@ -123,6 +123,8 @@ class StorageManager: StorageManagerProtocol {
     // MARK: Create operations
     
     func create(product nuProduct: NUProduct) {
+        let productIsAFavorite = getFavoritesProducts().contains{ $0.id == nuProduct.id }
+        
         deleteProduct(withID: nuProduct.id)
         
         let cdProduct = CDProduct(context: context)
@@ -313,10 +315,10 @@ class StorageManager: StorageManagerProtocol {
             cdProduct.nutriScore = cdNutriScore
         }
         
-        saveInHistory(cdProduct: cdProduct)
+        saveInHistory(cdProduct: cdProduct, productIsAFavorite: productIsAFavorite)
     }
     
-    private func saveInHistory(cdProduct: CDProduct) {
+    private func saveInHistory(cdProduct: CDProduct, productIsAFavorite: Bool) {
         let cdHistory: CDHistory
 
         let request: NSFetchRequest<CDHistory> = CDHistory.fetchRequest()
@@ -350,7 +352,7 @@ class StorageManager: StorageManagerProtocol {
         
         let favoritesProducts = getFavoritesProducts()
         let newCDHistoryProducts = cdHistory.mutableOrderedSetValue(forKey: "products")
-        
+                
         productsToDelete.forEach { cdProduct in
             guard let id = cdProduct.id else { return }
             
@@ -362,8 +364,22 @@ class StorageManager: StorageManagerProtocol {
             
             newCDHistoryProducts.remove(cdProduct)
         }
-        
         cdHistory.products = newCDHistoryProducts
+        
+        let cdFavorites = getCDFavorites() ?? CDFavorites(context: context)
+        if productIsAFavorite {
+            guard let cdFavoritesProducts = cdFavorites.products,
+                  let productsArray = Array(cdFavoritesProducts) as? [CDProduct],
+                  !productsArray.isEmpty
+            else {
+                cdFavorites.products = [cdProduct]
+                saveContext()
+                return
+            }
+
+            cdFavorites.products = NSOrderedSet(array: [cdProduct] + productsArray)
+        }
+        
         saveContext()
     }
     
@@ -371,34 +387,6 @@ class StorageManager: StorageManagerProtocol {
         guard let cdProduct = getProduct(withID: nuProduct.id) else {
             return
         }
-        
-        //        let cdFavorites: CDFavorites
-        //
-        //        let request: NSFetchRequest<CDFavorites> = CDFavorites.fetchRequest()
-        //
-        //        if let cdFavoritesValue = try? context.fetch(request),
-        //           !cdFavoritesValue.isEmpty {
-        //            cdFavorites = cdFavoritesValue[0]
-        //        } else {
-        //            cdFavorites = CDFavorites(context: context)
-        //        }
-        //
-        //        guard let cdFavoritesProducts = cdFavorites.products,
-        //              let productsArray = Array(cdFavoritesProducts) as? [CDProduct],
-        //              !productsArray.isEmpty else {
-        //                  cdFavorites.products = [cdProduct]
-        //
-        //                  saveContext()
-        //
-        //                  return
-        //              }
-        
-        //        cdFavorites.products = NSOrderedSet(array: [cdProduct] + productsArray)
-        //
-        //        print("StorageManager ~> saveInFavorites ~> cdFavorites ~>", cdFavorites)
-        //
-        //        saveContext()
-        
         
         let cdFavorites = getCDFavorites() ?? CDFavorites(context: context)
         
