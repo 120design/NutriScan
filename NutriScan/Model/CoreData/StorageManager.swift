@@ -318,39 +318,52 @@ class StorageManager: StorageManagerProtocol {
     
     private func saveInHistory(cdProduct: CDProduct) {
         let cdHistory: CDHistory
-        
+
         let request: NSFetchRequest<CDHistory> = CDHistory.fetchRequest()
-        
+
         if let cdHistories = try? context.fetch(request),
            !cdHistories.isEmpty  {
             cdHistory = cdHistories[0]
         } else {
             cdHistory = CDHistory(context: context)
         }
-        
+
         guard let cdHistoryProducts = cdHistory.products,
               let productsArray = Array(cdHistoryProducts) as? [CDProduct],
               !productsArray.isEmpty  else {
                   cdHistory.products = [cdProduct]
-                  
+
                   saveContext()
-                  
+
                   return
               }
         
-        let maxRangeToAdd = productsArray.count < maxHistory - 1  ? productsArray.count - 1 : maxHistory - 2
+        let maxRangeToAdd = productsArray.count < maxHistory - 1
+        ? productsArray.count - 1
+        : maxHistory - 2
         cdHistory.products = NSOrderedSet(array: [cdProduct] + productsArray[0...maxRangeToAdd])
         
-        let minRangeToDelete = productsArray.count < maxHistory - 1  ? productsArray.count : maxHistory - 1
+        let minRangeToDelete = productsArray.count < maxHistory - 1
+        ? productsArray.count
+        : maxHistory - 1
         let productsToDelete = productsArray[minRangeToDelete...]
         
-        // TODO: Ne pas supprimer totalement les produits favoris mais ne les supprimer que de l’historique
+        let favoritesProducts = getFavoritesProducts()
+        let newCDHistoryProducts = cdHistory.mutableOrderedSetValue(forKey: "products")
+        
         productsToDelete.forEach { cdProduct in
-            if let id = cdProduct.id {
+            guard let id = cdProduct.id else { return }
+            
+            guard favoritesProducts.contains(where: { $0.id == id })
+            else {
                 deleteProduct(withID: id)
+                return
             }
+            
+            newCDHistoryProducts.remove(cdProduct)
         }
         
+        cdHistory.products = newCDHistoryProducts
         saveContext()
     }
     

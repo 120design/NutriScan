@@ -43,7 +43,7 @@ struct FavoritesView: View {
                 NUBackgroundView()
                 List {
                     HStack {
-                        Text("Ajoutez des produits depuis l’historique de vos recherches.")
+                        Text("Ajoutez des produits depuis *l’historique* de vos recherches.")
                         Spacer()
                     }
                     .modifier(NUTextBodyModifier())
