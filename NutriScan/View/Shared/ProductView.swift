@@ -17,11 +17,11 @@ struct ProductView: View {
             if let nutriments = product.nutriments {
                 ProductNutrimentsInformationsView(nutriments: nutriments)
                 
-                if let energy_kj_100g = nutriments.energy_kj_100g,
-                   let energy_kcal_100g = nutriments.energy_kcal_100g {
+                if nutriments.energy_kj_100g != nil
+                    || nutriments.energy_kcal_100g != nil {
                     ProductEnergyInformationsView(
-                        energy_kj_100g: energy_kj_100g,
-                        energy_kcal_100g: energy_kcal_100g
+                        energy_kj_100g: nutriments.energy_kj_100g,
+                        energy_kcal_100g: nutriments.energy_kcal_100g
                     )
                 }
             }
@@ -323,8 +323,8 @@ struct ProductEcoScoreInformationsView: View {
 }
 
 struct ProductEnergyInformationsView: View {
-    let energy_kj_100g: Int
-    let energy_kcal_100g: Int
+    let energy_kj_100g: Int?
+    let energy_kcal_100g: Int?
     
     var body: some View {
         ProductCardInformationsView(
@@ -337,17 +337,21 @@ struct ProductEnergyInformationsView: View {
                 .foregroundColor(.nuSecondaryColor),
             
             rightContent: Group {
-                ProductInformationRowView(
-                    title: "Kilojoules",
-                    value: "\(energy_kj_100g) kJ",
-                    color: .nuSecondaryColor
-                )
+                if let energy_kj_100g = energy_kj_100g {
+                    ProductInformationRowView(
+                        title: "Kilojoules",
+                        value: "\(energy_kj_100g) kJ",
+                        color: .nuSecondaryColor
+                    )
+                }
                 
-                ProductInformationRowView(
-                    title: "Kilocalories",
-                    value: "\(energy_kcal_100g) kcal",
-                    color: .nuTertiaryColor
-                )
+                if let energy_kcal_100g = energy_kcal_100g {
+                    ProductInformationRowView(
+                        title: "Kilocalories",
+                        value: "\(energy_kcal_100g) kcal",
+                        color: .nuTertiaryColor
+                    )
+                }
             },
             
             bottomContent: nil
