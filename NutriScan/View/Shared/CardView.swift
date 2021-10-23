@@ -9,6 +9,39 @@ import SwiftUI
 import Kingfisher
 
 struct CardView: View {
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
+
+    enum CardType: Equatable {
+        case scanButton,
+             eanButton,
+             product(NUProduct),
+             favoriteProduct(NUProduct)
+        
+        var backgroundColor: Color {
+            switch self {
+            case .scanButton,
+                 .eanButton:
+                return .nuSecondaryColor
+            case .product(_):
+                return .nuQuaternaryColor
+            case .favoriteProduct(_):
+                return .nuTertiaryColor
+            }
+        }
+    }
+    
+//    var backgroundColor: Color {
+//        switch cardType {
+//        case .scanButton,
+//             .eanButton:
+//            return .nuSecondaryColor
+//        case .product(let product):
+//            return favoritesViewModel.productIsAFavorite(product)
+//            ? .nuTertiaryColor
+//            : .nuQuaternaryColor
+//        }
+//    }
+
     let cardType: CardType
     
     var body: some View {
@@ -25,22 +58,6 @@ struct CardView: View {
         )
         .nuShadowModifier(color: cardType.backgroundColor)
         .padding(.horizontal)
-    }
-    
-    enum CardType: Equatable {
-        case scanButton,
-             eanButton,
-             product(NUProduct)
-        
-        var backgroundColor: Color {
-            switch self {
-            case .scanButton,
-                 .eanButton:
-                return .nuSecondaryColor
-            case .product(_):
-                return .nuQuaternaryColor
-            }
-        }
     }
 }
 

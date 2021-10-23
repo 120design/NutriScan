@@ -10,6 +10,7 @@
 		2F09F8B1259612FA005F97FA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F09F8B0259612FA005F97FA /* SearchView.swift */; };
 		2F09F8B525961A93005F97FA /* CarBode in Frameworks */ = {isa = PBXBuildFile; productRef = 2F09F8B425961A93005F97FA /* CarBode */; };
 		2F09F8CF259677FD005F97FA /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F09F8CE259677FD005F97FA /* SearchResultView.swift */; };
+		2F0C761F27245CAC00564D21 /* ProductsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0C761E27245CAC00564D21 /* ProductsListView.swift */; };
 		2F1EA64F270C3FED004354C4 /* NutriScan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2F1EA64D270C3FED004354C4 /* NutriScan.xcdatamodeld */; };
 		2F471839270CDB6D006BDF7E /* CDGrades.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F471838270CDB6D006BDF7E /* CDGrades.swift */; };
 		2F47183B270DDE44006BDF7E /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F47183A270DDE44006BDF7E /* StorageManager.swift */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		2F09F8B0259612FA005F97FA /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		2F09F8CE259677FD005F97FA /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
+		2F0C761E27245CAC00564D21 /* ProductsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsListView.swift; sourceTree = "<group>"; };
 		2F1EA64E270C3FED004354C4 /* NutriScan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NutriScan.xcdatamodel; sourceTree = "<group>"; };
 		2F471838270CDB6D006BDF7E /* CDGrades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDGrades.swift; sourceTree = "<group>"; };
 		2F47183A270DDE44006BDF7E /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				2F8F348B26D17256007C4634 /* ProductView.swift */,
 				2FFC029426E3DE7C00334FA5 /* RingView.swift */,
 				2FFC029626E3EBEB00334FA5 /* ProductNutrimentsRingsView.swift */,
+				2F0C761E27245CAC00564D21 /* ProductsListView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				2FD776E026C46628003B03E2 /* NUColors.swift in Sources */,
 				2F09F8B1259612FA005F97FA /* SearchView.swift in Sources */,
 				2F55894F26D41AD000CEA23E /* NUTabView.swift in Sources */,
+				2F0C761F27245CAC00564D21 /* ProductsListView.swift in Sources */,
 				2F8F347F26CEB444007C4634 /* NUButtonStyle.swift in Sources */,
 				2FFC029926E64F2E00334FA5 /* Nutriments.swift in Sources */,
 				2F471839270CDB6D006BDF7E /* CDGrades.swift in Sources */,

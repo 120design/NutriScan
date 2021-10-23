@@ -37,7 +37,8 @@ struct CardHeaderView: View {
         case .eanButton:
             Image(systemName: "textformat.123")
                 .nuCardHeaderImageModifier()
-        case .product(let product):
+        case .product(let product),
+                .favoriteProduct(let product):
             KFImage.url(URL(string: product.imageURL ?? ""))
                 .nuCardHeaderImageModifier()
         }
@@ -50,7 +51,8 @@ struct CardHeaderView: View {
             Text("Scanner un code à\u{00a0}barres")
         case .eanButton:
             Text("Taper un code EAN13 ou EAN8")
-        case .product(let product):
+        case .product(let product),
+                .favoriteProduct(let product):
             Text(product.name)
                 .lineLimit(3)
         }

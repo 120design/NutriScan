@@ -45,4 +45,10 @@ class FavoritesViewModel: ObservableObject {
     func productIsAFavorite(_ product: NUProduct) -> Bool {
         products.contains { $0.id == product.id }
     }
+    
+    func getCardType(for product: NUProduct) -> CardView.CardType {
+        productIsAFavorite(product)
+        ? .favoriteProduct(product)
+        : .product(product)
+    }
 }

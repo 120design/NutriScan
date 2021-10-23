@@ -30,13 +30,6 @@ struct FavoritesView: View {
         alertViewModel.isPresented = true
     }
     
-    private func moveFavorite(fromIndex: IndexSet?, toIndex: Int?) {
-        print("MOVE !")
-    }
-    private func removeFavorite(for set: IndexSet) {
-        
-    }
-    
     var body: some View {
         NavigationView {
             ZStack {
@@ -57,7 +50,7 @@ struct FavoritesView: View {
                     ForEach(favoritesViewModel.products) { product in
                         Button (action: { }, label: {
                             CardView(
-                                cardType: .product(product)
+                                cardType: favoritesViewModel.getCardType(for: product)
                             )
                         })
                             .highPriorityGesture(
@@ -128,7 +121,7 @@ struct FavoritesView: View {
                 if let product = productToShow {
                     CardDetailView(
                         showDetail: $showCardDetail,
-                        cardType: .product(product)
+                        cardType: favoritesViewModel.getCardType(for: product)
                     )
                         .background(NUBackgroundClearView())
                 }

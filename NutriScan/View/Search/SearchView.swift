@@ -98,14 +98,15 @@ struct SearchView: View {
                     )
                     .padding(.bottom)
                     .animation(.spring(), value: searchViewModel.showCardDetail)
-                    
-                    NavigationLink(
-                        destination: SearchResultView(),
-                        isActive: $searchViewModel.showResult,
-                        label: {
-                            EmptyView()
-                        }
-                    )
+                    if let foundProduct = searchViewModel.foundProduct {
+                        NavigationLink(
+                            destination: SearchResultView(products: [foundProduct]),
+                            isActive: $searchViewModel.showResult,
+                            label: {
+                                EmptyView()
+                            }
+                        )
+                    }
                 }
             }
             .navigationTitle("Recherche")

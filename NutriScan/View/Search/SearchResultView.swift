@@ -12,80 +12,39 @@ struct SearchResultView: View {
     
     @State var showCardDetail = false
     
-    @ViewBuilder
-    private var foundParagraph: some View {
-        HStack {
-            Text("NutriScan a trouvé dans ")
-                + Text("la base de données d’Open Food Facts")
-                .font(nuBodyMediumItalicFont)
-                + Text(" ce produit correspondant ")
-                + Text("au code EAN \(searchViewModel.eanCode)")
-                .font(nuBodyMediumItalicFont)
-                + Text(" :")
-        }
-        .modifier(NUTextBodyModifier())
-        .frame(maxWidth: .infinity)
-        .padding([.top, .leading, .trailing])
-    }
-    
+    let products: [NUProduct]
+        
     var body: some View {
-        ZStack {
-            NUBackgroundView()
-            VStack {
-                if let product = searchViewModel.foundProduct {
-                    foundParagraph
-                    
-                    Button (action: {
-                        showCardDetail = true
-                    }, label: {
-                        CardView(
-                            cardType: .product(product)
-                        )
-                    })
-                    .opacity(
-                        showCardDetail
-                            ? 0
-                            : 1
-                    )
-                    .offset(
-                        x: 0,
-                        y: showCardDetail
-                            ? 300
-                            : 0
-                    )
-                    .animation(.spring(), value: showCardDetail)
-
-                } else {
-                    VStack {
-                        Spacer()
-                        ProgressView("Recherche en cours")
-                            .progressViewStyle(
-                                CircularProgressViewStyle(tint: .nuQuaternaryColor)
-                            )
-                            .foregroundColor(.nuQuaternaryColor)
-                        Spacer()
-                    }
-                }
-                
-                Spacer()
-            }
-        }
-        .navigationTitle("Résultat")
-        .foregroundColor(.nuSecondaryColor)
-        .fullScreenCover(isPresented: $showCardDetail) {
-            if let product = searchViewModel.foundProduct {
-                CardDetailView(
-                    showDetail: $showCardDetail,
-                    cardType: .product(product)
-                )
-                .background(NUBackgroundClearView())
-            }
-        }
+        ProductsListView(
+            navigationTitle: "Résultat",
+            products: products,
+            headerParagraphs: [
+                "NutriScan a trouvé dans *la base de données d’Open Food Facts* ce produit correspondant *au code EAN \(searchViewModel.eanCode) :*"
+            ]
+        )
     }
 }
 
 struct SearchResultView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchResultView()
+        SearchResultView(
+            products: [NUProduct(
+                id: "1234",
+                name: "Moutarde de Dijon",
+                imageURL: "",
+                nutriments: Nutriments(
+                    fiber_100g: 10,
+                    carbohydrates_100g: 8.5,
+                    proteins_100g: 8.5,
+                    fat_100g: 4.2,
+                    salt_100g: 25.12,
+                    energy_kj_100g: 100,
+                    energy_kcal_100g: 100
+                ),
+                nutriScore: nil,
+                novaGroup: nil,
+                ecoScore: nil
+            )]
+        )
     }
 }

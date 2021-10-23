@@ -27,7 +27,8 @@ struct CardDetailView: View {
             ScanView()
         case .eanButton:
             EANView()
-        case .product(let product):
+        case .product(let product),
+                .favoriteProduct(let product):
             ProductView(product: product, parentIsDraggable: $isDraggable)
                 .padding(.bottom)
         }
@@ -52,9 +53,7 @@ struct CardDetailView: View {
     }
     
     var body: some View {
-        print("CardDetailView ~> currentlyResearching ~>", currentlyResearching)
-
-        return VStack {
+        VStack {
             CardHeaderView(cardType: cardType)
                 .padding(.horizontal)
             if currentlyResearching {
