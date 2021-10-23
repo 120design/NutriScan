@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    @StateObject private var favoritesViewModel = FavoritesViewModel()
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @ObservedObject private var alertViewModel = AlertViewModel()
     
     @State private var showCardDetail = false

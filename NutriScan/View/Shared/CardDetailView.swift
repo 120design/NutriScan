@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CardDetailView: View {
     @Binding var showDetail: Bool
-    @State var currentlyResearching: Bool = false
+    
+    var currentlyResearching: Bool = false
     
     @State private var appear = false
     @State private var yTranslation = CGSize.zero.height
@@ -51,7 +52,9 @@ struct CardDetailView: View {
     }
     
     var body: some View {
-        VStack {
+        print("CardDetailView ~> currentlyResearching ~>", currentlyResearching)
+
+        return VStack {
             CardHeaderView(cardType: cardType)
                 .padding(.horizontal)
             if currentlyResearching {

@@ -254,7 +254,7 @@ extension Image {
             .aspectRatio(contentMode: .fit)
             .padding()
             .frame(width: pictureWidth, height: pictureWidth)
-            .foregroundColor(.nuTertiaryColor)
+            .foregroundColor(.nuSecondaryColor)
             .background(Color.nuPrimaryColor)
             .modifier(NUSmoothCornersModifier())
     }

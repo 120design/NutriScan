@@ -9,6 +9,8 @@ import SwiftUI
 import Combine
 
 struct NUTabView: View {
+    @StateObject private var favoritesViewModel = FavoritesViewModel()
+    
     var body: some View {
         TabView {
             SearchView()
@@ -25,6 +27,7 @@ struct NUTabView: View {
                 }
         }
         .accentColor(.nuTertiaryColor)
+        .environmentObject(favoritesViewModel)
         .onAppear() {
             let shadowImage = UIImage.gradientImageWithBounds(
                 bounds: CGRect( x: 0, y: 0, width: UIScreen.main.scale, height: 4),

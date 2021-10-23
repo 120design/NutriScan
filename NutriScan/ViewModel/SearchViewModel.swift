@@ -36,6 +36,7 @@ class SearchViewModel: ObservableObject {
         //        showDetail = false
 
         currentlyResearching = true
+        print("SearchViewModel ~> currentlyResearching")
         
         OFFService.shared.getProduct(from: eanCode) { result in
             DispatchQueue.main.async {

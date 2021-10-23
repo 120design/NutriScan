@@ -42,13 +42,13 @@ struct EANView: View {
             TextField("", text: $searchViewModel.eanCode)
                 .padding(14)
                 .font(.system(size: 16))
-                .foregroundColor(.nuTertiaryColor)
-                .accentColor(.nuTertiaryColor)
+                .foregroundColor(.nuSecondaryColor)
+                .accentColor(.nuSecondaryColor)
                 .modifier(
                     NUPlaceholderStyleModifier(
                         showPlaceHolder: searchViewModel.eanCode.isEmpty,
                         placeholder: "Exemple : 8712100325953",
-                        foregroundColor: .nuTertiaryColor
+                        foregroundColor: .nuSecondaryColor
                     )
                 )
                 .keyboardType(.numberPad)
@@ -57,10 +57,10 @@ struct EANView: View {
                         cornerRadius: 12,
                         style: .continuous
                     )
-                    .stroke(Color.nuTertiaryColor, lineWidth: 1)
+                    .stroke(Color.nuSecondaryColor, lineWidth: 1)
                 )
                 .background(
-                    Color.nuTertiaryColor.opacity(0.2)
+                    Color.nuSecondaryColor.opacity(0.2)
                         .mask(
                             RoundedRectangle(
                                 cornerRadius: 12,
@@ -78,7 +78,7 @@ struct EANView: View {
                         .padding(.vertical, 10)
                         .padding(.horizontal, 6)
                         .frame(maxWidth: .infinity)
-                        .background(Color.nuTertiaryColor)
+                        .background(Color.nuSecondaryColor)
                         .modifier(NUSmoothCornersModifier(cornerRadius: 12))
                 })
                 .disabled(searchViewModel.eanCode.isEmpty)
@@ -90,7 +90,7 @@ struct EANView: View {
                         .padding(.vertical, 10)
                         .padding(.horizontal, 6)
                         .frame(maxWidth: .infinity)
-                        .background(Color.nuSecondaryColor)
+                        .background(Color.nuTertiaryColor)
                         .modifier(NUSmoothCornersModifier(cornerRadius: 12))
                 })
                 .disabled(searchViewModel.eanCode.isEmpty)

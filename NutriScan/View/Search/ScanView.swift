@@ -67,12 +67,13 @@ struct ScanView: View {
                     .frame(width: 44, height: 44)
                     .font(.system(size: 30))
                     .foregroundColor(
-                        torchIsOn
-                            ? .nuPrimaryColor
-                            : .nuTertiaryColor
+                        .nuSecondaryColor
+//                        torchIsOn
+//                            ? .nuPrimaryColor
+//                            : .nuSecondaryColor
                     )
                     .padding()
-                    .background(Color.nuQuaternaryColor)
+                    .background(Color.nuPrimaryColor)
                     .mask(Circle())
                     .shadow(
                         color: torchIsOn

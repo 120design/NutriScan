@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HistoryView: View {
     @StateObject private var historyViewModel = HistoryViewModel()
-    @StateObject private var favoritesViewModel = FavoritesViewModel()
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @ObservedObject private var alertViewModel = AlertViewModel()
     
     @State private var showCardDetail = false
@@ -18,19 +18,23 @@ struct HistoryView: View {
     private func handleFavorite(for product: NUProduct) {
         let productIsAFavorite = favoritesViewModel.productIsAFavorite(product)
         
-        productIsAFavorite
-        ? favoritesViewModel.removeProductFromFavorites(product)
-        : favoritesViewModel.addProductToFavorites(product)
-        
         alertViewModel.title = productIsAFavorite
         ? "Retrait du produit des favoris"
         : "Ajout du produit aux favoris"
         
         alertViewModel.message = productIsAFavorite
-        ? "”\(product.name)” a été supprimé des favoris mais reste sauvegardé dans l’historique de vos recherches."
-        : "”\(product.name)” a été ajouté aux favoris."
+        ? "”\(product.name)” est supprimé de vos favoris mais reste sauvegardé dans l’historique de vos recherches."
+        : "”\(product.name)” est ajouté à vos favoris."
         
-        alertViewModel.primaryButton = .default("Merci !") { }
+        if productIsAFavorite {
+            alertViewModel.primaryButton = .destructive("Merci, j’ai bien compris") {
+                favoritesViewModel.removeProductFromFavorites(product)
+            }
+        } else {
+            alertViewModel.primaryButton = .default("Merci, j’ai bien compris") {
+                favoritesViewModel.addProductToFavorites(product)
+            }
+        }
         
         alertViewModel.isPresented = true
     }
@@ -41,7 +45,7 @@ struct HistoryView: View {
                 NUBackgroundView()
                 List {
                     HStack {
-                        Text("Consultez ici l’historique de vos cinq dernières recherches de produits.")
+                        Text("Consultez ici l’historique de vos trois dernières recherches de produits.")
                         Spacer()
                     }
                     .modifier(NUTextBodyModifier())
@@ -91,8 +95,8 @@ struct HistoryView: View {
                             }
                             .tint(
                                 productIsAFavorite
-                                ? .nuTertiaryColor
-                                : .nuSecondaryColor
+                                ? .red
+                                : .nuTertiaryColor
                             )
                         }
                     }
@@ -107,7 +111,7 @@ struct HistoryView: View {
                 historyViewModel.getHistoryProducts()
             }
             .alert(isPresented: $alertViewModel.isPresented) {
-                Alert(viewModel: alertViewModel)
+                return Alert(viewModel: alertViewModel)
             }
             .fullScreenCover(isPresented: $showCardDetail) {
                 productToShow = nil

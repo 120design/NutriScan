@@ -36,7 +36,7 @@ struct CardView: View {
             switch self {
             case .scanButton,
                  .eanButton:
-                return .nuTertiaryColor
+                return .nuSecondaryColor
             case .product(_):
                 return .nuQuaternaryColor
             }
