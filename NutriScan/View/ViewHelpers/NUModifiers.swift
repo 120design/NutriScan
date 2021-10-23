@@ -45,9 +45,9 @@ struct NUStrongLabelModifier: ViewModifier {
                     size: 34
                 )
             )
-            .foregroundColor(.nuQuaternaryColor)
+            .foregroundColor(.nuSecondaryColor)
             .shadow(
-                color: .nuQuaternaryColor,
+                color: .nuSecondaryColor,
                 radius: 4,
                 x: 0,
                 y: 0

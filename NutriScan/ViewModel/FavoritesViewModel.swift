@@ -18,37 +18,55 @@ class FavoritesViewModel: ObservableObject {
     }
     
     func getFavoritesProducts() {
-        products = storageManager.getFavoritesProducts()
+        if nuProVersion {
+            products = storageManager.getFavoritesProducts()
+        }
     }
     
     func addProductToFavorites(_ product: NUProduct) {
-        storageManager.saveInFavorites(product: product)
-        getFavoritesProducts()
+        if nuProVersion {
+            storageManager.saveInFavorites(product: product)
+            getFavoritesProducts()
+        }
     }
     
     func removeProductFromFavorites(_ product: NUProduct) {
-        storageManager.removeProductFromFavorites(product)
-        getFavoritesProducts()
+        if nuProVersion {
+            storageManager.removeProductFromFavorites(product)
+            getFavoritesProducts()
+        }
     }
     
     func removeProductFromFavorites(indexSet: Foundation.IndexSet) {
-        let index = indexSet[indexSet.startIndex]
-        removeProductFromFavorites(products[index])
-        getFavoritesProducts()
+        if nuProVersion {
+            let index = indexSet[indexSet.startIndex]
+            removeProductFromFavorites(products[index])
+            getFavoritesProducts()
+        }
     }
     
     func moveProduct(from: IndexSet, to: Int) {
-        storageManager.moveFavoritesProduct(from: from, to: to)
-        getFavoritesProducts()
+        if nuProVersion {
+            storageManager.moveFavoritesProduct(from: from, to: to)
+            getFavoritesProducts()
+        }
     }
 
     func productIsAFavorite(_ product: NUProduct) -> Bool {
-        products.contains { $0.id == product.id }
+        if nuProVersion {
+            return products.contains { $0.id == product.id }
+        } else {
+            return false
+        }
     }
     
     func getCardType(for product: NUProduct) -> CardView.CardType {
-        productIsAFavorite(product)
-        ? .favoriteProduct(product)
-        : .product(product)
+        if nuProVersion {
+            return productIsAFavorite(product)
+            ? .favoriteProduct(product)
+            : .product(product)
+        } else {
+            return .product(product)
+        }
     }
 }

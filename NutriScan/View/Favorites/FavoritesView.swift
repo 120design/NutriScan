@@ -34,78 +34,83 @@ struct FavoritesView: View {
         NavigationView {
             ZStack {
                 NUBackgroundView()
-                List {
-                    HStack {
-                        Text("Ajoutez des produits depuis *l’historique* de vos recherches.")
-                        Spacer()
-                    }
-                    .modifier(NUTextBodyModifier())
-                    .frame(maxWidth: .infinity)
-                    .padding([.leading, .trailing])
-                    .padding(.top, 8)
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
-                    
-                    ForEach(favoritesViewModel.products) { product in
-                        Button (action: { }, label: {
-                            CardView(
-                                cardType: favoritesViewModel.getCardType(for: product)
-                            )
-                        })
-                            .highPriorityGesture(
-                                TapGesture()
-                                    .onEnded {
-                                        if !editingList {
-                                            productToShow = product
-                                            showCardDetail = true
+                
+                if nuProVersion {
+                    List {
+                        HStack {
+                            Text("Ajoutez des produits depuis *l’historique* de vos recherches.")
+                            Spacer()
+                        }
+                        .modifier(NUTextBodyModifier())
+                        .frame(maxWidth: .infinity)
+                        .padding([.leading, .trailing])
+                        .padding(.top, 8)
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+                        
+                        ForEach(favoritesViewModel.products) { product in
+                            Button (action: { }, label: {
+                                CardView(
+                                    cardType: favoritesViewModel.getCardType(for: product)
+                                )
+                            })
+                                .highPriorityGesture(
+                                    TapGesture()
+                                        .onEnded {
+                                            if !editingList {
+                                                productToShow = product
+                                                showCardDetail = true
+                                            }
+                                            editingList = false
                                         }
-                                        editingList = false
+                                )
+                                .opacity(
+                                    showCardDetail
+                                    ? 0
+                                    : 1
+                                )
+                                .offset(
+                                    x: 0,
+                                    y: showCardDetail
+                                    ? 300
+                                    : 0
+                                )
+                                .animation(.spring(), value: showCardDetail)
+                                .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+                                .swipeActions {
+                                    Button(role: .destructive) {
+                                        handleFavorite(for: product)
+                                        editingList.toggle()
+                                    } label: {
+                                        Label("Supprimer des favoris", systemImage: "trash.fill")
                                     }
-                            )
-                            .opacity(
-                                showCardDetail
-                                ? 0
-                                : 1
-                            )
-                            .offset(
-                                x: 0,
-                                y: showCardDetail
-                                ? 300
-                                : 0
-                            )
-                            .animation(.spring(), value: showCardDetail)
-                            .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
-                            .swipeActions {
-                                Button(role: .destructive) {
-                                    handleFavorite(for: product)
-                                    editingList.toggle()
-                                } label: {
-                                    Label("Supprimer des favoris", systemImage: "trash.fill")
                                 }
+                        }
+                        .onMove { from, to in
+                            favoritesViewModel.moveProduct(from: from, to: to)
+                            withAnimation {
+                                editingList = false
                             }
-                    }
-                    .onMove { from, to in
-                        favoritesViewModel.moveProduct(from: from, to: to)
-                        withAnimation {
-                            editingList = false
                         }
-                    }
-                    .onDelete { indexSet in
-                        favoritesViewModel.removeProductFromFavorites(indexSet: indexSet)
-                        withAnimation {
-                            editingList = false
+                        .onDelete { indexSet in
+                            favoritesViewModel.removeProductFromFavorites(indexSet: indexSet)
+                            withAnimation {
+                                editingList = false
+                            }
                         }
-                    }
-                    .onLongPressGesture {
-                        withAnimation {
-                            editingList.toggle()
+                        .onLongPressGesture {
+                            withAnimation {
+                                editingList.toggle()
+                            }
                         }
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
                     }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
+                    .listStyle(.plain)
+                } else {
+                    LiteVersionFavoritesView()
                 }
-                .listStyle(.plain)
             }
             .navigationTitle("Favoris")
             .foregroundColor(.nuSecondaryColor)

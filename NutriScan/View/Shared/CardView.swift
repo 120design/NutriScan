@@ -29,23 +29,11 @@ struct CardView: View {
             }
         }
     }
-    
-//    var backgroundColor: Color {
-//        switch cardType {
-//        case .scanButton,
-//             .eanButton:
-//            return .nuSecondaryColor
-//        case .product(let product):
-//            return favoritesViewModel.productIsAFavorite(product)
-//            ? .nuTertiaryColor
-//            : .nuQuaternaryColor
-//        }
-//    }
 
     let cardType: CardType
     
     var body: some View {
-        return VStack {
+        VStack {
             CardHeaderView(cardType: cardType)
         }
         .padding()
@@ -64,13 +52,13 @@ struct CardView: View {
 struct NUCardView_Previews: PreviewProvider {
     @Namespace static var namespace
     let type = CardView.CardType.eanButton
-    
+
     static var previews: some View {
         CardView(
             cardType: .eanButton
         )
         .previewLayout(.fixed(width: 375, height: 200))
-        
+
         CardView(cardType: .eanButton)
             .previewDevice("iPhone SE (1st generation)")
         CardView(cardType: .eanButton)

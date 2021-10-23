@@ -21,23 +21,37 @@ struct ProductsListView: View {
     let headerParagraphs: [String]
     
     private func handleFavorite(for product: NUProduct) {
-        let productIsAFavorite = favoritesViewModel.productIsAFavorite(product)
-        
-        alertViewModel.title = productIsAFavorite
-        ? "Retrait du produit des favoris"
-        : "Ajout du produit aux favoris"
-        
-        alertViewModel.message = productIsAFavorite
-        ? "”\(product.name)” est supprimé de vos favoris mais reste sauvegardé dans l’historique de vos recherches."
-        : "”\(product.name)” est ajouté à vos favoris."
-        
-        if productIsAFavorite {
-            alertViewModel.primaryButton = .destructive("Merci, j’ai bien compris") {
-                favoritesViewModel.removeProductFromFavorites(product)
+        if nuProVersion {
+            let productIsAFavorite = favoritesViewModel.productIsAFavorite(product)
+            
+            alertViewModel.title = productIsAFavorite
+            ? "Retrait du produit des favoris"
+            : "Ajout du produit aux favoris"
+            
+            alertViewModel.message = productIsAFavorite
+            ? "”\(product.name)” est supprimé de vos favoris mais reste sauvegardé dans l’historique de vos recherches."
+            : "”\(product.name)” est ajouté à vos favoris."
+            
+            if productIsAFavorite {
+                alertViewModel.primaryButton = .destructive("Merci, j’ai bien compris") {
+                    favoritesViewModel.removeProductFromFavorites(product)
+                }
+            } else {
+                alertViewModel.primaryButton = .default("Merci, j’ai bien compris") {
+                    favoritesViewModel.addProductToFavorites(product)
+                }
             }
         } else {
-            alertViewModel.primaryButton = .default("Merci, j’ai bien compris") {
-                favoritesViewModel.addProductToFavorites(product)
+            alertViewModel.title = "Ajout du produit aux favoris"
+            
+            alertViewModel.message = "L’ajout du produit aux favoris n’est possible que dans la version PRO de NutriScan."
+            
+            alertViewModel.primaryButton = .destructive("Annuler") { }
+            
+            alertViewModel.secondaryButton = .default("Installer la version PRO") {
+                if let url = URL(string: "itms-apps://apple.com/app/id1576078398") {
+                    UIApplication.shared.open(url)
+                }
             }
         }
         

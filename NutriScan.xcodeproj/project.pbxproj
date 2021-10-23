@@ -12,7 +12,6 @@
 		2F09F8CF259677FD005F97FA /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F09F8CE259677FD005F97FA /* SearchResultView.swift */; };
 		2F0C761F27245CAC00564D21 /* ProductsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0C761E27245CAC00564D21 /* ProductsListView.swift */; };
 		2F1EA64F270C3FED004354C4 /* NutriScan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2F1EA64D270C3FED004354C4 /* NutriScan.xcdatamodeld */; };
-		2F471839270CDB6D006BDF7E /* CDGrades.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F471838270CDB6D006BDF7E /* CDGrades.swift */; };
 		2F47183B270DDE44006BDF7E /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F47183A270DDE44006BDF7E /* StorageManager.swift */; };
 		2F50B67926CAF19A0064B060 /* CardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F50B67826CAF19A0064B060 /* CardHeaderView.swift */; };
 		2F55894A26D19D2300CEA23E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2F55894926D19D2300CEA23E /* Kingfisher */; };
@@ -20,6 +19,7 @@
 		2F55895126D42A5300CEA23E /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F55895026D42A5300CEA23E /* SearchViewModel.swift */; };
 		2F6A186C2712202A009A0BE8 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6A186B2712202A009A0BE8 /* FavoritesViewModel.swift */; };
 		2F6B91F426DD62540046A906 /* NUBackgroundClearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B91F326DD62540046A906 /* NUBackgroundClearView.swift */; };
+		2F87BA2E2724BB42001AC1D8 /* LiteVersionFavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F87BA2D2724BB42001AC1D8 /* LiteVersionFavoritesView.swift */; };
 		2F8F347926CE5C68007C4634 /* NUHaptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F347826CE5C68007C4634 /* NUHaptics.swift */; };
 		2F8F347B26CEB083007C4634 /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F347A26CEB083007C4634 /* ScanView.swift */; };
 		2F8F347D26CEB17B007C4634 /* EANView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F347C26CEB17B007C4634 /* EANView.swift */; };
@@ -59,13 +59,13 @@
 		2F09F8CE259677FD005F97FA /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		2F0C761E27245CAC00564D21 /* ProductsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsListView.swift; sourceTree = "<group>"; };
 		2F1EA64E270C3FED004354C4 /* NutriScan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NutriScan.xcdatamodel; sourceTree = "<group>"; };
-		2F471838270CDB6D006BDF7E /* CDGrades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDGrades.swift; sourceTree = "<group>"; };
 		2F47183A270DDE44006BDF7E /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		2F50B67826CAF19A0064B060 /* CardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardHeaderView.swift; sourceTree = "<group>"; };
 		2F55894E26D41AD000CEA23E /* NUTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NUTabView.swift; sourceTree = "<group>"; };
 		2F55895026D42A5300CEA23E /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		2F6A186B2712202A009A0BE8 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		2F6B91F326DD62540046A906 /* NUBackgroundClearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUBackgroundClearView.swift; sourceTree = "<group>"; };
+		2F87BA2D2724BB42001AC1D8 /* LiteVersionFavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteVersionFavoritesView.swift; sourceTree = "<group>"; };
 		2F8F347826CE5C68007C4634 /* NUHaptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUHaptics.swift; sourceTree = "<group>"; };
 		2F8F347A26CEB083007C4634 /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
 		2F8F347C26CEB17B007C4634 /* EANView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EANView.swift; sourceTree = "<group>"; };
@@ -131,7 +131,6 @@
 			children = (
 				2F47183A270DDE44006BDF7E /* StorageManager.swift */,
 				2F1EA64D270C3FED004354C4 /* NutriScan.xcdatamodeld */,
-				2F471838270CDB6D006BDF7E /* CDGrades.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -178,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				2FDCC19A2722E0B7002AED45 /* FavoritesView.swift */,
+				2F87BA2D2724BB42001AC1D8 /* LiteVersionFavoritesView.swift */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";
@@ -401,12 +401,12 @@
 				2F0C761F27245CAC00564D21 /* ProductsListView.swift in Sources */,
 				2F8F347F26CEB444007C4634 /* NUButtonStyle.swift in Sources */,
 				2FFC029926E64F2E00334FA5 /* Nutriments.swift in Sources */,
-				2F471839270CDB6D006BDF7E /* CDGrades.swift in Sources */,
 				2FE94C17259916AF00595F71 /* NUProduct.swift in Sources */,
 				2F55895126D42A5300CEA23E /* SearchViewModel.swift in Sources */,
 				2F6B91F426DD62540046A906 /* NUBackgroundClearView.swift in Sources */,
 				2F8F347D26CEB17B007C4634 /* EANView.swift in Sources */,
 				2F09F8CF259677FD005F97FA /* SearchResultView.swift in Sources */,
+				2F87BA2E2724BB42001AC1D8 /* LiteVersionFavoritesView.swift in Sources */,
 				2FEA7DB126C7DB020089AAA8 /* CardView.swift in Sources */,
 				2F6A186C2712202A009A0BE8 /* FavoritesViewModel.swift in Sources */,
 				2FDCC196272089A2002AED45 /* HistoryViewModel.swift in Sources */,
@@ -565,7 +565,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = design.120.NutriScan;
+				PRODUCT_BUNDLE_IDENTIFIER = design.120.NutriScanPRO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -587,7 +587,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = design.120.NutriScan;
+				PRODUCT_BUNDLE_IDENTIFIER = design.120.NutriScanPRO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

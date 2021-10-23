@@ -23,7 +23,7 @@ enum StorageType {
 }
 
 class StorageManager: StorageManagerProtocol {
-    let maxHistory = 3
+    let maxHistory = nuProVersion ? 10 : 3
     
     static let shared = StorageManager()
     
