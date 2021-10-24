@@ -62,8 +62,8 @@ struct ProductsListView: View {
         ZStack {
             NUBackgroundView()
             List {
-                ForEach(headerParagraphs, id: \.self) { headerParagraph in
-                    if let attributedString = try? AttributedString(markdown: headerParagraph)
+                ForEach(0..<headerParagraphs.count) { index in
+                    if let attributedString = try? AttributedString(markdown: headerParagraphs[index])
                     {
                         HStack {
                             Text(attributedString)
@@ -72,12 +72,13 @@ struct ProductsListView: View {
                         .modifier(NUTextBodyModifier())
                         .frame(maxWidth: .infinity)
                         .padding([.leading, .trailing])
-                        .padding(.bottom, 8)
+                        .padding(.top, index == 0 ? 8 : 0)
+                        .padding(.bottom, index == headerParagraphs.count - 1 ? 8 : 0)
                     }
                 }
+                .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
                 
                 ForEach(products) { product in
                     Button (action: {
@@ -127,7 +128,6 @@ struct ProductsListView: View {
                 .listRowBackground(Color.clear)
             }
             .listStyle(.plain)
-            .padding(.top)
         }
         .navigationTitle(navigationTitle)
         .foregroundColor(.nuSecondaryColor)
@@ -149,11 +149,52 @@ struct ProductsListView: View {
 }
 
 struct ProductsListView_Previews: PreviewProvider {
+    @StateObject static private var favoritesViewModel = FavoritesViewModel()
+    
     static var previews: some View {
-        ProductsListView(
-            navigationTitle: "Historique",
-            products: [],
-            headerParagraphs: []
-        )
+        NavigationView {
+            ProductsListView(
+                navigationTitle: "Historique",
+                products: [
+                    NUProduct(
+                        id: "1234",
+                        name: "Moutarde de Dijon",
+                        imageURL: "",
+                        nutriments: Nutriments(
+                            fiber_100g: 10,
+                            carbohydrates_100g: 8.5,
+                            proteins_100g: 8.5,
+                            fat_100g: 4.2,
+                            salt_100g: 25.12,
+                            energy_kj_100g: 100,
+                            energy_kcal_100g: 100
+                        ),
+                        nutriScore: nil,
+                        novaGroup: nil,
+                        ecoScore: nil
+                    ),
+                    NUProduct(
+                        id: "1235",
+                        name: "Moutarde de Dijon",
+                        imageURL: "",
+                        nutriments: Nutriments(
+                            fiber_100g: 10,
+                            carbohydrates_100g: 8.5,
+                            proteins_100g: 8.5,
+                            fat_100g: 4.2,
+                            salt_100g: 25.12,
+                            energy_kj_100g: 100,
+                            energy_kcal_100g: 100
+                        ),
+                        nutriScore: nil,
+                        novaGroup: nil,
+                        ecoScore: nil
+                    ),
+                ],
+                headerParagraphs: ["Scannez le code à barres d’un produit avec votre téléphone, NutriScan interrogera alors la base de données de l’Open Food Facts, un projet open source qui recense les informations nutritionnelles de plus de 700 000 produits alimentaires.", "Scannez le code à barres d’un produit avec votre téléphone, NutriScan interrogera alors la base de données de l’Open Food Facts, un projet open source qui recense les informations nutritionnelles de plus de 700 000 produits alimentaires."]
+            )
+                .environmentObject(favoritesViewModel)
+        }
+        .nuNavigationBar()
     }
 }

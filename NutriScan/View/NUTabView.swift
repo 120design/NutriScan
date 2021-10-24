@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-let nuProVersion = false
+let nuProVersion = true
 
 struct NUTabView: View {
     @StateObject private var favoritesViewModel = FavoritesViewModel()
