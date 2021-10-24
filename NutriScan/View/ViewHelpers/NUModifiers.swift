@@ -23,6 +23,42 @@ struct NUTextBodyModifier: ViewModifier {
     }
 }
 
+struct NUTextBodyPrimaryColorModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(nuBodyLightTextFont)
+            .foregroundColor(.nuPrimaryColor)
+            .shadow(
+                color: .nuPrimaryColor,
+                radius: 4,
+                x: 0,
+                y: 0
+            )
+    }
+}
+
+struct NUTextBodyPrimaryColorWithoutShadowModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(nuBodyLightTextFont)
+            .foregroundColor(.nuPrimaryColor)
+    }
+}
+
+struct NUTextBodyQuaternaryColorModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(nuBodyLightTextFont)
+            .foregroundColor(.nuQuaternaryColor)
+            .shadow(
+                color: .nuQuaternaryColor,
+                radius: 4,
+                x: 0,
+                y: 0
+            )
+    }
+}
+
 struct NUButtonLabelModifier: ViewModifier {
     func body(content: Content) -> some View {
         content

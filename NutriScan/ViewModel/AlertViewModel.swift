@@ -48,6 +48,16 @@ extension Alert.Button {
             action: action
         )
     }
+    
+    static func cancel(
+        _ label: String,
+        action: @escaping (() -> Void) = {}
+    )  -> Alert.Button {
+        .cancel(
+            Text(label),
+            action: action
+        )
+    }
 }
 
 extension Alert {
