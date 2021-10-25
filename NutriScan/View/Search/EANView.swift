@@ -81,7 +81,8 @@ struct EANView: View {
                         .background(Color.nuSecondaryColor)
                         .modifier(NUSmoothCornersModifier(cornerRadius: 12))
                 })
-                .disabled(searchViewModel.eanCode.isEmpty)
+                .disabled(searchViewModel.clearButtonIsDisabled)
+                .opacity(searchViewModel.clearButtonIsDisabled ? 0.6 : 1)
                 
                 Button(action: {
                     searchViewModel.getProduct()
@@ -94,6 +95,7 @@ struct EANView: View {
                         .modifier(NUSmoothCornersModifier(cornerRadius: 12))
                 })
                 .disabled(searchViewModel.eanCode.isEmpty)
+                .opacity(searchViewModel.searchButtonIsDisabled ? 0.6 : 1)
             }
             .modifier(NUButtonLabelModifier())
         }

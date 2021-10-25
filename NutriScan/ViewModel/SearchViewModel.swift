@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import Combine
 
 class SearchViewModel: ObservableObject {
     @Published var showCardDetail = false
-    @Published var eanCode = "7613035239562"
+    @Published var eanCode: String = ""
+
     @Published var foundProduct: NUProduct? {
         didSet {
             if let foundProduct = foundProduct {
@@ -20,10 +22,41 @@ class SearchViewModel: ObservableObject {
     @Published var showResult = false
     @Published private(set) var currentlyResearching = false
     
+    var clearButtonIsDisabled: Bool {
+        eanCode.isEmpty
+    }
+    var searchButtonIsDisabled: Bool {
+        eanCode.count != 8 && eanCode.count != 13
+    }
+    
     private let storageManager: StorageManagerProtocol
+    
+    private var subCancellable: AnyCancellable!
+    private var validCharSet = CharacterSet(charactersIn: "0123456789")
     
     init(storageManager: StorageManagerProtocol = StorageManager.shared) {
         self.storageManager = storageManager
+        
+        // https://stackoverflow.com/questions/57822749/how-to-create-swiftui-textfield-that-accepts-only-numbers-and-a-single-dot
+        subCancellable = $eanCode.sink { val in
+            //check if the new string contains any invalid characters
+            if val.rangeOfCharacter(from: self.validCharSet.inverted) != nil {
+                //clean the string (do this on the main thread to avoid overlapping with the current ContentView update cycle)
+                DispatchQueue.main.async {
+                    self.eanCode = String(self.eanCode.unicodeScalars.filter {
+                        self.validCharSet.contains($0)
+                    })
+                }
+            } else if val.count > 13 {
+                DispatchQueue.main.async {
+                    self.eanCode = String(val.dropLast(val.count - 13))
+                }
+            }
+        }
+    }
+    
+    deinit {
+        subCancellable.cancel()
     }
     
     func getProduct() {
@@ -34,7 +67,7 @@ class SearchViewModel: ObservableObject {
         //        eanCode = eanCode
         //        goToResult = true
         //        showDetail = false
-
+        
         currentlyResearching = true
         print("SearchViewModel ~> currentlyResearching")
         
@@ -49,7 +82,7 @@ class SearchViewModel: ObservableObject {
                     self.currentlyResearching = false
                     return
                 }
-
+                
                 self.showCardDetail = false
                 self.showResult = true
                 self.currentlyResearching = false
