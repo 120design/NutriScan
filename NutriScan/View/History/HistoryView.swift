@@ -12,7 +12,7 @@ struct HistoryView: View {
     
     var headerParagraphs: [String] {
         var array = ["Consultez ici *l’historique de vos trois dernières recherches* de produits."]
-        if nuProVersion {
+        if nuProVersion && !historyViewModel.products.isEmpty {
             array.append("Vous pouvez *ajouter un produit à vos favoris* ou l’en supprimer *en le faisant glisser vers la gauche* pour faire apparaître le bouton prévu à cet effet.")
         }
         return array

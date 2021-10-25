@@ -38,16 +38,31 @@ struct FavoritesView: View {
                 if nuProVersion {
                     List {
                         HStack {
-                            Text("Ajoutez des produits depuis *l’historique* de vos recherches.")
+                            Text("Ajoutez des produits depuis *l’historique de vos recherches* puis retrouvez-les ici.")
                             Spacer()
                         }
                         .modifier(NUTextBodyModifier())
                         .frame(maxWidth: .infinity)
                         .padding([.leading, .trailing])
                         .padding(.top, 8)
+                        .padding(.bottom, favoritesViewModel.products.isEmpty ? 8 : 0)
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear)
                         .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+                        
+                        if !favoritesViewModel.products.isEmpty {
+                            HStack {
+                                Text("Pour supprimer ou ré-ordonner les favoris, exercez une longue pression sur un des favoris.")
+                                Spacer()
+                            }
+                            .modifier(NUTextBodyModifier())
+                            .frame(maxWidth: .infinity)
+                            .padding([.leading, .trailing])
+                            .padding(.bottom, 8)
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+                        }
                         
                         ForEach(favoritesViewModel.products) { product in
                             Button (action: { }, label: {
