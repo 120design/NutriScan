@@ -12,14 +12,14 @@ import AVFoundation
 struct ScanView: View {
     @EnvironmentObject var searchViewModel: SearchViewModel
         
-    @StateObject private var cameraManager = CameraManager()
+    @StateObject private var cameraPermissionViewModel = CameraPermissionViewModel()
         
     @State var torchIsOn = false
     
     var body: some View {
         
         VStack {
-            if cameraManager.permissionGranted {
+            if cameraPermissionViewModel.accessGranted {
                 Spacer()
                 ZStack {
                     
@@ -123,7 +123,7 @@ struct ScanView: View {
         }
         .frame(maxHeight: .infinity)
         .onAppear {
-            cameraManager.requestPermission()
+            cameraPermissionViewModel.requestPermission()
         }
     }
 }
@@ -134,17 +134,5 @@ struct ScanView_Previews: PreviewProvider {
     static var previews: some View {
         ScanView()
             .environmentObject(SearchViewModel())
-    }
-}
-
-class CameraManager : ObservableObject {
-    @Published var permissionGranted = false
-    
-    func requestPermission() {
-        AVCaptureDevice.requestAccess(for: .video, completionHandler: { accessGranted in
-            DispatchQueue.main.async {
-                self.permissionGranted = accessGranted
-            }
-        })
     }
 }
