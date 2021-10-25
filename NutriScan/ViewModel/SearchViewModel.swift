@@ -60,16 +60,11 @@ class SearchViewModel: ObservableObject {
     }
     
     func getProduct() {
-        // Reprise de la View à intégrer ici
-        //        guard eanCode.count == 8 || eanCode.count == 13 else {
-        //            return
-        //        }
-        //        eanCode = eanCode
-        //        goToResult = true
-        //        showDetail = false
+        guard eanCode.count == 8 || eanCode.count == 13 else {
+            return
+        }
         
         currentlyResearching = true
-        print("SearchViewModel ~> currentlyResearching")
         
         OFFService.shared.getProduct(from: eanCode) { result in
             DispatchQueue.main.async {

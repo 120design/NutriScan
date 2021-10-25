@@ -10,32 +10,7 @@ import SwiftUI
 struct EANView: View {
     @EnvironmentObject var searchViewModel: SearchViewModel
     
-    let firstParagraph: some View = VStack(alignment: .leading) {
-        Text("Recherchez un produit après avoir soit renseigné ")
-            + Text("un code EAN13 à treize chiffres,")
-            .font(nuBodyBoldItalicFont)
-            + Text(" soit renseigné ")
-            + Text("un code EAN8 à huit chiffres.")
-            .font(nuBodyBoldItalicFont)
-    }
-    .frame(maxWidth: .infinity, alignment: .leading)
-    .font(nuBodyBookTextFont)
-    .foregroundColor(.nuPrimaryColor)
-    .padding([.leading, .trailing])
-    
-    let secondParagraph: some View = VStack(alignment: .leading) {
-        Text("Ce code est généralement inscrit ")
-            + Text("sous le code à barres")
-            .font(nuBodyBoldItalicFont)
-            + Text(" du produit. Une fois le code tapé, ")
-            + Text("pressez le bouton de recherche.")
-           .font(nuBodyBoldItalicFont)
-    }
-    .frame(maxWidth: .infinity, alignment: .leading)
-    .font(nuBodyBookTextFont)
-    .foregroundColor(.nuPrimaryColor)
-    .padding([.leading, .trailing])
-    .padding(.top, 8)
+    @FocusState private var isTextFieldFocused: Bool
     
     var body: some View {
         VStack {
@@ -52,6 +27,7 @@ struct EANView: View {
                     )
                 )
                 .keyboardType(.numberPad)
+                .focused($isTextFieldFocused)
                 .overlay(
                     RoundedRectangle(
                         cornerRadius: 12,
@@ -107,9 +83,26 @@ struct EANView: View {
         )
         .padding()
         
-        firstParagraph
-        secondParagraph
-        
+        if !isTextFieldFocused {
+            VStack(alignment: .leading) {
+                Text("Recherchez un produit après avoir soit renseigné *un code EAN13 à treize chiffres,* soit renseigné *un code EAN8 à huit chiffres.*")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .font(nuBodyBookTextFont)
+            .foregroundColor(.nuPrimaryColor)
+            .padding([.leading, .trailing])
+            .padding(.bottom, 8)
+            
+            VStack(alignment: .leading) {
+                Text("Ce code est généralement inscrit *sous le code à barres* du produit. Une fois le code tapé, *pressez le bouton de recherche.*")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .font(nuBodyBookTextFont)
+            .foregroundColor(.nuPrimaryColor)
+            .padding([.leading, .trailing])
+            .padding(.bottom, 8)
+        }
+
         Spacer()
     }
 }
