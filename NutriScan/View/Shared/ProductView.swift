@@ -12,41 +12,97 @@ struct ProductView: View {
     
     @Binding var parentIsDraggable: Bool
     
+    private var viewHasContent: Bool {
+        if let nutriments = product.nutriments {
+            if nutriments.proteins_100g != nil
+                || nutriments.carbohydrates_100g != nil
+                || nutriments.fat_100g != nil
+                || nutriments.fiber_100g != nil
+                || nutriments.salt_100g != nil {
+                return true
+            }
+            
+            if nutriments.energy_kj_100g != nil
+                || nutriments.energy_kcal_100g != nil {
+                return true
+            }
+        }
+        
+        if let nutriScore = product.nutriScore,
+           let _ = nutriScore.score,
+           let _ = nutriScore.negative_points,
+           let _ = nutriScore.positive_points,
+           let _ = nutriScore.pictoName
+        {
+            return true
+        }
+        
+        if let ecoScore = product.ecoScore,
+           let _ = ecoScore.pictoName
+        {
+            return true
+        }
+        
+        if let _ = product.novaGroup {
+            return true
+        }
+        
+        return false
+    }
+//    @State private var viewHasContent = false
+    
     var body: some View {
+        
         ScrollView {
-            if let nutriments = product.nutriments {
-                ProductNutrimentsInformationsView(nutriments: nutriments)
+            if viewHasContent {
+                if let nutriments = product.nutriments {
+                    if nutriments.proteins_100g != nil
+                        || nutriments.carbohydrates_100g != nil
+                        || nutriments.fat_100g != nil
+                        || nutriments.fiber_100g != nil
+                        || nutriments.salt_100g != nil {
+                        ProductNutrimentsInformationsView(nutriments: nutriments)
+                    }
+                    
+                    if nutriments.energy_kj_100g != nil
+                        || nutriments.energy_kcal_100g != nil {
+                        ProductEnergyInformationsView(
+                            energy_kj_100g: nutriments.energy_kj_100g,
+                            energy_kcal_100g: nutriments.energy_kcal_100g
+                        )
+                    }
+                }
                 
-                if nutriments.energy_kj_100g != nil
-                    || nutriments.energy_kcal_100g != nil {
-                    ProductEnergyInformationsView(
-                        energy_kj_100g: nutriments.energy_kj_100g,
-                        energy_kcal_100g: nutriments.energy_kcal_100g
+                if let nutriScore = product.nutriScore,
+                   let score = nutriScore.score,
+                   let negative_points = nutriScore.negative_points,
+                   let positive_points = nutriScore.positive_points,
+                   let pictoName = nutriScore.pictoName
+                {
+                    ProductNutriScoreInformationsView(
+                        score: score,
+                        negative_points: negative_points,
+                        positive_points: positive_points,
+                        pictoName: pictoName
                     )
                 }
-            }
-            
-            if let nutriScore = product.nutriScore,
-               let score = nutriScore.score,
-               let negative_points = nutriScore.negative_points,
-               let positive_points = nutriScore.positive_points,
-               let pictoNmae = nutriScore.pictoName
-            {
-                ProductNutriScoreInformationsView(
-                    score: score,
-                    negative_points: negative_points,
-                    positive_points: positive_points,
-                    pictoName: pictoNmae
-                )
-            }
-            
-            if let ecoScore = product.ecoScore,
-               let pictoName = ecoScore.pictoName
-            {
-                ProductEcoScoreInformationsView(ecoScore: ecoScore, pictoName: pictoName)
-            }
-            if let novaGroup = product.novaGroup {
-                ProductNovaGroupInformationsView(novaGroup: novaGroup)
+                
+                if let ecoScore = product.ecoScore,
+                   let pictoName = ecoScore.pictoName
+                {
+                    ProductEcoScoreInformationsView(ecoScore: ecoScore, pictoName: pictoName)
+                }
+                if let novaGroup = product.novaGroup {
+                    ProductNovaGroupInformationsView(novaGroup: novaGroup)
+                }
+
+            } else {
+                Text("La base de données d’Open Food Facts n’a pas fourni à NutriScan d’information nutritionnelle pour ce produit.")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(nuBodyBookTextFont)
+                    .foregroundColor(.nuPrimaryColor)
+                    .padding([.leading, .trailing])
+                    .padding(.bottom, 8)
             }
         }
         .gesture(

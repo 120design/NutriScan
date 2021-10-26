@@ -37,7 +37,6 @@ class SearchViewModel: ObservableObject {
     init(storageManager: StorageManagerProtocol = StorageManager.shared) {
         self.storageManager = storageManager
         
-        // https://stackoverflow.com/questions/57822749/how-to-create-swiftui-textfield-that-accepts-only-numbers-and-a-single-dot
         subCancellable = $eanCode.sink { val in
             //check if the new string contains any invalid characters
             if val.rangeOfCharacter(from: self.validCharSet.inverted) != nil {

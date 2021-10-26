@@ -158,25 +158,25 @@ class StorageManager: StorageManagerProtocol {
             cdNutriments = CDNutriments(context: context)
             
             if let fiber_100g = nutriments.fiber_100g {
-                cdNutriments.fiber_100g = fiber_100g
+                cdNutriments.fiber_100g = NSNumber(value: fiber_100g)
             }
             if let carbohydrates_100g = nutriments.carbohydrates_100g {
-                cdNutriments.carbohydrates_100g = carbohydrates_100g
+                cdNutriments.carbohydrates_100g = NSNumber(value: carbohydrates_100g)
             }
             if let proteins_100g = nutriments.proteins_100g {
-                cdNutriments.proteins_100g = proteins_100g
+                cdNutriments.proteins_100g = NSNumber(value: proteins_100g)
             }
             if let fat_100g = nutriments.fat_100g {
-                cdNutriments.fat_100g = fat_100g
+                cdNutriments.fat_100g = NSNumber(value: fat_100g)
             }
             if let salt_100g = nutriments.salt_100g {
-                cdNutriments.salt_100g = salt_100g
+                cdNutriments.salt_100g = NSNumber(value: salt_100g)
             }
             if let energy_kj_100g = nutriments.energy_kj_100g {
-                cdNutriments.energy_kj_100g = Int16(energy_kj_100g)
+                cdNutriments.energy_kj_100g = Int16(energy_kj_100g) as NSNumber?
             }
             if let energy_kcal_100g = nutriments.energy_kcal_100g {
-                cdNutriments.energy_kcal_100g = Int16(energy_kcal_100g)
+                cdNutriments.energy_kcal_100g = Int16(energy_kcal_100g) as NSNumber?
             }
             
             cdProduct.nutriments = cdNutriments
@@ -557,14 +557,44 @@ extension NUProduct {
         self.imageURL = cdProduct.imageURL
         
         if let cdNutriments = cdProduct.nutriments {
+            var cdFiber_100g: Float?
+            var cdCarbohydrates_100g: Float?
+            var cdProteins_100g: Float?
+            var cdFat_100g: Float?
+            var cdSalt_100g: Float?
+            var cdEnergy_kj_100g: Int? = nil
+            var cdEnergy_kcal_100g: Int? = nil
+            
+            if let fiber_100g = cdNutriments.fiber_100g {
+                cdFiber_100g = Float(truncating: fiber_100g)
+            }
+            if let carbohydrates_100g = cdNutriments.carbohydrates_100g {
+                cdCarbohydrates_100g = Float(truncating: carbohydrates_100g)
+            }
+            if let proteins_100g = cdNutriments.proteins_100g {
+                cdProteins_100g = Float(truncating: proteins_100g)
+            }
+            if let fat_100g = cdNutriments.fat_100g {
+                cdFat_100g = Float(truncating: fat_100g)
+            }
+            if let salt_100g = cdNutriments.salt_100g {
+                cdSalt_100g = Float(truncating: salt_100g)
+            }
+            if let energy_kj_100g = cdNutriments.energy_kj_100g {
+                cdEnergy_kj_100g = Int(truncating: energy_kj_100g)
+            }
+            if let energy_kcal_100g = cdNutriments.energy_kcal_100g {
+                cdEnergy_kcal_100g = Int(truncating: energy_kcal_100g)
+            }
+
             self.nutriments = Nutriments(
-                fiber_100g: cdNutriments.fiber_100g,
-                carbohydrates_100g: cdNutriments.carbohydrates_100g,
-                proteins_100g: cdNutriments.proteins_100g,
-                fat_100g: cdNutriments.fat_100g,
-                salt_100g: cdNutriments.salt_100g,
-                energy_kj_100g: Int(cdNutriments.energy_kj_100g),
-                energy_kcal_100g: Int(cdNutriments.energy_kcal_100g)
+                fiber_100g: cdFiber_100g,
+                carbohydrates_100g: cdCarbohydrates_100g,
+                proteins_100g: cdProteins_100g,
+                fat_100g: cdFat_100g,
+                salt_100g: cdSalt_100g,
+                energy_kj_100g: cdEnergy_kj_100g,
+                energy_kcal_100g: cdEnergy_kcal_100g
             )
         } else {
             self.nutriments = nil
