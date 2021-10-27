@@ -17,6 +17,7 @@ class FavoritesViewModel: ObservableObject {
         getFavoritesProducts()
     }
     
+    
     func getFavoritesProducts() {
         if nuProVersion {
             products = storageManager.getFavoritesProducts()
