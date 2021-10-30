@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProductsListView: View {
-    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel<InAppPurchasesViewModel>
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @ObservedObject private var alertViewModel = AlertViewModel()
     
     @State private var showCardDetail = false
@@ -149,7 +149,7 @@ struct ProductsListView: View {
 }
 
 struct ProductsListView_Previews: PreviewProvider {
-    @StateObject static private var favoritesViewModel = FavoritesViewModel(inAppPurchasesViewModel: InAppPurchasesViewModel())
+    @StateObject static private var favoritesViewModel = FavoritesViewModel()
     
     static var previews: some View {
         NavigationView {

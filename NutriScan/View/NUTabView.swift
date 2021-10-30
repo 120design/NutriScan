@@ -10,8 +10,9 @@ import SwiftUI
 let nuProVersion = true
 
 struct NUTabView: View {
-    @StateObject private var favoritesViewModel = FavoritesViewModel(inAppPurchasesViewModel: InAppPurchasesViewModel())
-    
+    @StateObject private var favoritesViewModel = FavoritesViewModel()
+    @StateObject private var inAppPurchasesViewModel = InAppPurchasesViewModel()
+        
     var body: some View {
         TabView {
             SearchView()
@@ -29,6 +30,7 @@ struct NUTabView: View {
         }
         .accentColor(.nuTertiaryColor)
         .environmentObject(favoritesViewModel)
+        .environmentObject(inAppPurchasesViewModel)
         .onAppear() {
             let shadowImage = UIImage.gradientImageWithBounds(
                 bounds: CGRect( x: 0, y: 0, width: UIScreen.main.scale, height: 4),
@@ -50,6 +52,15 @@ struct NUTabView: View {
 //            UITabBar.appearance().unselectedItemTintColor = UIColor(Color.nuSecondaryColor)
             UITabBar.appearance().backgroundColor = UIColor(Color.nuQuaternaryColor)
             UITabBar.appearance().barTintColor = UIColor(Color.nuQuaternaryColor)
+        }
+        .onReceive(inAppPurchasesViewModel.$paidVersionIsPurchased) { paidVersionIsPurchased in
+            guard let paidVersionIsPurchased = paidVersionIsPurchased
+            else {
+                favoritesViewModel.favoritesAreGranted = false
+                return
+            }
+            
+            favoritesViewModel.favoritesAreGranted = paidVersionIsPurchased
         }
     }
 }

@@ -7,24 +7,16 @@
 
 import SwiftUI
 
-class FavoritesViewModel<IAPViewModel>: ObservableObject where IAPViewModel: InAppPurchasesViewModelProtocol {
-    @ObservedObject private var inAppPurchasesViewModel: IAPViewModel
-    
+class FavoritesViewModel: ObservableObject {
     @Published internal var products: [NUProduct] = []
     
-    internal var paidVersionIsPurchased: Bool? {
-        print("FavoritesViewModel ~> inAppPurchasesViewModel.paidVersionIsPurchased ~>", inAppPurchasesViewModel.paidVersionIsPurchased)
-        return inAppPurchasesViewModel.paidVersionIsPurchased
-    }
+    @Published var favoritesAreGranted: Bool = false
     
     private let storageManager: StorageManagerProtocol
     
     init(
-        inAppPurchasesViewModel: IAPViewModel,
         storageManager: StorageManagerProtocol = StorageManager.shared
     ) {
-        self.inAppPurchasesViewModel = inAppPurchasesViewModel
-        
         self.storageManager = storageManager
         getFavoritesProducts()
     }
@@ -81,19 +73,19 @@ class FavoritesViewModel<IAPViewModel>: ObservableObject where IAPViewModel: InA
             return .product(product)
         }
     }
-    
-    func purchaseFavoritesAccess() async throws -> PurchaseState {
-        do {
-            let purchaseState = try await inAppPurchasesViewModel.purchasePaidVersion()
-            print("FavoritesViewModel ~> purchaseState ~>", purchaseState)
-            
-            objectWillChange.send()
-            return purchaseState
-        } catch {
-            print("FavoritesViewModel ~> error ~>", error)
-            
-            objectWillChange.send()
-            return .unknown
-        }
-    }
+//    
+//    func purchaseFavoritesAccess() async throws -> PurchaseState {
+//        do {
+//            let purchaseState = try await inAppPurchasesViewModel.purchasePaidVersion()
+//            print("FavoritesViewModel ~> purchaseState ~>", purchaseState)
+//            
+//            objectWillChange.send()
+//            return purchaseState
+//        } catch {
+//            print("FavoritesViewModel ~> error ~>", error)
+//            
+//            objectWillChange.send()
+//            return .unknown
+//        }
+//    }
 }

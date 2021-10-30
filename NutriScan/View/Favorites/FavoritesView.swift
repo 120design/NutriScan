@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel<InAppPurchasesViewModel>
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
     @ObservedObject private var alertViewModel = AlertViewModel()
     
     @State private var showCardDetail = false
@@ -35,8 +35,7 @@ struct FavoritesView: View {
             ZStack {
                 NUBackgroundView()
                 
-                if let paidVersionIsPurchased = favoritesViewModel.paidVersionIsPurchased,
-                   paidVersionIsPurchased
+                if favoritesViewModel.favoritesAreGranted
                 {
                     List {
                         HStack {

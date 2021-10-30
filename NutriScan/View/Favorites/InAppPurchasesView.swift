@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InAppPurchasesView: View {
-    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel<InAppPurchasesViewModel>
+    @EnvironmentObject private var inAppPurchasesViewModel: InAppPurchasesViewModel
     
     var body: some View {
         VStack {
@@ -28,7 +28,7 @@ struct InAppPurchasesView: View {
             Button {
                 Task {
                     do {
-                        let purchaseState = try await favoritesViewModel.purchaseFavoritesAccess()
+                        let purchaseState = try await inAppPurchasesViewModel.purchasePaidVersion()
                         print("InAppPurchasesView ~> purchase ~>", purchaseState)
                     } catch {
                         print("InAppPurchasesView ~> error ~>", error)
