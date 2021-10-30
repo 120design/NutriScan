@@ -9,6 +9,8 @@ import Foundation
 import CoreData
 
 protocol StorageManagerProtocol {
+    var maxHistory: Int { get set }
+    
     func create(product nuProduct: NUProduct)
     func getHistoryProducts() -> [NUProduct]
     func getFavoritesProducts() -> [NUProduct]

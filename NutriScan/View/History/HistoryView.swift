@@ -41,6 +41,17 @@ struct HistoryView: View {
             
             historyViewModel.maxHistory = paidVersionIsPurchased ? .high : .low
         }
+//        
+//        .onReceive(inAppPurchasesViewModel.$paidVersionIsPurchased) { paidVersionIsPurchased in
+//            guard let paidVersionIsPurchased = paidVersionIsPurchased
+//            else {
+//                storageManager.maxHistory = HistoryViewModel.MaxHistory.low.int
+//                return
+//            }
+//            
+//            storageManager.maxHistory = paidVersionIsPurchased ? HistoryViewModel.MaxHistory.high.int : HistoryViewModel.MaxHistory.low.int
+//        }
+//
     }
 }
 

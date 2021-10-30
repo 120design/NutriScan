@@ -64,9 +64,6 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
                 paidVersionIsPurchased = await isPaidVersionPurchased()
             }
         }
-//        Task {
-//            products = try? await Product.products(for: [paidVersionProductID])
-//        }
     }
     
     @MainActor
@@ -157,39 +154,11 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
     
     @MainActor
     internal func isPaidVersionPurchased() async -> Bool {
-        guard let productID = products?.first?.id
+        guard let productID = products?.first?.id,
+              let isPurchased = try? await isPurchased(productID: productID)
         else { return false }
-        
-        do {
-            guard try await isPurchased(productID: productID)
-            else { return false}
-            
-            return true
-        } catch {
-            print("InAppPurchasesViewModel ~> isPaidVersionPurchased ~> error ~>", error)
-            return false
-        }
-    }
-    
-    @MainActor
-    func checkIfPaidVersionIsPurchased() async {
-        guard let productID = products?.first?.id
-        else {
-            paidVersionIsPurchased = false
-            return
-        }
-        do {
-            if try await isPurchased(productID: productID) {
-                paidVersionIsPurchased = true
-                return
-            } else {
-                paidVersionIsPurchased = false
-                return
-            }
-        } catch {
-            paidVersionIsPurchased = false
-            return
-        }
+       
+        return isPurchased
     }
 
     // Requests the most recent transaction for a product from the App Store and determines if it has been previously purchased.
@@ -317,6 +286,11 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
                 purchasedProductsIDs.remove(at: index)
             }
         }
+    }
+    
+    // TODO: Replace by a real method for handle refundi
+    func getFreeVersion() {
+        paidVersionIsPurchased = false
     }
     
 //    func fetchProducts() async {

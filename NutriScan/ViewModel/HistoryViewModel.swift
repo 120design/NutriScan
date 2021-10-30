@@ -9,7 +9,11 @@ import SwiftUI
 
 class HistoryViewModel: ObservableObject {
     @Published var products: [NUProduct] = []
-    @Published var maxHistory: MaxHistory = .low
+    @Published var maxHistory: MaxHistory = .low {
+        didSet {
+            storageManager.maxHistory = maxHistory.int
+        }
+    }
     
     enum MaxHistory: String {
         case low = "trois", high = "dix"
@@ -24,7 +28,7 @@ class HistoryViewModel: ObservableObject {
         }
     }
     
-    private let storageManager: StorageManagerProtocol
+    private var storageManager: StorageManagerProtocol
     
     init(storageManager: StorageManagerProtocol = StorageManager.shared) {
         self.storageManager = storageManager

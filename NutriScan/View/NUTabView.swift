@@ -24,6 +24,10 @@ struct NUTabView: View {
                 .tabItem {
                     Label("Favoris", systemImage: "bookmark")
                 }
+            SettingsView()
+                .tabItem {
+                    Label("Réglages", systemImage: "gear")
+                }
         }
         .accentColor(.nuTertiaryColor)
         .onAppear() {

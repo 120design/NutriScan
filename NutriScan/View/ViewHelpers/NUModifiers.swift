@@ -23,6 +23,19 @@ struct NUTextBodyModifier: ViewModifier {
     }
 }
 
+struct NUSmallTextBodyModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(nuProductDetailTextLightFont)
+            .shadow(
+                color: .nuSecondaryColor,
+                radius: 4,
+                x: 0,
+                y: 0
+            )
+    }
+}
+
 struct NUTextBodyPrimaryColorModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -66,6 +79,19 @@ struct NUButtonLabelModifier: ViewModifier {
                 .custom(
                     boldFontName,
                     size: 20
+                )
+            )
+            .foregroundColor(.nuPrimaryColor)
+    }
+}
+
+struct NUSmallButtonLabelModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(
+                .custom(
+                    boldFontName,
+                    size: 14
                 )
             )
             .foregroundColor(.nuPrimaryColor)
