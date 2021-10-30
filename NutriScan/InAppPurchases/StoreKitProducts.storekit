@@ -1,0 +1,34 @@
+{
+  "identifier" : "77D27137",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : true,
+      "internalID" : "69604A28",
+      "localizations" : [
+        {
+          "description" : "Bénéficiez d’une liste de produits favoris !",
+          "displayName" : "Version payante",
+          "locale" : "fr"
+        }
+      ],
+      "productID" : "design.120.NutriScan.211029-2321",
+      "referenceName" : "Version payante",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_locale" : "fr",
+    "_storefront" : "FRA"
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 1
+  }
+}

@@ -26,6 +26,9 @@
 		2F8F347D26CEB17B007C4634 /* EANView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F347C26CEB17B007C4634 /* EANView.swift */; };
 		2F8F347F26CEB444007C4634 /* NUButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F347E26CEB444007C4634 /* NUButtonStyle.swift */; };
 		2F8F348C26D17256007C4634 /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F348B26D17256007C4634 /* ProductView.swift */; };
+		2FA1CD89272AFEC2004365F2 /* CheckingVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA1CD88272AFEC2004365F2 /* CheckingVersionView.swift */; };
+		2FA1CD8D272B2B45004365F2 /* InAppPurchasesProducts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FA1CD8C272B2B45004365F2 /* InAppPurchasesProducts.plist */; };
+		2FA1CD90272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA1CD8F272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift */; };
 		2FD776E026C46628003B03E2 /* NUColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776DF26C46628003B03E2 /* NUColors.swift */; };
 		2FD776E226C46894003B03E2 /* NUNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776E126C46894003B03E2 /* NUNavigationBar.swift */; };
 		2FD776E826C46AC8003B03E2 /* OperatorMono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FD776E326C46AC7003B03E2 /* OperatorMono-Bold.otf */; };
@@ -34,6 +37,8 @@
 		2FD776EB26C46AC8003B03E2 /* OperatorMono-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FD776E626C46AC8003B03E2 /* OperatorMono-Light.otf */; };
 		2FD776EC26C46AC8003B03E2 /* OperatorMono-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FD776E726C46AC8003B03E2 /* OperatorMono-BoldItalic.otf */; };
 		2FD776EF26C5A5A0003B03E2 /* NUModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776EE26C5A5A0003B03E2 /* NUModifiers.swift */; };
+		2FDBCF68272A8C2800812C7E /* InAppPurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDBCF67272A8C2800812C7E /* InAppPurchasesViewModel.swift */; };
+		2FDBCF6A272A8D1400812C7E /* StoreKitProducts.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 2FDBCF69272A8D1400812C7E /* StoreKitProducts.storekit */; };
 		2FDCC196272089A2002AED45 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDCC195272089A2002AED45 /* HistoryViewModel.swift */; };
 		2FDCC198272289C8002AED45 /* AlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDCC197272289C8002AED45 /* AlertViewModel.swift */; };
 		2FDCC19B2722E0B7002AED45 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDCC19A2722E0B7002AED45 /* FavoritesView.swift */; };
@@ -73,6 +78,9 @@
 		2F8F347C26CEB17B007C4634 /* EANView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EANView.swift; sourceTree = "<group>"; };
 		2F8F347E26CEB444007C4634 /* NUButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUButtonStyle.swift; sourceTree = "<group>"; };
 		2F8F348B26D17256007C4634 /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
+		2FA1CD88272AFEC2004365F2 /* CheckingVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckingVersionView.swift; sourceTree = "<group>"; };
+		2FA1CD8C272B2B45004365F2 /* InAppPurchasesProducts.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InAppPurchasesProducts.plist; sourceTree = "<group>"; };
+		2FA1CD8F272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesProductsConfiguration.swift; sourceTree = "<group>"; };
 		2FD776DF26C46628003B03E2 /* NUColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUColors.swift; sourceTree = "<group>"; };
 		2FD776E126C46894003B03E2 /* NUNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUNavigationBar.swift; sourceTree = "<group>"; };
 		2FD776E326C46AC7003B03E2 /* OperatorMono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-Bold.otf"; sourceTree = "<group>"; };
@@ -81,6 +89,8 @@
 		2FD776E626C46AC8003B03E2 /* OperatorMono-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-Light.otf"; sourceTree = "<group>"; };
 		2FD776E726C46AC8003B03E2 /* OperatorMono-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-BoldItalic.otf"; sourceTree = "<group>"; };
 		2FD776EE26C5A5A0003B03E2 /* NUModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUModifiers.swift; sourceTree = "<group>"; };
+		2FDBCF67272A8C2800812C7E /* InAppPurchasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesViewModel.swift; sourceTree = "<group>"; };
+		2FDBCF69272A8D1400812C7E /* StoreKitProducts.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKitProducts.storekit; sourceTree = "<group>"; };
 		2FDCC195272089A2002AED45 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		2FDCC197272289C8002AED45 /* AlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewModel.swift; sourceTree = "<group>"; };
 		2FDCC19A2722E0B7002AED45 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
@@ -145,8 +155,19 @@
 				2F6A186B2712202A009A0BE8 /* FavoritesViewModel.swift */,
 				2F8ED3002726BC2D00EF7741 /* CameraPermissionViewModel.swift */,
 				2FDCC197272289C8002AED45 /* AlertViewModel.swift */,
+				2FDBCF67272A8C2800812C7E /* InAppPurchasesViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2FA1CD8E272B2BCB004365F2 /* InAppPurchases */ = {
+			isa = PBXGroup;
+			children = (
+				2FDBCF69272A8D1400812C7E /* StoreKitProducts.storekit */,
+				2FA1CD8F272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift */,
+				2FA1CD8C272B2B45004365F2 /* InAppPurchasesProducts.plist */,
+			);
+			path = InAppPurchases;
 			sourceTree = "<group>";
 		};
 		2FD776DE26C465C5003B03E2 /* ViewHelpers */ = {
@@ -208,6 +229,7 @@
 				2F55894D26D41A3400CEA23E /* ViewModel */,
 				2FE94C0025990EE400595F71 /* Model */,
 				2FE3E2292590D59A00CF5AB0 /* NutriScanApp.swift */,
+				2FA1CD8E272B2BCB004365F2 /* InAppPurchases */,
 				2FE3E22D2590D59D00CF5AB0 /* Assets.xcassets */,
 				2FE3E2322590D59D00CF5AB0 /* Info.plist */,
 				2FD776ED26C46ACF003B03E2 /* Fonts */,
@@ -226,6 +248,7 @@
 		2FE3E2392590D5DE00CF5AB0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2FA1CD88272AFEC2004365F2 /* CheckingVersionView.swift */,
 				2F55894E26D41AD000CEA23E /* NUTabView.swift */,
 				2FEA7DAF26C7DADF0089AAA8 /* Shared */,
 				2F09F8AC25960E54005F97FA /* Search */,
@@ -380,11 +403,13 @@
 			files = (
 				2FE3E2312590D59D00CF5AB0 /* Preview Assets.xcassets in Resources */,
 				2FFC029326E3D93900334FA5 /* OperatorMono-Book.otf in Resources */,
+				2FDBCF6A272A8D1400812C7E /* StoreKitProducts.storekit in Resources */,
 				2FD776EA26C46AC8003B03E2 /* OperatorMono-MediumItalic.otf in Resources */,
 				2FD776E926C46AC8003B03E2 /* OperatorMono-Medium.otf in Resources */,
 				2FD776EB26C46AC8003B03E2 /* OperatorMono-Light.otf in Resources */,
 				2FD776EC26C46AC8003B03E2 /* OperatorMono-BoldItalic.otf in Resources */,
 				2FE3E22E2590D59D00CF5AB0 /* Assets.xcassets in Resources */,
+				2FA1CD8D272B2B45004365F2 /* InAppPurchasesProducts.plist in Resources */,
 				2FD776E826C46AC8003B03E2 /* OperatorMono-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,10 +448,13 @@
 				2FE3E23C2590D66300CF5AB0 /* HistoryView.swift in Sources */,
 				2F47183B270DDE44006BDF7E /* StorageManager.swift in Sources */,
 				2FE3E22A2590D59A00CF5AB0 /* NutriScanApp.swift in Sources */,
+				2FA1CD89272AFEC2004365F2 /* CheckingVersionView.swift in Sources */,
 				2FD776E226C46894003B03E2 /* NUNavigationBar.swift in Sources */,
 				2FE94C0B259913A400595F71 /* OFFData.swift in Sources */,
+				2FDBCF68272A8C2800812C7E /* InAppPurchasesViewModel.swift in Sources */,
 				2FDCC198272289C8002AED45 /* AlertViewModel.swift in Sources */,
 				2F8F347926CE5C68007C4634 /* NUHaptics.swift in Sources */,
+				2FA1CD90272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift in Sources */,
 				2FFC029726E3EBEB00334FA5 /* ProductNutrimentsRingsView.swift in Sources */,
 				2FDCC19B2722E0B7002AED45 /* FavoritesView.swift in Sources */,
 				2FE94C132599152900595F71 /* NutriScore.swift in Sources */,
@@ -570,7 +598,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = design.120.NutriScanPRO;
+				PRODUCT_BUNDLE_IDENTIFIER = design.120.NutriScan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -593,7 +621,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = design.120.NutriScanPRO;
+				PRODUCT_BUNDLE_IDENTIFIER = design.120.NutriScan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

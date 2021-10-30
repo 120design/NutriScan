@@ -13,7 +13,7 @@ struct NutriScanApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NUTabView()
+            CheckingVersionView()
                 .environment(\.managedObjectContext, storageManager.persistentContainer.viewContext)
                 .preferredColorScheme(.dark)
         }
