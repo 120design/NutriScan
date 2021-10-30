@@ -9,9 +9,10 @@ import SwiftUI
 
 struct HistoryView: View {
     @StateObject private var historyViewModel = HistoryViewModel()
+    @EnvironmentObject private var inAppPurchasesViewModel: InAppPurchasesViewModel
     
     var headerParagraphs: [String] {
-        var array = ["Consultez ici *l’historique de vos \(nuProVersion ? "dix" : "trois") dernières recherches* de produits."]
+        var array = ["Consultez ici *l’historique de vos \(historyViewModel.maxHistory.rawValue) dernières recherches* de produits."]
         if nuProVersion && !historyViewModel.products.isEmpty {
             array.append("Vous pouvez *ajouter un produit à vos favoris* ou l’en supprimer *en le faisant glisser vers la gauche* pour faire apparaître le bouton prévu à cet effet.")
         }
@@ -31,6 +32,15 @@ struct HistoryView: View {
         }
         .nuNavigationBar()
         .environmentObject(historyViewModel)
+        .onReceive(inAppPurchasesViewModel.$paidVersionIsPurchased) { paidVersionIsPurchased in
+            guard let paidVersionIsPurchased = paidVersionIsPurchased
+            else {
+                historyViewModel.maxHistory = .three
+                return
+            }
+            
+            historyViewModel.maxHistory = paidVersionIsPurchased ? .ten : .three
+        }
     }
 }
 

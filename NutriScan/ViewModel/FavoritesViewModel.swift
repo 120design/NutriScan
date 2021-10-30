@@ -9,7 +9,6 @@ import SwiftUI
 
 class FavoritesViewModel: ObservableObject {
     @Published internal var products: [NUProduct] = []
-    
     @Published var favoritesAreGranted: Bool = false
     
     private let storageManager: StorageManagerProtocol
