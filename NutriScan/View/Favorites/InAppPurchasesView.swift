@@ -1,5 +1,5 @@
 //
-//  LiteVersionFavoritesView.swift
+//  InAppPurchasesView.swift
 //  NutriScan
 //
 //  Created by Vincent Caronnet on 23/10/2021.
@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct LiteVersionFavoritesView: View {
+struct InAppPurchasesView: View {
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel<InAppPurchasesViewModel>
+    
     var body: some View {
         VStack {
             Image(systemName: "lock.circle.fill")
@@ -15,22 +17,25 @@ struct LiteVersionFavoritesView: View {
                 .padding(.bottom, 8)
                 .modifier(NUTextBodyModifier())
             
-            Text("*Vous utilisez la version LITE* de NutriScan. Celle-ci *ne permet pas* de sauvegarder vos produits dans une liste de favoris.")
+            Text("*Vous utilisez la version gratuite* de NutriScan. Celle-ci *ne permet pas* de sauvegarder vos produits dans une liste de favoris.")
                 .padding(.bottom, 8)
                 .modifier(NUTextBodyModifier())
 
-            Text("Pour bénéficier d’une liste de favoris, *achetez la version PRO de NutriScan* sur l’App Store *en pressant le bouton ci-dessous.*")
+            Text("Pour bénéficier d’une liste de favoris, *achetez la version payante de NutriScan* sur l’App Store *en pressant le bouton ci-dessous.*")
                 .padding(.bottom, 8)
                 .modifier(NUTextBodyModifier())
            
             Button {
-                if let url = URL(string: "itms-apps://apple.com/app/id1576078398") {
-                    UIApplication.shared.open(url)
+                Task {
+                    do {
+                        let purchaseState = try await favoritesViewModel.purchaseFavoritesAccess()
+                        print("InAppPurchasesView ~> purchase ~>", purchaseState)
+                    } catch {
+                        print("InAppPurchasesView ~> error ~>", error)
+                    }
                 }
             } label: {
-                Text(
-                    "Installer NutriScan PRO"
-                )
+                Text("Passer à la version payante (0,99 €)")
             }
             .padding(.vertical, 10)
             .padding(.horizontal, 6)
@@ -47,8 +52,9 @@ struct LiteVersionFavoritesView: View {
     }
 }
 
-struct LiteVersionFavoritesView_Previews: PreviewProvider {
+struct LiteVersionFavoritesView_Previews:
+    PreviewProvider {
     static var previews: some View {
-        LiteVersionFavoritesView()
+        InAppPurchasesView()
     }
 }

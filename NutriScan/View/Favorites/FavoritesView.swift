@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel<InAppPurchasesViewModel>
     @ObservedObject private var alertViewModel = AlertViewModel()
     
     @State private var showCardDetail = false
@@ -35,7 +35,9 @@ struct FavoritesView: View {
             ZStack {
                 NUBackgroundView()
                 
-                if nuProVersion {
+                if let paidVersionIsPurchased = favoritesViewModel.paidVersionIsPurchased,
+                   paidVersionIsPurchased
+                {
                     List {
                         HStack {
                             Text("Ajoutez des produits depuis *l’historique de vos recherches* puis retrouvez-les ici.")
@@ -124,7 +126,7 @@ struct FavoritesView: View {
                     }
                     .listStyle(.plain)
                 } else {
-                    LiteVersionFavoritesView()
+                    InAppPurchasesView()
                 }
             }
             .navigationTitle("Favoris")

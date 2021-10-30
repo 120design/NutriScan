@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-import Combine
 
 let nuProVersion = true
 
 struct NUTabView: View {
-    @StateObject private var favoritesViewModel = FavoritesViewModel()
+    @StateObject private var favoritesViewModel = FavoritesViewModel(inAppPurchasesViewModel: InAppPurchasesViewModel())
     
     var body: some View {
         TabView {

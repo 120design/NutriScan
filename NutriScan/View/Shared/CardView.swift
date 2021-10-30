@@ -9,7 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct CardView: View {
-    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
+    @EnvironmentObject private var favoritesViewModel: FavoritesViewModel<InAppPurchasesViewModel>
 
     enum CardType: Equatable {
         case scanButton,

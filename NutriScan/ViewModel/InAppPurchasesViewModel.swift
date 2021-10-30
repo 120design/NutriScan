@@ -7,39 +7,47 @@
 
 import StoreKit
 
+protocol InAppPurchasesViewModelProtocol: ObservableObject {
+    var paidVersionIsPurchased: Bool? { get set }
+    
+    func purchasePaidVersion() async throws -> PurchaseState
+    func isPaidVersionPurchased() async -> Bool
+}
+
 typealias ProductID = String
 
-class InAppPurchasesViewModel: ObservableObject {
-    @Published private var products: [Product]?
-    @Published private var purchasedProductsIDs: [String] = []
-    @Published private(set) var paidVersionIsPurchased: Bool?
+// The state of a purchase.
+enum PurchaseState {
+    case notStarted,
+         userCannotMakePayments,
+         inProgress,
+         purchased,
+         pending,
+         cancelled,
+         failed,
+         failedVerification,
+         unknown
+}
+
+// Information on the result of unwrapping a transaction `VerificationResult`.
+struct UnwrappedVerificationResult<T> {
+    // The verified or unverified transaction.
+    let transaction: T
     
+    // True if the transaction was successfully verified by StoreKit.
+    let verified: Bool
+    
+    // If `verified` is false then `verificationError` will hold the verification error, nil otherwise.
+    let verificationError: VerificationResult<T>.VerificationError?
+}
+
+class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol {
+    @Published internal var paidVersionIsPurchased: Bool?
+    
+    private var products: [Product]?
+    private var purchasedProductsIDs: [String] = []
+
     private(set) var purchaseState: PurchaseState = .notStarted
-        
-    // The state of a purchase.
-    enum PurchaseState {
-        case notStarted,
-             userCannotMakePayments,
-             inProgress,
-             purchased,
-             pending,
-             cancelled,
-             failed,
-             failedVerification,
-             unknown
-    }
-    
-    // Information on the result of unwrapping a transaction `VerificationResult`.
-    struct UnwrappedVerificationResult<T> {
-        // The verified or unverified transaction.
-        let transaction: T
-        
-        // True if the transaction was successfully verified by StoreKit.
-        let verified: Bool
-        
-        // If `verified` is false then `verificationError` will hold the verification error, nil otherwise.
-        let verificationError: VerificationResult<T>.VerificationError?
-    }
     
     // Handle for App Store transactions.
     private var transactionListener: Task<Void, Error>? = nil
@@ -53,6 +61,7 @@ class InAppPurchasesViewModel: ObservableObject {
             // Get localized product info from the App Store
             Task {
                 products = try? await Product.products(for: productIDs)
+                paidVersionIsPurchased = await isPaidVersionPurchased()
             }
         }
 //        Task {
@@ -61,7 +70,7 @@ class InAppPurchasesViewModel: ObservableObject {
     }
     
     @MainActor
-    func purchase() async throws -> PurchaseState {
+    func purchasePaidVersion() async throws -> PurchaseState {
         guard let product = products?.first
         else {
             print("InAppPurchasesViewModel ~> purchase ~> ERROR ~> No product to sell!")
@@ -143,6 +152,22 @@ class InAppPurchasesViewModel: ObservableObject {
     }
     
     @MainActor
+    internal func isPaidVersionPurchased() async -> Bool {
+        guard let productID = products?.first?.id
+        else { return false }
+        
+        do {
+            guard try await isPurchased(productID: productID)
+            else { return false}
+            
+            return true
+        } catch {
+            print("InAppPurchasesViewModel ~> isPaidVersionPurchased ~> error ~>", error)
+            return false
+        }
+    }
+    
+    @MainActor
     func checkIfPaidVersionIsPurchased() async {
         guard let productID = products?.first?.id
         else {
@@ -162,7 +187,7 @@ class InAppPurchasesViewModel: ObservableObject {
             return
         }
     }
-    
+
     // Requests the most recent transaction for a product from the App Store and determines if it has been previously purchased.
     // May throw an exception of type `StoreException.transactionVerificationFailed`.
     // - Parameter productId: The `ProductID` of the product.
@@ -193,7 +218,7 @@ class InAppPurchasesViewModel: ObservableObject {
     // - Returns: A verified `Set<ProductId>` for all products the user is entitled to have access to. The set will be empty if the
     // user has not purchased anything previously.
     @MainActor
-    func currentEntitlements() async -> Set<ProductID> {
+    private func currentEntitlements() async -> Set<ProductID> {
         var entitledProductIDs = Set<ProductID>()
         
         for await result in Transaction.currentEntitlements {
@@ -208,7 +233,7 @@ class InAppPurchasesViewModel: ObservableObject {
     // The `Product` associated with a `ProductID`.
     // - Parameter productId: `ProductID`.
     // - Returns: Returns the `Product` associated with a `ProductID`.
-    func getProduct(from productID: ProductID) -> Product? {
+    private func getProduct(from productID: ProductID) -> Product? {
         guard let products = products
         else { return nil }
         
@@ -257,7 +282,7 @@ class InAppPurchasesViewModel: ObservableObject {
     // - Returns: Returns an `UnwrappedVerificationResult<T>` where `verified` is true if the transaction was
     // successfully verified by StoreKit. When `verified` is false `verificationError` will be non-nil.
     @MainActor
-    public func checkVerificationResult<T>(result: VerificationResult<T>) -> UnwrappedVerificationResult<T> {
+    private func checkVerificationResult<T>(result: VerificationResult<T>) -> UnwrappedVerificationResult<T> {
         switch result {
             case .unverified(let unverifiedTransaction, let error):
                 // StoreKit failed to automatically validate the transaction

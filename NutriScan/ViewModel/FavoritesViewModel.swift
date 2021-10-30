@@ -7,12 +7,24 @@
 
 import SwiftUI
 
-class FavoritesViewModel: ObservableObject {
-    @Published var products: [NUProduct] = []
+class FavoritesViewModel<IAPViewModel>: ObservableObject where IAPViewModel: InAppPurchasesViewModelProtocol {
+    @ObservedObject private var inAppPurchasesViewModel: IAPViewModel
+    
+    @Published internal var products: [NUProduct] = []
+    
+    internal var paidVersionIsPurchased: Bool? {
+        print("FavoritesViewModel ~> inAppPurchasesViewModel.paidVersionIsPurchased ~>", inAppPurchasesViewModel.paidVersionIsPurchased)
+        return inAppPurchasesViewModel.paidVersionIsPurchased
+    }
     
     private let storageManager: StorageManagerProtocol
     
-    init(storageManager: StorageManagerProtocol = StorageManager.shared) {
+    init(
+        inAppPurchasesViewModel: IAPViewModel,
+        storageManager: StorageManagerProtocol = StorageManager.shared
+    ) {
+        self.inAppPurchasesViewModel = inAppPurchasesViewModel
+        
         self.storageManager = storageManager
         getFavoritesProducts()
     }
@@ -67,6 +79,21 @@ class FavoritesViewModel: ObservableObject {
             : .product(product)
         } else {
             return .product(product)
+        }
+    }
+    
+    func purchaseFavoritesAccess() async throws -> PurchaseState {
+        do {
+            let purchaseState = try await inAppPurchasesViewModel.purchasePaidVersion()
+            print("FavoritesViewModel ~> purchaseState ~>", purchaseState)
+            
+            objectWillChange.send()
+            return purchaseState
+        } catch {
+            print("FavoritesViewModel ~> error ~>", error)
+            
+            objectWillChange.send()
+            return .unknown
         }
     }
 }
