@@ -23,12 +23,12 @@ enum StorageType {
 }
 
 class StorageManager: StorageManagerProtocol {
-    let maxHistory = nuProVersion ? 10 : 3
+    var maxHistory: Int
     
     static let shared = StorageManager()
     
     static var preview: StorageManager = {
-        let result = StorageManager(.inMemory)
+        let result = StorageManager(.inMemory, maxHistory: 10)
         let context = result.persistentContainer.viewContext
         for _ in 0..<10 {
             let cdNutriments = CDNutriments(context: context)
@@ -88,7 +88,10 @@ class StorageManager: StorageManagerProtocol {
     
     let persistentContainer: NSPersistentContainer
     
-    init(_ storageType: StorageType = .persistent) {
+    init(
+        _ storageType: StorageType = .persistent,
+        maxHistory: Int = HistoryViewModel.MaxHistory.low.int
+    ) {
         self.persistentContainer = NSPersistentContainer(name: "NutriScan")
         
         if storageType == .inMemory {
@@ -102,6 +105,8 @@ class StorageManager: StorageManagerProtocol {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+        
+        self.maxHistory = maxHistory
     }
     
     private var context: NSManagedObjectContext {
@@ -422,6 +427,7 @@ class StorageManager: StorageManagerProtocol {
     
     func getHistoryProducts() -> [NUProduct] {
         let request: NSFetchRequest<CDHistory> = CDHistory.fetchRequest()
+        request.fetchLimit = maxHistory
         
         guard let cdHistory = try? context.fetch(request),
               !cdHistory.isEmpty,

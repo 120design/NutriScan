@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FavoritesView: View {
     @EnvironmentObject private var favoritesViewModel: FavoritesViewModel
+    @EnvironmentObject private var inAppPurchasesViewModel: InAppPurchasesViewModel
     @ObservedObject private var alertViewModel = AlertViewModel()
     
     @State private var showCardDetail = false
@@ -149,8 +150,16 @@ struct FavoritesView: View {
             }
         }
         .nuNavigationBar()
-        .environmentObject(favoritesViewModel)
         .environment(\.editMode, editingList ? .constant(.active) : .constant(.inactive))
+        .onReceive(inAppPurchasesViewModel.$paidVersionIsPurchased) { paidVersionIsPurchased in
+            guard let paidVersionIsPurchased = paidVersionIsPurchased
+            else {
+                favoritesViewModel.favoritesAreGranted = false
+                return
+            }
+            
+            favoritesViewModel.favoritesAreGranted = paidVersionIsPurchased
+        }
     }
 }
 

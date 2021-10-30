@@ -9,16 +9,16 @@ import SwiftUI
 
 class HistoryViewModel: ObservableObject {
     @Published var products: [NUProduct] = []
-    @Published var maxHistory: MaxHistory = .three
+    @Published var maxHistory: MaxHistory = .low
     
     enum MaxHistory: String {
-        case three = "trois", ten = "dix"
+        case low = "trois", high = "dix"
         
         var int: Int {
             switch self {
-            case .three:
+            case .low:
                 return 3
-            case .ten:
+            case .high:
                 return 10
             }
         }
