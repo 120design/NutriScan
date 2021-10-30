@@ -72,9 +72,9 @@ struct SearchView: View {
                     
                     Text("ou")
                         .padding(.top, -5.0)
-                        .padding(.bottom, -0.5)
+                        .padding(.bottom, 2)
                         .modifier(NUStrongLabelModifier())
-                    
+
                     Button(action: {
                         cardDetailType = .eanButton
                         searchViewModel.showCardDetail = true

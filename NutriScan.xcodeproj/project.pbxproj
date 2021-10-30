@@ -29,7 +29,6 @@
 		2FA1CD89272AFEC2004365F2 /* CheckingVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA1CD88272AFEC2004365F2 /* CheckingVersionView.swift */; };
 		2FA1CD8D272B2B45004365F2 /* InAppPurchasesProducts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FA1CD8C272B2B45004365F2 /* InAppPurchasesProducts.plist */; };
 		2FA1CD90272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA1CD8F272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift */; };
-		2FA1CD92272D73CE004365F2 /* InAppPurchasesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA1CD91272D73CE004365F2 /* InAppPurchasesManager.swift */; };
 		2FD776E026C46628003B03E2 /* NUColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776DF26C46628003B03E2 /* NUColors.swift */; };
 		2FD776E226C46894003B03E2 /* NUNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776E126C46894003B03E2 /* NUNavigationBar.swift */; };
 		2FD776E826C46AC8003B03E2 /* OperatorMono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FD776E326C46AC7003B03E2 /* OperatorMono-Bold.otf */; };
@@ -82,7 +81,6 @@
 		2FA1CD88272AFEC2004365F2 /* CheckingVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckingVersionView.swift; sourceTree = "<group>"; };
 		2FA1CD8C272B2B45004365F2 /* InAppPurchasesProducts.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InAppPurchasesProducts.plist; sourceTree = "<group>"; };
 		2FA1CD8F272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesProductsConfiguration.swift; sourceTree = "<group>"; };
-		2FA1CD91272D73CE004365F2 /* InAppPurchasesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesManager.swift; sourceTree = "<group>"; };
 		2FD776DF26C46628003B03E2 /* NUColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUColors.swift; sourceTree = "<group>"; };
 		2FD776E126C46894003B03E2 /* NUNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUNavigationBar.swift; sourceTree = "<group>"; };
 		2FD776E326C46AC7003B03E2 /* OperatorMono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-Bold.otf"; sourceTree = "<group>"; };
@@ -167,7 +165,6 @@
 			children = (
 				2FDBCF69272A8D1400812C7E /* StoreKitProducts.storekit */,
 				2FA1CD8F272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift */,
-				2FA1CD91272D73CE004365F2 /* InAppPurchasesManager.swift */,
 				2FA1CD8C272B2B45004365F2 /* InAppPurchasesProducts.plist */,
 			);
 			path = InAppPurchases;
@@ -428,7 +425,6 @@
 				2FE94C0425990F6900595F71 /* OFFService.swift in Sources */,
 				2FD776E026C46628003B03E2 /* NUColors.swift in Sources */,
 				2F09F8B1259612FA005F97FA /* SearchView.swift in Sources */,
-				2FA1CD92272D73CE004365F2 /* InAppPurchasesManager.swift in Sources */,
 				2F55894F26D41AD000CEA23E /* NUTabView.swift in Sources */,
 				2F0C761F27245CAC00564D21 /* ProductsListView.swift in Sources */,
 				2F8F347F26CEB444007C4634 /* NUButtonStyle.swift in Sources */,

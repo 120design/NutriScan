@@ -115,6 +115,7 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
                 if !checkResult.verified {
                     purchaseState = .failedVerification
                     print("InAppPurchasesViewModel ~> purchase ~> TRANSACTION VALIDATION FAILURE ~> checkResult.transaction.productID ~>", checkResult.transaction.productID)
+                    paidVersionIsPurchased = false
                     throw StoreException.transactionVerificationFailed
                 }
                 
@@ -130,6 +131,7 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
                 
                 // Let the caller know the purchase succeeded and that the user should be given access to the product
                 purchaseState = .purchased
+                paidVersionIsPurchased = true
                 print("InAppPurchasesViewModel ~> purchase ~> NOTIFICATION ~> product.id ~>", product.id, "~>", StoreNotification.purchaseSuccess)
                 
                 return .purchased
@@ -137,6 +139,7 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
             case .userCancelled:
                 purchaseState = .cancelled
                 print("InAppPurchasesViewModel ~> purchase ~>  product.id ~>", product.id, "~> .cancelled")
+                paidVersionIsPurchased = false
                 return .cancelled
                 
             case .pending:
@@ -147,6 +150,7 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
             default:
                 purchaseState = .unknown
                 print("InAppPurchasesViewModel ~> purchase ~>  product.id ~>", product.id, "~> .unknown")
+                paidVersionIsPurchased = false
                 return .unknown
         }
     }
