@@ -109,9 +109,9 @@ struct EcoScore: Decodable, Equatable {
         }
     }
     
-    let score: Int?
-    let score_fr: Int?
-    
+    let score: Int? // 41
+    let score_fr: Int? // 36
+
     var score_value: String {
         var value = score ?? 0
         
@@ -127,8 +127,8 @@ struct EcoScore: Decodable, Equatable {
         return "\(value) pts/100"
     }
     
-    let grade: Grade?
-    let grade_fr: Grade?
+    let grade: Grade? // .c
+    let grade_fr: Grade? // .d
     
     var grade_value: Grade? {
         var value = grade

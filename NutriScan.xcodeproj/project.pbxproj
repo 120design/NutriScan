@@ -29,6 +29,10 @@
 		2FA1CD8D272B2B45004365F2 /* InAppPurchasesProducts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FA1CD8C272B2B45004365F2 /* InAppPurchasesProducts.plist */; };
 		2FA1CD90272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA1CD8F272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift */; };
 		2FA1CD95272DA674004365F2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA1CD94272DA674004365F2 /* SettingsView.swift */; };
+		2FA1CDA4272E8DBE004365F2 /* OFFServiceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA1CDA3272E8DBE004365F2 /* OFFServiceTestCase.swift */; };
+		2FA1CDA7272E8F30004365F2 /* 3502110006790-jus-d-orange-tropicana.json in Resources */ = {isa = PBXBuildFile; fileRef = 2FA1CDA6272E8F30004365F2 /* 3502110006790-jus-d-orange-tropicana.json */; };
+		2FA1CDA9272E8F94004365F2 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA1CDA8272E8F94004365F2 /* MockURLProtocol.swift */; };
+		2FA1CDAB272E8FF6004365F2 /* MockResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA1CDAA272E8FF6004365F2 /* MockResponseData.swift */; };
 		2FD776E026C46628003B03E2 /* NUColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776DF26C46628003B03E2 /* NUColors.swift */; };
 		2FD776E226C46894003B03E2 /* NUNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD776E126C46894003B03E2 /* NUNavigationBar.swift */; };
 		2FD776E826C46AC8003B03E2 /* OperatorMono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2FD776E326C46AC7003B03E2 /* OperatorMono-Bold.otf */; };
@@ -60,6 +64,16 @@
 		2FFC029926E64F2E00334FA5 /* Nutriments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFC029826E64F2E00334FA5 /* Nutriments.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2FA1CD9E272DDDBD004365F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2FE3E21E2590D59A00CF5AB0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2FE3E2252590D59A00CF5AB0;
+			remoteInfo = NutriScan;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		2F09F8B0259612FA005F97FA /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		2F09F8CE259677FD005F97FA /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
@@ -81,6 +95,11 @@
 		2FA1CD8C272B2B45004365F2 /* InAppPurchasesProducts.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InAppPurchasesProducts.plist; sourceTree = "<group>"; };
 		2FA1CD8F272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesProductsConfiguration.swift; sourceTree = "<group>"; };
 		2FA1CD94272DA674004365F2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2FA1CD9A272DDDBD004365F2 /* NutriScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NutriScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FA1CDA3272E8DBE004365F2 /* OFFServiceTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OFFServiceTestCase.swift; sourceTree = "<group>"; };
+		2FA1CDA6272E8F30004365F2 /* 3502110006790-jus-d-orange-tropicana.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "3502110006790-jus-d-orange-tropicana.json"; sourceTree = "<group>"; };
+		2FA1CDA8272E8F94004365F2 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		2FA1CDAA272E8FF6004365F2 /* MockResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResponseData.swift; sourceTree = "<group>"; };
 		2FD776DF26C46628003B03E2 /* NUColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUColors.swift; sourceTree = "<group>"; };
 		2FD776E126C46894003B03E2 /* NUNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NUNavigationBar.swift; sourceTree = "<group>"; };
 		2FD776E326C46AC7003B03E2 /* OperatorMono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OperatorMono-Bold.otf"; sourceTree = "<group>"; };
@@ -115,6 +134,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2FA1CD97272DDDBD004365F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2FE3E2232590D59A00CF5AB0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -178,6 +204,25 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		2FA1CD9B272DDDBD004365F2 /* NutriScanTests */ = {
+			isa = PBXGroup;
+			children = (
+				2FA1CDA3272E8DBE004365F2 /* OFFServiceTestCase.swift */,
+				2FA1CDA5272E8E59004365F2 /* Mocks */,
+			);
+			path = NutriScanTests;
+			sourceTree = "<group>";
+		};
+		2FA1CDA5272E8E59004365F2 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				2FA1CDA8272E8F94004365F2 /* MockURLProtocol.swift */,
+				2FA1CDAA272E8FF6004365F2 /* MockResponseData.swift */,
+				2FA1CDA6272E8F30004365F2 /* 3502110006790-jus-d-orange-tropicana.json */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		2FD776DE26C465C5003B03E2 /* ViewHelpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				2FE3E2282590D59A00CF5AB0 /* NutriScan */,
+				2FA1CD9B272DDDBD004365F2 /* NutriScanTests */,
 				2FE3E2272590D59A00CF5AB0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -225,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				2FE3E2262590D59A00CF5AB0 /* NutriScan.app */,
+				2FA1CD9A272DDDBD004365F2 /* NutriScanTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -347,6 +394,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2FA1CD99272DDDBD004365F2 /* NutriScanTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2FA1CDA0272DDDBD004365F2 /* Build configuration list for PBXNativeTarget "NutriScanTests" */;
+			buildPhases = (
+				2FA1CD96272DDDBD004365F2 /* Sources */,
+				2FA1CD97272DDDBD004365F2 /* Frameworks */,
+				2FA1CD98272DDDBD004365F2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2FA1CD9F272DDDBD004365F2 /* PBXTargetDependency */,
+			);
+			name = NutriScanTests;
+			productName = NutriScanTests;
+			productReference = 2FA1CD9A272DDDBD004365F2 /* NutriScanTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		2FE3E2252590D59A00CF5AB0 /* NutriScan */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2FE3E2352590D59D00CF5AB0 /* Build configuration list for PBXNativeTarget "NutriScan" */;
@@ -374,9 +439,14 @@
 		2FE3E21E2590D59A00CF5AB0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1220;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
+					2FA1CD99272DDDBD004365F2 = {
+						CreatedOnToolsVersion = 13.1;
+						LastSwiftMigration = 1310;
+						TestTargetID = 2FE3E2252590D59A00CF5AB0;
+					};
 					2FE3E2252590D59A00CF5AB0 = {
 						CreatedOnToolsVersion = 12.2;
 					};
@@ -400,11 +470,20 @@
 			projectRoot = "";
 			targets = (
 				2FE3E2252590D59A00CF5AB0 /* NutriScan */,
+				2FA1CD99272DDDBD004365F2 /* NutriScanTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2FA1CD98272DDDBD004365F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FA1CDA7272E8F30004365F2 /* 3502110006790-jus-d-orange-tropicana.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2FE3E2242590D59A00CF5AB0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -425,6 +504,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2FA1CD96272DDDBD004365F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FA1CDAB272E8FF6004365F2 /* MockResponseData.swift in Sources */,
+				2FA1CDA4272E8DBE004365F2 /* OFFServiceTestCase.swift in Sources */,
+				2FA1CDA9272E8F94004365F2 /* MockURLProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2FE3E2222590D59A00CF5AB0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -473,7 +562,66 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		2FA1CD9F272DDDBD004365F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2FE3E2252590D59A00CF5AB0 /* NutriScan */;
+			targetProxy = 2FA1CD9E272DDDBD004365F2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		2FA1CDA1272DDDBD004365F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7A5894W984;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = design.120.CKProject.NutriScanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NutriScan.app/NutriScan";
+			};
+			name = Debug;
+		};
+		2FA1CDA2272DDDBD004365F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7A5894W984;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = design.120.CKProject.NutriScanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NutriScan.app/NutriScan";
+			};
+			name = Release;
+		};
 		2FE3E2332590D59D00CF5AB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -639,6 +787,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2FA1CDA0272DDDBD004365F2 /* Build configuration list for PBXNativeTarget "NutriScanTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FA1CDA1272DDDBD004365F2 /* Debug */,
+				2FA1CDA2272DDDBD004365F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2FE3E2212590D59A00CF5AB0 /* Build configuration list for PBXProject "NutriScan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

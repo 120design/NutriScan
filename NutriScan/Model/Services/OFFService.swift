@@ -8,11 +8,22 @@
 import Foundation
 
 struct OFFService {
-    private let offApi = "https://world.openfoodfacts.org/api/v0/products/"
+    private var offApi = "https://world.openfoodfacts.org/api/v0/products/"
     
-    // Création du singleton
+    // Ssingleton's creation
     static let shared = OFFService()
     private init() {}
+    
+    // For unit tests
+    private var session = URLSession(configuration: .default)
+    private var task: URLSessionDataTask?
+    init(
+        session: URLSession = URLSession.shared,
+        offApi: String
+    ) {
+        self.session = session
+        self.offApi = offApi
+    }
     
     enum OFFError: Error {
         case connection,
@@ -24,111 +35,124 @@ struct OFFService {
              cancelledRequest
     }
     
-    func getProduct(from eanCode: String, completion: @escaping (Result<NUProduct, OFFError>) -> Void) {
-//        TODO: Utiliser ici URLComponent
-        guard let productURL = URL(string: offApi + eanCode) else {
+    func getProduct(
+        from eanCode: String,
+        completion: @escaping (Result<NUProduct, OFFError>) -> Void
+    ) {
+        // TODO: Utiliser ici URLComponent
+        guard let productURL = URL(string: offApi + eanCode)
+        else {
             print("OFFSERVICE ~> BAD URL")
             completion(.failure(.undefined))
             return
         }
 
-        let task = URLSession.shared.dataTask(with: productURL) { data, response, error in
-            // HTTP request error handling
-            if let error = error as? URLError {
-                if error.code == URLError.Code.notConnectedToInternet {
-                    print("OFFSERVICE ~> ERROR BECAUSE NOT CONNECTED TO INTERNET")
-                    completion(.failure(.connection))
-                    return
-                } else if error.code == URLError.Code.cancelled {
-                    print("OFFSERVICE ~> CANCELLED REQUEST")
-                    completion(.failure(.cancelledRequest))
-                    return
-                } else {
-                   print("OFFSERVICE ~> UNDEFINED REQUEST ERROR ~>", error)
-                   completion(.failure(.undefined))
-                   return
-               }
-            }
-            
-            // Getting HTTP response
-            guard let response = response as? HTTPURLResponse else {
-                print("OFFSERVICE ~> ERROR WITH THE RESPONSE")
-                completion(.failure(.response))
-                return
-            }
-            guard response.statusCode == 200 else {
-                print("OFFSERVICE ~> ERROR WITH THE RESPONSE'S STATUS CODE", response.statusCode)
-                completion(.failure(.statusCode))
-                return
-            }
-            
-            // Getting and decoding response's JSON data
-            guard let data = data,
-                  let offData = try? JSONDecoder().decode(OFFData.self, from: data)
-            else {
-                print("OFFSERVICE ~> ERROR WITH THE DATA")
-                completion(.failure(.data))
-                return
-            }
-            
-            // Checking than the response provide a product
-            guard offData.status == 1,
-                  let offProduct = offData.product
-            else {
-                print("OFFSERVICE ~> NO PRODUCT FOUND")
-                completion(.failure(.noProductFound))
-                return
-            }
-            
-            // Constructing a NUProduct's instance
-            let id = offProduct._id
-            
-            let name = offProduct.product_name_fr ?? offProduct.product_name
-            
-            let nutriments = offProduct.nutriments
-
-            let novaGroup = offProduct.nova_group
-            
-            var nutriScore: NutriScore?
-
-            if let offNutriScore = offProduct.nutriscore_data,
-               let _ = offNutriScore.score,
-               let _ = offNutriScore.negative_points,
-               let _ = offNutriScore.positive_points,
-               let _ = offNutriScore.grade
-            {
-                nutriScore = offNutriScore
-            } else {
-                nutriScore = nil
-            }
-            
-            let image_url = offProduct.image_url ?? nil
-            
-            var ecoScore: EcoScore?
-            
-            if let offEcoScore = offProduct.ecoscore_data,
-               let _ = offEcoScore.score,
-               let _ = offEcoScore.grade,
-               let offAgribalyse = offEcoScore.agribalyse,
-               let _ = offAgribalyse.score,
-               let _ = offEcoScore.adjustments {
-                ecoScore = offEcoScore
-            } else {
-                ecoScore = nil
-            }
+        task?.cancel()
+        let task = session.dataTask(with: productURL) { data, response, error in
+            DispatchQueue.main.async {
+                // HTTP request error handling
+                if let error = error as? URLError {
+                    if error.code == URLError.Code.notConnectedToInternet {
+                        print("OFFSERVICE ~> ERROR BECAUSE NOT CONNECTED TO INTERNET")
+                        completion(.failure(.connection))
+                        return
+                    } else if error.code == URLError.Code.cancelled {
+                        print("OFFSERVICE ~> CANCELLED REQUEST")
+                        completion(.failure(.cancelledRequest))
+                        return
+                    } else {
+                       print("OFFSERVICE ~> UNDEFINED REQUEST ERROR ~>", error)
+                       completion(.failure(.undefined))
+                       return
+                   }
+                }
                 
-            let product = NUProduct(
-                id: id,
-                name: name,
-                imageURL: image_url,
-                nutriments: nutriments,
-                nutriScore: nutriScore,
-                novaGroup: novaGroup,
-                ecoScore: ecoScore
-            )
-            
-            // Return the NUProduct
-            completion(.success(product))
+                // Getting HTTP response
+                guard let response = response as? HTTPURLResponse else {
+                    print("OFFSERVICE ~> ERROR WITH THE RESPONSE")
+                    completion(.failure(.response))
+                    return
+                }
+                guard response.statusCode == 200 else {
+                    print("OFFSERVICE ~> ERROR WITH THE RESPONSE'S STATUS CODE", response.statusCode)
+                    completion(.failure(.statusCode))
+                    return
+                }
+                
+                // Getting and decoding response's JSON data
+                guard let data = data,
+                      let offData = try? JSONDecoder().decode(OFFData.self, from: data)
+                else {
+                    print("OFFSERVICE ~> ERROR WITH THE DATA")
+                    completion(.failure(.data))
+                    return
+                }
+                
+                print("-----------------")
+                print("OFFService ~> offData.product?.ecoscore_data?.product_name_fr ~>", offData.product?.product_name_fr)
+                print("OFFService ~> offData.product?.ecoscore_data?.score ~>", offData.product?.ecoscore_data?.score)
+                print("OFFService ~> offData.product?.ecoscore_data?.score_fr ~>", offData.product?.ecoscore_data?.score_fr)
+                print("OFFService ~> offData.product?.ecoscore_data?.grade ~>", offData.product?.ecoscore_data?.grade)
+                print("OFFService ~> offData.product?.ecoscore_data?.grade_fr ~>", offData.product?.ecoscore_data?.grade_fr)
+                print("-----------------")
+
+                // Checking than the response provide a product
+                guard offData.status == 1,
+                      let offProduct = offData.product
+                else {
+                    print("OFFSERVICE ~> NO PRODUCT FOUND")
+                    completion(.failure(.noProductFound))
+                    return
+                }
+
+                // Constructing a NUProduct's instance
+                let id = offProduct._id
+                
+                let name = offProduct.product_name_fr ?? offProduct.product_name
+                
+                let nutriments = offProduct.nutriments
+
+                let novaGroup = offProduct.nova_group
+                
+                var nutriScore: NutriScore?
+
+                if let offNutriScore = offProduct.nutriscore_data,
+                   let _ = offNutriScore.score,
+                   let _ = offNutriScore.negative_points,
+                   let _ = offNutriScore.positive_points,
+                   let _ = offNutriScore.grade
+                {
+                    nutriScore = offNutriScore
+                }
+                
+                let image_url = offProduct.image_url ?? nil
+                
+                var ecoScore: EcoScore?
+                
+                if let offEcoScore = offProduct.ecoscore_data,
+                   let _ = offEcoScore.score,
+                   let _ = offEcoScore.grade,
+                   let offAgribalyse = offEcoScore.agribalyse,
+                   let _ = offAgribalyse.score,
+                   let _ = offEcoScore.adjustments
+                {
+                    ecoScore = offEcoScore
+                }
+                
+
+                let product = NUProduct(
+                    id: id,
+                    name: name,
+                    imageURL: image_url,
+                    nutriments: nutriments,
+                    nutriScore: nutriScore,
+                    novaGroup: novaGroup,
+                    ecoScore: ecoScore
+                )
+                
+                // Return the NUProduct
+                completion(.success(product))
+            }
         }
         task.resume()
     }

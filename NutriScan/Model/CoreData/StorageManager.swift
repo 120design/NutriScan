@@ -200,10 +200,10 @@ class StorageManager: StorageManagerProtocol {
             
             var cdAdjustments: CDAdjustments
             
-            cdEcoScore.score = Int16(score)
+            cdEcoScore.score = Int16(score) as NSNumber?
             
             if let score_fr = ecoScore.score_fr {
-                cdEcoScore.score_fr = Int16(score_fr)
+                cdEcoScore.score_fr = Int16(score_fr) as NSNumber?
             }
             
             switch grade {
@@ -235,7 +235,7 @@ class StorageManager: StorageManagerProtocol {
             }
             
             let cdAgribalyse = CDAgribalyse(context: context)
-            cdAgribalyse.score = Int16(agribalyseScore)
+            cdAgribalyse.score = Int16(agribalyseScore) as NSNumber?
             cdEcoScore.agribalyse = cdAgribalyse
             
             cdAdjustments = CDAdjustments(context: context)
@@ -247,7 +247,7 @@ class StorageManager: StorageManagerProtocol {
             
             if let value = adjustments.production_system?.value {
                 cdProductionSystem = CDProductionSystem(context: context)
-                cdProductionSystem.value = Int16(value)
+                cdProductionSystem.value = Int16(value) as NSNumber?
                 
                 cdAdjustments.production_system = cdProductionSystem
             }
@@ -261,29 +261,29 @@ class StorageManager: StorageManagerProtocol {
                 let origins_of_ingredients = adjustments.origins_of_ingredients
                 
                 if let transportation_value = origins_of_ingredients?.transportation_value {
-                    cdOriginsOfIngredients.transportation_value = Int16(transportation_value)
+                    cdOriginsOfIngredients.transportation_value = Int16(transportation_value) as NSNumber?
                 }
                 
                 if let transportation_value_fr = origins_of_ingredients?.transportation_value_fr {
-                    cdOriginsOfIngredients.transportation_value_fr = Int16(transportation_value_fr)
+                    cdOriginsOfIngredients.transportation_value_fr = Int16(transportation_value_fr) as NSNumber?
                 }
                 
                 if let epi_value = origins_of_ingredients?.epi_value {
-                    cdOriginsOfIngredients.epi_value = Int16(epi_value)
+                    cdOriginsOfIngredients.epi_value = Int16(epi_value) as NSNumber?
                 }
                 
                 cdAdjustments.origins_of_ingredients = cdOriginsOfIngredients
                 
                 if let value = adjustments.packaging?.value {
                     cdPackaging = CDPackaging(context: context)
-                    cdPackaging.value = Int16(value)
+                    cdPackaging.value = Int16(value) as NSNumber?
                     
                     cdAdjustments.packaging = cdPackaging
                 }
                 
                 if let value = adjustments.threatened_species?.value {
                     cdThreatenedSpecies = CDThreatnenedSpecies(context: context)
-                    cdThreatenedSpecies.value = Int16(value)
+                    cdThreatenedSpecies.value = Int16(value) as NSNumber?
                     
                     cdAdjustments.threatened_species = cdThreatenedSpecies
                 }
@@ -302,9 +302,9 @@ class StorageManager: StorageManagerProtocol {
         {
             cdNutriScore = CDNutriScore(context: context)
             
-            cdNutriScore.score = Int16(score)
-            cdNutriScore.negative_points = Int16(negative_points)
-            cdNutriScore.positive_points = Int16(positive_points)
+            cdNutriScore.score = Int16(score) as NSNumber?
+            cdNutriScore.negative_points = Int16(negative_points) as NSNumber?
+            cdNutriScore.positive_points = Int16(positive_points) as NSNumber?
             
             switch grade {
             case .a:
@@ -626,10 +626,24 @@ extension NUProduct {
                 grade = nil
             }
             
+            var cdScore: Int?
+            var cdNegative_points: Int?
+            var cdPositive_points: Int?
+            
+            if let score = cdNutriScore.score {
+                cdScore = Int(truncating: score)
+            }
+            if let negative_points = cdNutriScore.negative_points {
+                cdNegative_points = Int(truncating: negative_points)
+            }
+            if let positive_points = cdNutriScore.positive_points {
+                cdPositive_points = Int(truncating: positive_points)
+            }
+
             self.nutriScore = NutriScore(
-                score: Int(cdNutriScore.score),
-                negative_points: Int(cdNutriScore.negative_points),
-                positive_points: Int(cdNutriScore.positive_points),
+                score: cdScore,
+                negative_points: cdNegative_points,
+                positive_points: cdPositive_points,
                 grade: grade
             )
         } else {
@@ -695,17 +709,33 @@ extension NUProduct {
                 var packaging: Packaging
                 var threatened_species: ThreatenedSpecies
                 
-                if let cdProductionSystem = cdAdjustments.production_system {
-                    production_system = ProductionSystem(value: Int(cdProductionSystem.value))
+                if let cdProductionSystem = cdAdjustments.production_system,
+                   let cdValue = cdProductionSystem.value
+                {
+                    production_system = ProductionSystem(value: Int(truncating: cdValue))
                 } else {
                     production_system = ProductionSystem(value: nil)
                 }
                 
                 if let cdOriginOfIngedients = cdAdjustments.origins_of_ingredients {
+                    var cdTransportation_value: Int?
+                    var cdTransportation_value_fr: Int?
+                    var cdEpi_value: Int?
+                    
+                    if let transportation_value = cdOriginOfIngedients.transportation_value {
+                        cdTransportation_value = Int(truncating: transportation_value)
+                    }
+                    if let transportation_value_fr = cdOriginOfIngedients.transportation_value_fr {
+                        cdTransportation_value_fr = Int(truncating: transportation_value_fr)
+                    }
+                    if let epi_value = cdOriginOfIngedients.epi_value {
+                        cdEpi_value = Int(truncating: epi_value)
+                    }
+
                     origins_of_ingredients = OriginsOfIngredients(
-                        transportation_value: Int(cdOriginOfIngedients.transportation_value),
-                        transportation_value_fr: Int(cdOriginOfIngedients.transportation_value_fr),
-                        epi_value: Int(cdOriginOfIngedients.epi_value)
+                        transportation_value: cdTransportation_value,
+                        transportation_value_fr: cdTransportation_value_fr,
+                        epi_value: cdEpi_value
                     )
                 } else {
                     origins_of_ingredients = OriginsOfIngredients(
@@ -716,13 +746,25 @@ extension NUProduct {
                 }
                 
                 if let cdPackaging = cdAdjustments.packaging {
-                    packaging = Packaging(value: Int(cdPackaging.value))
+                    var cdValue: Int?
+                    
+                    if let value = cdPackaging.value {
+                        cdValue = Int(truncating: value)
+                    }
+                    
+                    packaging = Packaging(value: cdValue)
                 } else {
                     packaging = Packaging(value: nil)
                 }
                 
                 if let cdThreatenedSpecies = cdAdjustments.threatened_species {
-                    threatened_species = ThreatenedSpecies(value: Int(cdThreatenedSpecies.value))
+                    var cdValue: Int?
+                    
+                    if let value = cdThreatenedSpecies.value {
+                        cdValue = Int(truncating: value)
+                    }
+
+                    threatened_species = ThreatenedSpecies(value: cdValue)
                 } else {
                     threatened_species = ThreatenedSpecies(value: nil)
                 }
@@ -737,9 +779,19 @@ extension NUProduct {
                 adjustments = nil
             }
             
+            var cdScore: Int?
+            var cdScore_fr: Int?
+            
+            if let score = cdEcoScore.score {
+                cdScore = Int(truncating: score)
+            }
+            if let score_fr = cdEcoScore.score_fr {
+                cdScore_fr = Int(truncating: score_fr)
+            }
+
             self.ecoScore = EcoScore(
-                score: Int(bitPattern: cdEcoScore.id),
-                score_fr: Int(cdEcoScore.score_fr),
+                score: cdScore,
+                score_fr: cdScore_fr,
                 grade: grade,
                 grade_fr: grade_fr,
                 agribalyse: EcoScore.Agribalyse(

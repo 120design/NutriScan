@@ -8,14 +8,14 @@
         <relationship name="threatened_species" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CDThreatnenedSpecies" inverseName="adjustments" inverseEntity="CDThreatnenedSpecies"/>
     </entity>
     <entity name="CDAgribalyse" representedClassName="CDAgribalyse" syncable="YES" codeGenerationType="class">
-        <attribute name="score" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="score" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
         <relationship name="ecoScore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDEcoScore" inverseName="agribalyse" inverseEntity="CDEcoScore"/>
     </entity>
     <entity name="CDEcoScore" representedClassName="CDEcoScore" syncable="YES" codeGenerationType="class">
-        <attribute name="grade" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
-        <attribute name="grade_fr" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
-        <attribute name="score" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
-        <attribute name="score_fr" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="grade" optional="YES" attributeType="Integer 16" usesScalarValueType="NO"/>
+        <attribute name="grade_fr" optional="YES" attributeType="Integer 16" usesScalarValueType="NO"/>
+        <attribute name="score" optional="YES" attributeType="Integer 16" usesScalarValueType="NO"/>
+        <attribute name="score_fr" optional="YES" attributeType="Integer 16" usesScalarValueType="NO"/>
         <relationship name="adjustments" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CDAdjustments" inverseName="ecoSore" inverseEntity="CDAdjustments"/>
         <relationship name="agribalyse" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CDAgribalyse" inverseName="ecoScore" inverseEntity="CDAgribalyse"/>
         <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDProduct" inverseName="ecoScore" inverseEntity="CDProduct"/>
@@ -37,27 +37,27 @@
         <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDProduct" inverseName="nutriments" inverseEntity="CDProduct"/>
     </entity>
     <entity name="CDNutriScore" representedClassName="CDNutriScore" syncable="YES" codeGenerationType="class">
-        <attribute name="grade" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="negative_points" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="positive_points" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="score" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="grade" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="negative_points" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="positive_points" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="score" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
         <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDProduct" inverseName="nutriScore" inverseEntity="CDProduct"/>
     </entity>
     <entity name="CDOriginsOfIngredients" representedClassName="CDOriginsOfIngredients" syncable="YES" codeGenerationType="class">
-        <attribute name="epi_value" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
-        <attribute name="transportation_value" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
-        <attribute name="transportation_value_fr" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="epi_value" optional="YES" attributeType="Integer 16" usesScalarValueType="NO"/>
+        <attribute name="transportation_value" optional="YES" attributeType="Integer 16" usesScalarValueType="NO"/>
+        <attribute name="transportation_value_fr" optional="YES" attributeType="Integer 16" usesScalarValueType="NO"/>
         <relationship name="adjustments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDAdjustments" inverseName="origins_of_ingredients" inverseEntity="CDAdjustments"/>
     </entity>
     <entity name="CDPackaging" representedClassName="CDPackaging" syncable="YES" codeGenerationType="class">
-        <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
         <relationship name="adjustments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDAdjustments" inverseName="packaging" inverseEntity="CDAdjustments"/>
     </entity>
     <entity name="CDProduct" representedClassName="CDProduct" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="imageURL" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="novaGroup" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="novaGroup" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
         <relationship name="ecoScore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDEcoScore" inverseName="product" inverseEntity="CDEcoScore"/>
         <relationship name="favorites" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDFavorites" inverseName="products" inverseEntity="CDFavorites"/>
         <relationship name="history" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDHistory" inverseName="products" inverseEntity="CDHistory"/>
@@ -65,11 +65,11 @@
         <relationship name="nutriScore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDNutriScore" inverseName="product" inverseEntity="CDNutriScore"/>
     </entity>
     <entity name="CDProductionSystem" representedClassName="CDProductionSystem" syncable="YES" codeGenerationType="class">
-        <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
         <relationship name="adjustments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDAdjustments" inverseName="production_system" inverseEntity="CDAdjustments"/>
     </entity>
     <entity name="CDThreatnenedSpecies" representedClassName="CDThreatnenedSpecies" syncable="YES" codeGenerationType="class">
-        <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
         <relationship name="adjustments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDAdjustments" inverseName="threatened_species" inverseEntity="CDAdjustments"/>
     </entity>
     <elements>
@@ -79,11 +79,11 @@
         <element name="CDFavorites" positionX="-18" positionY="81" width="128" height="44"/>
         <element name="CDHistory" positionX="-9" positionY="90" width="128" height="44"/>
         <element name="CDNutriments" positionX="-54" positionY="-9" width="128" height="149"/>
-        <element name="CDNutriScore" positionX="-36" positionY="54" width="128" height="14"/>
+        <element name="CDNutriScore" positionX="-36" positionY="54" width="128" height="104"/>
         <element name="CDOriginsOfIngredients" positionX="0" positionY="90" width="128" height="89"/>
-        <element name="CDPackaging" positionX="18" positionY="108" width="128" height="14"/>
+        <element name="CDPackaging" positionX="18" positionY="108" width="128" height="59"/>
         <element name="CDProduct" positionX="-63" positionY="-9" width="128" height="164"/>
-        <element name="CDProductionSystem" positionX="-18" positionY="81" width="128" height="14"/>
+        <element name="CDProductionSystem" positionX="-18" positionY="81" width="128" height="59"/>
         <element name="CDThreatnenedSpecies" positionX="36" positionY="117" width="128" height="59"/>
     </elements>
 </model>
