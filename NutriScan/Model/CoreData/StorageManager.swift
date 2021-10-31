@@ -664,10 +664,20 @@ extension NUProduct {
         }
         
         if let cdEcoScore = cdProduct.ecoScore {
+            var score: Int?
+            var scores: EcoScore.Scores?
             var grade: EcoScore.Grade?
-            var grade_fr: EcoScore.Grade?
+            var grades: EcoScore.Grades?
+            var agribalyse: EcoScore.Agribalyse?
             var adjustments: EcoScore.Adjustments?
             
+            if let cdScore = cdEcoScore.score {
+                score = Int(truncating: cdScore)
+            }
+            if let cdScore_fr = cdEcoScore.score_fr {
+                scores = EcoScore.Scores(fr: Int(truncating: cdScore_fr))
+            }
+
             switch cdEcoScore.grade {
             case 1:
                 grade = .a
@@ -685,17 +695,21 @@ extension NUProduct {
             
             switch cdEcoScore.grade_fr {
             case 1:
-                grade_fr = .a
+                grades = EcoScore.Grades(fr: .a)
             case 2:
-                grade_fr = .b
+                grades = EcoScore.Grades(fr: .b)
             case 3:
-                grade_fr = .c
+                grades = EcoScore.Grades(fr: .c)
             case 4:
-                grade_fr = .d
+                grades = EcoScore.Grades(fr: .d)
             case 5:
-                grade_fr = .e
+                grades = EcoScore.Grades(fr: .e)
             default:
-                grade_fr = nil
+                grades = nil
+            }
+            
+            if let score = cdEcoScore.agribalyse?.score {
+                agribalyse = EcoScore.Agribalyse(score: Int(truncating: score))
             }
             
             if let cdAdjustments = cdEcoScore.adjustments {
@@ -718,29 +732,31 @@ extension NUProduct {
                 }
                 
                 if let cdOriginOfIngedients = cdAdjustments.origins_of_ingredients {
-                    var cdTransportation_value: Int?
-                    var cdTransportation_value_fr: Int?
-                    var cdEpi_value: Int?
+                    typealias TransportationValues = EcoScore.Adjustments.OriginsOfIngredients.TransportationValues
                     
-                    if let transportation_value = cdOriginOfIngedients.transportation_value {
-                        cdTransportation_value = Int(truncating: transportation_value)
+                    var transportation_value: Int?
+                    var transportation_values: TransportationValues?
+                    var epi_value: Int?
+                    
+                    if let cdTransportation_value = cdOriginOfIngedients.transportation_value {
+                        transportation_value = Int(truncating: cdTransportation_value)
                     }
-                    if let transportation_value_fr = cdOriginOfIngedients.transportation_value_fr {
-                        cdTransportation_value_fr = Int(truncating: transportation_value_fr)
+                    if let cdTransportation_value_fr = cdOriginOfIngedients.transportation_value_fr {
+                        transportation_values = TransportationValues(fr: Int(truncating: cdTransportation_value_fr))
                     }
-                    if let epi_value = cdOriginOfIngedients.epi_value {
-                        cdEpi_value = Int(truncating: epi_value)
+                    if let cdEpi_value = cdOriginOfIngedients.epi_value {
+                        epi_value = Int(truncating: cdEpi_value)
                     }
 
                     origins_of_ingredients = OriginsOfIngredients(
-                        transportation_value: cdTransportation_value,
-                        transportation_value_fr: cdTransportation_value_fr,
-                        epi_value: cdEpi_value
+                        transportation_value: transportation_value,
+                        transportation_values: transportation_values,
+                        epi_value: epi_value
                     )
                 } else {
                     origins_of_ingredients = OriginsOfIngredients(
                         transportation_value: nil,
-                        transportation_value_fr: nil,
+                        transportation_values: nil,
                         epi_value: nil
                     )
                 }
@@ -778,25 +794,13 @@ extension NUProduct {
             } else {
                 adjustments = nil
             }
-            
-            var cdScore: Int?
-            var cdScore_fr: Int?
-            
-            if let score = cdEcoScore.score {
-                cdScore = Int(truncating: score)
-            }
-            if let score_fr = cdEcoScore.score_fr {
-                cdScore_fr = Int(truncating: score_fr)
-            }
 
             self.ecoScore = EcoScore(
-                score: cdScore,
-                score_fr: cdScore_fr,
+                score: score,
+                scores: scores,
                 grade: grade,
-                grade_fr: grade_fr,
-                agribalyse: EcoScore.Agribalyse(
-                    score: Int(cdEcoScore.agribalyse?.score ?? 0)
-                ),
+                grades: grades,
+                agribalyse: agribalyse,
                 adjustments: adjustments
             )
         } else {

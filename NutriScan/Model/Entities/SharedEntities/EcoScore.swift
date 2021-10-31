@@ -26,8 +26,15 @@ struct EcoScore: Decodable, Equatable {
             let value: Int?
         }
         struct OriginsOfIngredients: Decodable, Equatable {
+            struct TransportationValues: Decodable, Equatable {
+                let fr: Int?
+            }
+            
             let transportation_value: Int?
-            let transportation_value_fr: Int?
+            
+            let transportation_values: TransportationValues?
+            var transportation_value_fr: Int? { transportation_values?.fr ?? nil }
+            
             let epi_value: Int?
         }
         struct Packaging: Decodable, Equatable {
@@ -109,9 +116,18 @@ struct EcoScore: Decodable, Equatable {
         }
     }
     
-    let score: Int? // 41
-    let score_fr: Int? // 36
-
+    struct Scores: Decodable, Equatable {
+        let fr:  Int?
+    }
+    
+    struct Grades: Decodable, Equatable {
+        let fr:  Grade?
+    }
+    
+    let score: Int?
+    let scores: Scores?
+    var score_fr: Int? { scores?.fr ?? nil }
+    
     var score_value: String {
         var value = score ?? 0
         
@@ -127,8 +143,9 @@ struct EcoScore: Decodable, Equatable {
         return "\(value) pts/100"
     }
     
-    let grade: Grade? // .c
-    let grade_fr: Grade? // .d
+    let grade: Grade?
+    let grades: Grades?
+    var grade_fr: Grade? { grades?.fr ?? nil }
     
     var grade_value: Grade? {
         var value = grade

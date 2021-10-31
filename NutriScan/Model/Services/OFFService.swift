@@ -87,14 +87,6 @@ struct OFFService {
                     completion(.failure(.data))
                     return
                 }
-                
-                print("-----------------")
-                print("OFFService ~> offData.product?.ecoscore_data?.product_name_fr ~>", offData.product?.product_name_fr)
-                print("OFFService ~> offData.product?.ecoscore_data?.score ~>", offData.product?.ecoscore_data?.score)
-                print("OFFService ~> offData.product?.ecoscore_data?.score_fr ~>", offData.product?.ecoscore_data?.score_fr)
-                print("OFFService ~> offData.product?.ecoscore_data?.grade ~>", offData.product?.ecoscore_data?.grade)
-                print("OFFService ~> offData.product?.ecoscore_data?.grade_fr ~>", offData.product?.ecoscore_data?.grade_fr)
-                print("-----------------")
 
                 // Checking than the response provide a product
                 guard offData.status == 1,

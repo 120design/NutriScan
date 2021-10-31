@@ -194,9 +194,11 @@ struct ProductCardInformationsView<LeftContent: View, RightContent: View>: View 
                 .frame(maxWidth: .infinity)
             }
             
-            if let bottomContent = bottomContent {
+            if let bottomContent = bottomContent,
+               let attributedString = try? AttributedString(markdown: bottomContent)
+            {
                 VStack(alignment: .leading) {
-                    Text(bottomContent)
+                    Text(attributedString)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 5)
@@ -310,7 +312,7 @@ struct ProductNutriScoreInformationsView: View {
                 )
             },
             
-            bottomContent: "Le Nutri-score résulte de la différence entre ses points négatifs et ses points positifs. Plus il est bas, meilleures sont les qualités nutritionnelles du produit."
+            bottomContent: "Le Nutri-score résulte de *la différence entre ses points négatifs et ses points positifs.* Plus il est bas, meilleures sont les qualités nutritionnelles du produit."
         )
     }
 }
@@ -373,7 +375,7 @@ struct ProductEcoScoreInformationsView: View {
                 )
             },
             
-            bottomContent: "Ce calcul de l’Eco-score est celui d’un produit consommé en France, le bonus accordé pour le transport pouvant varier d’un pays de consommation à un autre."
+            bottomContent: "Ce calcul de l’Eco-score est celui *d’un produit consommé en France,* le bonus accordé pour le transport *pouvant varier d’un pays de consommation à un autre.*"
         )
     }
 }
