@@ -29,65 +29,6 @@ class StorageManager: StorageManagerProtocol {
     
     static let shared = StorageManager()
     
-    static var preview: StorageManager = {
-        let result = StorageManager(.inMemory, maxHistory: 10)
-        let context = result.persistentContainer.viewContext
-        for _ in 0..<10 {
-            let cdNutriments = CDNutriments(context: context)
-            cdNutriments.fiber_100g = 0.4
-            cdNutriments.carbohydrates_100g = 9.8
-            cdNutriments.proteins_100g = 3.57
-            cdNutriments.fat_100g = 1.8
-            cdNutriments.salt_100g = 0.00014
-            cdNutriments.energy_kj_100g = 296
-            cdNutriments.energy_kcal_100g = 70
-            
-            var cdNutriscore = CDNutriScore(context: context)
-            cdNutriscore.score = 1
-            cdNutriscore.negative_points = 3
-            cdNutriscore.positive_points = 2
-            cdNutriscore.grade = 2
-            
-            var cdAgribalyse = CDAgribalyse(context: context)
-            cdAgribalyse.score = 52
-            
-            var cdOriginsOfIngredients = CDOriginsOfIngredients(context: context)
-            cdOriginsOfIngredients.transportation_value_fr = 0
-            cdOriginsOfIngredients.epi_value = -5
-            
-            var cdPackaging = CDPackaging(context: context)
-            cdPackaging.value = -13
-            
-            var cdAdjustments = CDAdjustments(context: context)
-            cdAdjustments.origins_of_ingredients = cdOriginsOfIngredients
-            cdAdjustments.packaging = cdPackaging
-            
-            var cdEcoScore = CDEcoScore(context: context)
-            cdEcoScore.score = 39
-            cdEcoScore.score_fr = 34
-            cdEcoScore.grade = 4
-            cdEcoScore.grade_fr = 4
-            cdEcoScore.agribalyse = cdAgribalyse
-            
-            let cdProduct = CDProduct(context: context)
-            cdProduct.id = "7613035239562"
-            cdProduct.name = "Nesquik"
-            cdProduct.imageURL = "https://images.openfoodfacts.org/images/products/761/303/523/9562/front_fr.185.400.jpg"
-            cdProduct.nutriments = cdNutriments
-            cdProduct.nutriScore = cdNutriscore
-            cdProduct.novaGroup = 4
-        }
-        do {
-            try context.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        return result
-    }()
-    
     let persistentContainer: NSPersistentContainer
     
     init(
@@ -202,7 +143,7 @@ class StorageManager: StorageManagerProtocol {
             
             cdEcoScore.score = Int16(score) as NSNumber?
             
-            if let score_fr = ecoScore.score_fr {
+            if let score_fr = ecoScore.scores?.fr {
                 cdEcoScore.score_fr = Int16(score_fr) as NSNumber?
             }
             
@@ -219,18 +160,18 @@ class StorageManager: StorageManagerProtocol {
                 cdEcoScore.grade = 5
             }
             
-            if let grade_fr = ecoScore.grade_fr {
+            if let grade_fr = ecoScore.grades?.fr {
                 switch grade_fr {
                 case .a:
-                    cdEcoScore.grade = 1
+                    cdEcoScore.grade_fr = 1
                 case .b:
-                    cdEcoScore.grade = 2
+                    cdEcoScore.grade_fr = 2
                 case .c:
-                    cdEcoScore.grade = 3
+                    cdEcoScore.grade_fr = 3
                 case .d:
-                    cdEcoScore.grade = 4
+                    cdEcoScore.grade_fr = 4
                 case .e:
-                    cdEcoScore.grade = 5
+                    cdEcoScore.grade_fr = 5
                 }
             }
             
@@ -253,7 +194,7 @@ class StorageManager: StorageManagerProtocol {
             }
             
             if adjustments.origins_of_ingredients?.transportation_value != nil
-                || adjustments.origins_of_ingredients?.transportation_value_fr != nil
+                || adjustments.origins_of_ingredients?.transportation_values?.fr != nil
                 || adjustments.origins_of_ingredients?.epi_value != nil
             {
                 cdOriginsOfIngredients = CDOriginsOfIngredients(context: context)
@@ -264,7 +205,7 @@ class StorageManager: StorageManagerProtocol {
                     cdOriginsOfIngredients.transportation_value = Int16(transportation_value) as NSNumber?
                 }
                 
-                if let transportation_value_fr = origins_of_ingredients?.transportation_value_fr {
+                if let transportation_value_fr = origins_of_ingredients?.transportation_values?.fr {
                     cdOriginsOfIngredients.transportation_value_fr = Int16(transportation_value_fr) as NSNumber?
                 }
                 
@@ -374,6 +315,7 @@ class StorageManager: StorageManagerProtocol {
         cdHistory.products = newCDHistoryProducts
         
         let cdFavorites = getCDFavorites() ?? CDFavorites(context: context)
+        
         if productIsAFavorite {
             guard let cdFavoritesProducts = cdFavorites.products,
                   let productsArray = Array(cdFavoritesProducts) as? [CDProduct],
@@ -409,7 +351,6 @@ class StorageManager: StorageManagerProtocol {
         cdFavorites.products = NSOrderedSet(array: [cdProduct] + productsArray)
         saveContext()
     }
-    
     
     // MARK: Read operations
     
@@ -453,9 +394,11 @@ class StorageManager: StorageManagerProtocol {
         else { return [] }
         
         return cdProducts.compactMap { cdProduct -> NUProduct?  in
-            guard let nuProduct = NUProduct(from: cdProduct as! CDProduct) else {
+            guard let nuProduct = NUProduct(from: cdProduct as! CDProduct)
+            else {
                 return nil
             }
+//
             return nuProduct
         }
     }
@@ -469,11 +412,8 @@ class StorageManager: StorageManagerProtocol {
         
         if let cdFavorites = try? context.fetch(request),
            !cdFavorites.isEmpty
-        {
-            return cdFavorites[0]
-        } else {
-            return nil
-        }
+        { return cdFavorites[0] }
+        else { return nil }
     }
     
     private func getCDHistoryProducts() -> [CDProduct]? {
@@ -483,22 +423,15 @@ class StorageManager: StorageManagerProtocol {
            !cdHistories.isEmpty,
            let cdProducts = cdHistories[0].products,
            let cdProductsArray = Array(cdProducts) as? [CDProduct]
-        {
-            return cdProductsArray
-        } else {
-            return nil
-        }
+        { return cdProductsArray }
+        else { return nil }
     }
     
     // MARK: Update operations
     
     func moveFavoritesProduct(from: IndexSet, to: Int) {
         guard let cdFavorites = getCDFavorites()
-//                ,
-//            let cdFavoritesProducts = cdFavorites.products?.mutableCopy() as? NSMutableOrderedSet
-        else {
-            return
-        }
+        else { return }
 
         let cdFavoritesProducts = cdFavorites.mutableOrderedSetValue(forKey: "products")
         let fromInt = from[from.startIndex]

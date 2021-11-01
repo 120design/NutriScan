@@ -21,27 +21,27 @@ class FavoritesViewModel: ObservableObject {
     }
     
     func getFavoritesProducts() {
-        if nuProVersion {
+        if favoritesAreGranted {
             products = storageManager.getFavoritesProducts()
         }
     }
     
     func addProductToFavorites(_ product: NUProduct) {
-        if nuProVersion {
+        if favoritesAreGranted {
             storageManager.saveInFavorites(product: product)
             getFavoritesProducts()
         }
     }
     
     func removeProductFromFavorites(_ product: NUProduct) {
-        if nuProVersion {
+        if favoritesAreGranted {
             storageManager.removeProductFromFavorites(product)
             getFavoritesProducts()
         }
     }
     
     func removeProductFromFavorites(indexSet: Foundation.IndexSet) {
-        if nuProVersion {
+        if favoritesAreGranted {
             let index = indexSet[indexSet.startIndex]
             removeProductFromFavorites(products[index])
             getFavoritesProducts()
@@ -49,14 +49,14 @@ class FavoritesViewModel: ObservableObject {
     }
     
     func moveProduct(from: IndexSet, to: Int) {
-        if nuProVersion {
+        if favoritesAreGranted {
             storageManager.moveFavoritesProduct(from: from, to: to)
             getFavoritesProducts()
         }
     }
 
     func productIsAFavorite(_ product: NUProduct) -> Bool {
-        if nuProVersion {
+        if favoritesAreGranted {
             return products.contains { $0.id == product.id }
         } else {
             return false
@@ -64,7 +64,7 @@ class FavoritesViewModel: ObservableObject {
     }
     
     func getCardType(for product: NUProduct) -> CardView.CardType {
-        if nuProVersion {
+        if favoritesAreGranted {
             return productIsAFavorite(product)
             ? .favoriteProduct(product)
             : .product(product)
@@ -72,19 +72,4 @@ class FavoritesViewModel: ObservableObject {
             return .product(product)
         }
     }
-//    
-//    func purchaseFavoritesAccess() async throws -> PurchaseState {
-//        do {
-//            let purchaseState = try await inAppPurchasesViewModel.purchasePaidVersion()
-//            print("FavoritesViewModel ~> purchaseState ~>", purchaseState)
-//            
-//            objectWillChange.send()
-//            return purchaseState
-//        } catch {
-//            print("FavoritesViewModel ~> error ~>", error)
-//            
-//            objectWillChange.send()
-//            return .unknown
-//        }
-//    }
 }

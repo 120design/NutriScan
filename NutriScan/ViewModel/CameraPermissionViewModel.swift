@@ -11,12 +11,20 @@ import AVFoundation
 class CameraPermissionViewModel : ObservableObject {
     @Published var accessGranted = false
     
+    private let requestAccess: (AVMediaType, @escaping (Bool) -> Void) -> Void
+
+    init(
+        requestAccess: @escaping (AVMediaType, @escaping (Bool) -> Void) -> Void = AVCaptureDevice.requestAccess
+    ) {
+        self.requestAccess = requestAccess
+    }
+    
     func requestPermission() {
-        AVCaptureDevice.requestAccess(for: .video, completionHandler: { accessGranted in
+        requestAccess(.video) { accessGranted in
             DispatchQueue.main.async {
                 self.accessGranted = accessGranted
             }
-        })
+        }
     }
 }
 

@@ -15,7 +15,7 @@ struct OFFService {
     private init() {}
     
     // For unit tests
-    private var session = URLSession(configuration: .default)
+    private(set) var session = URLSession(configuration: .default)
     private var task: URLSessionDataTask?
     init(
         session: URLSession = URLSession.shared,
@@ -118,7 +118,7 @@ struct OFFService {
                 }
                 
                 let image_url = offProduct.image_url ?? nil
-                
+
                 var ecoScore: EcoScore?
                 
                 if let offEcoScore = offProduct.ecoscore_data,
@@ -150,14 +150,14 @@ struct OFFService {
     }
     
     func cancelRequest(with eanCode: String) {
-        guard let url = URL(string: offApi + eanCode) else {
-            return
-        }
+        guard let url = URL(string: offApi + eanCode)
+        else { return }
         
-        URLSession.shared.getAllTasks { tasks in
+        session.getAllTasks { tasks in
           tasks
             .filter { $0.state == .running }
-            .filter { $0.originalRequest?.url == url }.first?
+            .filter { $0.originalRequest?.url == url }
+            .first?
             .cancel()
         }
       }
