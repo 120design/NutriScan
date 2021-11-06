@@ -53,7 +53,7 @@ struct EcoScore: Decodable, Equatable {
             if let value = production_system?.value {
                 if value == 0 || value == 1 { return "+\(value) pt" }
                 
-                return "+ \(value) pts"
+                return "+\(value) pts"
             }
             return "+0 pt"
         }
@@ -83,12 +83,10 @@ struct EcoScore: Decodable, Equatable {
                 if value == 0 || value == 1 { return "+\(value) pt" }
                 
                 if value == -1 { return "\(value) pt" }
-                
-                if value == 1 { return "+\(value) pt" }
-                
+                                
                 if value < 1 { return "\(value) pts" }
                 
-                else { return "+\(value) pts" }
+                return "+\(value) pts"
             }
             return "+0 pt"
         }

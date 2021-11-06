@@ -39,10 +39,7 @@ struct FavoritesView: View {
                 if favoritesViewModel.favoritesAreGranted
                 {
                     List {
-                        HStack {
-                            Text("Ajoutez des produits depuis *l’historique de vos recherches* puis retrouvez-les ici.")
-                            Spacer()
-                        }
+                        Text("Ajoutez des produits depuis *l’historique de vos recherches* puis retrouvez-les ici.")
                         .modifier(NUTextBodyModifier())
                         .frame(maxWidth: .infinity)
                         .padding([.leading, .trailing])
@@ -53,10 +50,7 @@ struct FavoritesView: View {
                         .listRowInsets(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
                         
                         if !favoritesViewModel.products.isEmpty {
-                            HStack {
-                                Text("Pour supprimer ou ré-ordonner les favoris, exercez une longue pression sur un des favoris.")
-                                Spacer()
-                            }
+                            Text("Pour supprimer ou ré-ordonner les favoris, exercez une longue pression sur un des favoris.")
                             .modifier(NUTextBodyModifier())
                             .frame(maxWidth: .infinity)
                             .padding([.leading, .trailing])

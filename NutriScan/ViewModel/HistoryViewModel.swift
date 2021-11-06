@@ -16,7 +16,8 @@ class HistoryViewModel: ObservableObject {
     }
     
     enum MaxHistory: String {
-        case low = "trois", high = "dix"
+        case low = "trois",
+             high = "dix"
         
         var int: Int {
             switch self {

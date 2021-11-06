@@ -15,6 +15,15 @@
 		2F3445ED272F03A600DE3A19 /* no-product-found.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F3445EC272F03A600DE3A19 /* no-product-found.json */; };
 		2F3445EF272F153B00DE3A19 /* StorageManagerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3445EE272F153B00DE3A19 /* StorageManagerTestCase.swift */; };
 		2F3445F1272FE13900DE3A19 /* CoreDataPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3445F0272FE13900DE3A19 /* CoreDataPreview.swift */; };
+		2F3BF28D27315A3100962550 /* HistoryViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BF28C27315A3100962550 /* HistoryViewModelTestCase.swift */; };
+		2F3BF28F27315CA200962550 /* MockStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BF28E27315CA200962550 /* MockStorageManager.swift */; };
+		2F3BF2912731B63000962550 /* FavoritesViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BF2902731B63000962550 /* FavoritesViewModelTestCase.swift */; };
+		2F3BF2932733C10E00962550 /* SearchViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BF2922733C10E00962550 /* SearchViewModelTestCase.swift */; };
+		2F3BF2D327340BA000962550 /* MockOFFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BF2D227340BA000962550 /* MockOFFService.swift */; };
+		2F3BF2D52735A93B00962550 /* InAppPurchasesProductsConfigurationTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BF2D42735A93B00962550 /* InAppPurchasesProductsConfigurationTestCase.swift */; };
+		2F3BF2D9273667A100962550 /* InAppPurchasesViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BF2D8273667A100962550 /* InAppPurchasesViewModelTestCase.swift */; };
+		2F3BF2DC273705A100962550 /* NovaGroupTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BF2DB273705A100962550 /* NovaGroupTestCase.swift */; };
+		2F3BF2DE27370D8300962550 /* EcoScoreTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BF2DD27370D8300962550 /* EcoScoreTestCase.swift */; };
 		2F42E3022729DAD600321FE5 /* NutriScan.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2F42E3002729DAD600321FE5 /* NutriScan.xcdatamodeld */; };
 		2F47183B270DDE44006BDF7E /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F47183A270DDE44006BDF7E /* StorageManager.swift */; };
 		2F50B67926CAF19A0064B060 /* CardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F50B67826CAF19A0064B060 /* CardHeaderView.swift */; };
@@ -88,6 +97,15 @@
 		2F3445EC272F03A600DE3A19 /* no-product-found.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "no-product-found.json"; sourceTree = "<group>"; };
 		2F3445EE272F153B00DE3A19 /* StorageManagerTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerTestCase.swift; sourceTree = "<group>"; };
 		2F3445F0272FE13900DE3A19 /* CoreDataPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataPreview.swift; sourceTree = "<group>"; };
+		2F3BF28C27315A3100962550 /* HistoryViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModelTestCase.swift; sourceTree = "<group>"; };
+		2F3BF28E27315CA200962550 /* MockStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStorageManager.swift; sourceTree = "<group>"; };
+		2F3BF2902731B63000962550 /* FavoritesViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModelTestCase.swift; sourceTree = "<group>"; };
+		2F3BF2922733C10E00962550 /* SearchViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTestCase.swift; sourceTree = "<group>"; };
+		2F3BF2D227340BA000962550 /* MockOFFService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOFFService.swift; sourceTree = "<group>"; };
+		2F3BF2D42735A93B00962550 /* InAppPurchasesProductsConfigurationTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesProductsConfigurationTestCase.swift; sourceTree = "<group>"; };
+		2F3BF2D8273667A100962550 /* InAppPurchasesViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesViewModelTestCase.swift; sourceTree = "<group>"; };
+		2F3BF2DB273705A100962550 /* NovaGroupTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaGroupTestCase.swift; sourceTree = "<group>"; };
+		2F3BF2DD27370D8300962550 /* EcoScoreTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoScoreTestCase.swift; sourceTree = "<group>"; };
 		2F42E3012729DAD600321FE5 /* NutriScan.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NutriScan.xcdatamodel; sourceTree = "<group>"; };
 		2F47183A270DDE44006BDF7E /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		2F50B67826CAF19A0064B060 /* CardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardHeaderView.swift; sourceTree = "<group>"; };
@@ -188,12 +206,12 @@
 		2F55894D26D41A3400CEA23E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				2F55895026D42A5300CEA23E /* SearchViewModel.swift */,
-				2FDCC195272089A2002AED45 /* HistoryViewModel.swift */,
-				2F6A186B2712202A009A0BE8 /* FavoritesViewModel.swift */,
-				2F8ED3002726BC2D00EF7741 /* CameraPermissionViewModel.swift */,
 				2FDCC197272289C8002AED45 /* AlertViewModel.swift */,
+				2F8ED3002726BC2D00EF7741 /* CameraPermissionViewModel.swift */,
+				2F6A186B2712202A009A0BE8 /* FavoritesViewModel.swift */,
+				2FDCC195272089A2002AED45 /* HistoryViewModel.swift */,
 				2FDBCF67272A8C2800812C7E /* InAppPurchasesViewModel.swift */,
+				2F55895026D42A5300CEA23E /* SearchViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -201,7 +219,6 @@
 		2FA1CD8E272B2BCB004365F2 /* InAppPurchases */ = {
 			isa = PBXGroup;
 			children = (
-				2FDBCF69272A8D1400812C7E /* StoreKitProducts.storekit */,
 				2FA1CD8F272B2C47004365F2 /* InAppPurchasesProductsConfiguration.swift */,
 				2FA1CD8C272B2B45004365F2 /* InAppPurchasesProducts.plist */,
 			);
@@ -220,6 +237,13 @@
 			isa = PBXGroup;
 			children = (
 				2FD36C00272FFC26004F4510 /* CameraPermissionViewModelTestCase.swift */,
+				2F3BF2DD27370D8300962550 /* EcoScoreTestCase.swift */,
+				2F3BF2902731B63000962550 /* FavoritesViewModelTestCase.swift */,
+				2F3BF2D42735A93B00962550 /* InAppPurchasesProductsConfigurationTestCase.swift */,
+				2F3BF2D8273667A100962550 /* InAppPurchasesViewModelTestCase.swift */,
+				2F3BF28C27315A3100962550 /* HistoryViewModelTestCase.swift */,
+				2F3BF2DB273705A100962550 /* NovaGroupTestCase.swift */,
+				2F3BF2922733C10E00962550 /* SearchViewModelTestCase.swift */,
 				2F3445EE272F153B00DE3A19 /* StorageManagerTestCase.swift */,
 				2FA1CDA3272E8DBE004365F2 /* OFFServiceTestCase.swift */,
 				2FA1CDA5272E8E59004365F2 /* Mocks */,
@@ -230,8 +254,10 @@
 		2FA1CDA5272E8E59004365F2 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				2FA1CDA8272E8F94004365F2 /* MockURLProtocol.swift */,
+				2F3BF2D227340BA000962550 /* MockOFFService.swift */,
 				2FA1CDAA272E8FF6004365F2 /* MockResponseData.swift */,
+				2F3BF28E27315CA200962550 /* MockStorageManager.swift */,
+				2FA1CDA8272E8F94004365F2 /* MockURLProtocol.swift */,
 				2FA1CDA6272E8F30004365F2 /* 3502110006790-jus-d-orange-tropicana.json */,
 				2F3445EA272EFDAE00DE3A19 /* incomplete-data.json */,
 				2F3445EC272F03A600DE3A19 /* no-product-found.json */,
@@ -298,13 +324,13 @@
 			isa = PBXGroup;
 			children = (
 				2FE3E2292590D59A00CF5AB0 /* NutriScanApp.swift */,
-				2FE3E2392590D5DE00CF5AB0 /* View */,
-				2F55894D26D41A3400CEA23E /* ViewModel */,
-				2FE94C0025990EE400595F71 /* Model */,
-				2FA1CD8E272B2BCB004365F2 /* InAppPurchases */,
+				2FDBCF69272A8D1400812C7E /* StoreKitProducts.storekit */,
 				2FE3E22D2590D59D00CF5AB0 /* Assets.xcassets */,
 				2FE3E2322590D59D00CF5AB0 /* Info.plist */,
 				2FD776ED26C46ACF003B03E2 /* Fonts */,
+				2FE94C0025990EE400595F71 /* Model */,
+				2FE3E2392590D5DE00CF5AB0 /* View */,
+				2F55894D26D41A3400CEA23E /* ViewModel */,
 			);
 			path = NutriScan;
 			sourceTree = "<group>";
@@ -342,6 +368,7 @@
 		2FE94C0025990EE400595F71 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2FA1CD8E272B2BCB004365F2 /* InAppPurchases */,
 				2FE94C0125990EF800595F71 /* Entities */,
 				2FE94C0225990F0100595F71 /* Services */,
 				2F1EA650270C5E98004354C4 /* CoreData */,
@@ -532,7 +559,16 @@
 				2FA1CDA4272E8DBE004365F2 /* OFFServiceTestCase.swift in Sources */,
 				2FA1CDA9272E8F94004365F2 /* MockURLProtocol.swift in Sources */,
 				2FD36C01272FFC26004F4510 /* CameraPermissionViewModelTestCase.swift in Sources */,
+				2F3BF2932733C10E00962550 /* SearchViewModelTestCase.swift in Sources */,
+				2F3BF2912731B63000962550 /* FavoritesViewModelTestCase.swift in Sources */,
+				2F3BF28F27315CA200962550 /* MockStorageManager.swift in Sources */,
+				2F3BF2D9273667A100962550 /* InAppPurchasesViewModelTestCase.swift in Sources */,
+				2F3BF2DE27370D8300962550 /* EcoScoreTestCase.swift in Sources */,
+				2F3BF2DC273705A100962550 /* NovaGroupTestCase.swift in Sources */,
 				2F3445EF272F153B00DE3A19 /* StorageManagerTestCase.swift in Sources */,
+				2F3BF28D27315A3100962550 /* HistoryViewModelTestCase.swift in Sources */,
+				2F3BF2D327340BA000962550 /* MockOFFService.swift in Sources */,
+				2F3BF2D52735A93B00962550 /* InAppPurchasesProductsConfigurationTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

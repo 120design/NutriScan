@@ -6,18 +6,25 @@
 //
 
 import XCTest
-
-@testable
-import NutriScan
+@testable import NutriScan
 import AVFoundation
 
 class CameraPermissionViewModelTestCase: XCTestCase {
     var sut: CameraPermissionViewModel!
     var expectation: XCTestExpectation!
-    let timeOut = 1.0
+    let timeOut = 2.0
     
     override func setUp() {
+        super.setUp()
+        
         expectation = expectation(description: "OFFServiceTestCase expectation")
+    }
+    
+    override func tearDown() {
+        sut = nil
+        expectation = nil
+        
+        super.tearDown()
     }
     
     func testGivenAccesGrantedIsFalse_WhenRequestAccessReturnsTrue_ThenAccessGrantedIsTrue() {
@@ -25,7 +32,6 @@ class CameraPermissionViewModelTestCase: XCTestCase {
         sut = CameraPermissionViewModel(
             requestAccess: requestMethod
         )
-        sut.accessGranted = false
 
         sut.requestPermission()
         
@@ -48,13 +54,6 @@ class CameraPermissionViewModelTestCase: XCTestCase {
     
     func testGivenAccesGrantedIsFalse_WhenRequestAccessReturnsFalse_ThenAccessGrantedIsFalse() {
         // Given
-        sut = CameraPermissionViewModel(
-            requestAccess: requestMethod
-        )
-        sut.accessGranted = false
-
-        sut.requestPermission()
-        
         func requestMethod(
             for: AVMediaType,
             completionHander: @escaping ((Bool) -> Void)
@@ -68,6 +67,11 @@ class CameraPermissionViewModelTestCase: XCTestCase {
                 self.expectation.fulfill()
             }
         }
+        sut = CameraPermissionViewModel(
+            requestAccess: requestMethod
+        )
+
+        sut.requestPermission()
 
         wait(for: [expectation], timeout: timeOut)
    }

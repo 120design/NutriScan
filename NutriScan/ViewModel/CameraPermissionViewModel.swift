@@ -17,6 +17,7 @@ class CameraPermissionViewModel : ObservableObject {
         requestAccess: @escaping (AVMediaType, @escaping (Bool) -> Void) -> Void = AVCaptureDevice.requestAccess
     ) {
         self.requestAccess = requestAccess
+        self.accessGranted = accessGranted
     }
     
     func requestPermission() {

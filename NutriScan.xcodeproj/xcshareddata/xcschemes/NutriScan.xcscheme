@@ -20,6 +20,20 @@
                ReferencedContainer = "container:NutriScan.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2FA1CD99272DDDBD004365F2"
+               BuildableName = "NutriScanTests.xctest"
+               BlueprintName = "NutriScanTests"
+               ReferencedContainer = "container:NutriScan.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -62,7 +76,7 @@
          </BuildableReference>
       </BuildableProductRunnable>
       <StoreKitConfigurationFileReference
-         identifier = "../../NutriScan/InAppPurchases/StoreKitProducts.storekit">
+         identifier = "../../NutriScan/StoreKitProducts.storekit">
       </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction

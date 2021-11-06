@@ -7,19 +7,23 @@
 
 import Foundation
 
-struct OFFService {
-    private var offApi = "https://world.openfoodfacts.org/api/v0/products/"
-    
-    // Ssingleton's creation
-    static let shared = OFFService()
-    private init() {}
+protocol OFFServiceProtocol {
+    func getProduct(
+        from eanCode: String,
+        completion: @escaping (Result<NUProduct, OFFService.OFFError>) -> Void
+    )
+    func cancelRequest(with eanCode: String)
+}
+
+struct OFFService: OFFServiceProtocol {
+    private var offApi:String
     
     // For unit tests
     private(set) var session = URLSession(configuration: .default)
     private var task: URLSessionDataTask?
     init(
         session: URLSession = URLSession.shared,
-        offApi: String
+        offApi: String = "https://world.openfoodfacts.org/api/v0/products/"
     ) {
         self.session = session
         self.offApi = offApi

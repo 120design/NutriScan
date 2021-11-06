@@ -6,9 +6,7 @@
 //
 
 import Foundation
-
-@testable
-import NutriScan
+@testable import NutriScan
 
 class MockResponseData {
     // MARK: - Simulate URL

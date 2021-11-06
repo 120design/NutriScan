@@ -11,6 +11,20 @@ struct InAppPurchasesView: View {
     @EnvironmentObject private var inAppPurchasesViewModel: InAppPurchasesViewModel
     @ObservedObject private var alertViewModel = AlertViewModel()
     
+    private func presentPurchaseAlert() {
+        alertViewModel.title = "Demande de remboursement"
+        
+        alertViewModel.message = "Souhaitez-vous réellement supprimer revenir à la version gratuite de NutriScan ? Vous serez reboursé par Apple sous 48 h 00."
+        
+        alertViewModel.primaryButton = .default("Annuler") { }
+        
+        alertViewModel.secondaryButton = .destructive("Demander le remboursement") {
+            inAppPurchasesViewModel.getFreeVersion()
+        }
+        
+        alertViewModel.isPresented = true
+    }
+    
     private func presentRefundAlert() {
         alertViewModel.title = "Demande de remboursement"
         

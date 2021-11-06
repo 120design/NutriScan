@@ -6,9 +6,7 @@
 //
 
 import XCTest
-
-@testable
-import NutriScan
+@testable import NutriScan
 
 class OFFServiceTestCase: XCTestCase {
     var sut: OFFService!
@@ -16,6 +14,8 @@ class OFFServiceTestCase: XCTestCase {
     let timeOut = 1.0
     
     override func setUp() {
+        super.setUp()
+        
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [MockURLProtocol.self]
         let session = URLSession.init(configuration: configuration)
@@ -25,6 +25,13 @@ class OFFServiceTestCase: XCTestCase {
             offApi: MockResponseData.goodURL
         )
         expectation = expectation(description: "OFFServiceTestCase expectation")
+    }
+    
+    override func tearDown() {
+        sut = nil
+        expectation = nil
+        
+        super.tearDown()
     }
     
     func testGivenResponseAndDataAreCorrect_WhenGetProduct_ThenResultIsSuccess() {

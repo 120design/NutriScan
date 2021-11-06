@@ -7,17 +7,21 @@
 
 import XCTest
 import CoreData
-
-@testable
-import NutriScan
+@testable import NutriScan
 
 class StorageManagerTestCase: XCTestCase {
-    var sut = StorageManager(.inMemory)
+    var sut: StorageManager!
     
     override func setUp() {
         super.setUp()
         
         sut = StorageManager(.inMemory)
+    }
+    
+    override func tearDown() {
+        sut = nil
+        
+        super.tearDown()
     }
     
     // MARK: Create product

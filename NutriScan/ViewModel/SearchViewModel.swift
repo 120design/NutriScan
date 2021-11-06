@@ -22,6 +22,19 @@ class SearchViewModel: ObservableObject {
     @Published var showResult = false
     @Published private(set) var currentlyResearching = false
     
+    @Published var alertViewModel = AlertViewModel()
+    
+    private let connectionAlertTitle = "Problème de connexion"
+    private let connectionAlertMessage = "Votre appareil n’est pas connecté au web, merci de vérifier votre connexion avant de lancer une recherche."
+
+    private let noProductFoundAlertTitle = "Pas de produit trouvé"
+    private var noProductFoundAlertMessage: String {
+        "Aucun produit correspondant au code EAN \(eanCode) n’a été trouvé dans la base de données d’Open Food Facts. Il pourrait être ajouté ultérieurement, alors n’hésitez pas à ré-essayer une autre fois."
+    }
+    
+    private let undefinedAlertTitle = "Erreur indéterminée"
+    private let undefinedAlertMessage = "Une erreur est survenue, merci de ré-essayer ultérieurement."
+    
     var clearButtonIsDisabled: Bool {
         eanCode.isEmpty
     }
@@ -30,12 +43,17 @@ class SearchViewModel: ObservableObject {
     }
     
     private let storageManager: StorageManagerProtocol
-    
+    private let offService: OFFServiceProtocol
+
     private var subCancellable: AnyCancellable!
     private var validCharSet = CharacterSet(charactersIn: "0123456789")
     
-    init(storageManager: StorageManagerProtocol = StorageManager.shared) {
+    init(
+        storageManager: StorageManagerProtocol = StorageManager.shared,
+        offService: OFFServiceProtocol = OFFService()
+    ) {
         self.storageManager = storageManager
+        self.offService = offService
         
         subCancellable = $eanCode.sink { val in
             //check if the new string contains any invalid characters
@@ -65,27 +83,51 @@ class SearchViewModel: ObservableObject {
         
         currentlyResearching = true
         
-        OFFService.shared.getProduct(from: eanCode) { result in
+        offService.getProduct(from: eanCode) { result in
             DispatchQueue.main.async {
+                self.currentlyResearching = false
+
                 switch result {
                 case .success(let foundProduct):
                     self.foundProduct = foundProduct
+                    self.showCardDetail = false
+                    self.showResult = true
+                    return
+
                 case .failure(let error):
                     // TODO: Traiter les erreurs
                     print("SearchManager ~> getProduct.failure ~> error ~>", error)
-                    self.currentlyResearching = false
+                    self.alertViewModel.isPresented = true
+
+                    switch error {
+                    case .connection:
+                        self.alertViewModel.title = self.connectionAlertTitle
+                        self.alertViewModel.message = self.connectionAlertMessage
+
+                        
+                    case .noProductFound:
+                        self.alertViewModel.title = self.noProductFoundAlertTitle
+                        self.alertViewModel.message = self.noProductFoundAlertMessage
+                        
+                    case .undefined,
+                            .response,
+                            .statusCode,
+                            .data:
+                        self.alertViewModel.title = self.undefinedAlertTitle
+                        self.alertViewModel.message = self.undefinedAlertMessage
+                        
+                    case .cancelledRequest:
+                        self.alertViewModel.isPresented = false
+                        self.showCardDetail = false
+                    }
                     return
                 }
-                
-                self.showCardDetail = false
-                self.showResult = true
-                self.currentlyResearching = false
             }
         }
     }
     
-    // Annuler la recherche quand on ferme la CardDetailView avant d’avoir reçu la réponse d’OFF
+    // Cancel the search when closing the CardDetailView before receiving the response from API
     func cancelRequest() {
-        OFFService.shared.cancelRequest(with: eanCode)
+        offService.cancelRequest(with: eanCode)
     }
 }

@@ -9,7 +9,11 @@ import SwiftUI
 
 class FavoritesViewModel: ObservableObject {
     @Published internal var products: [NUProduct] = []
-    @Published var favoritesAreGranted: Bool = false
+    @Published var favoritesAreGranted: Bool = false {
+        didSet {
+            if favoritesAreGranted { getFavoritesProducts() }
+        }
+    }
     
     private let storageManager: StorageManagerProtocol
     
@@ -17,6 +21,7 @@ class FavoritesViewModel: ObservableObject {
         storageManager: StorageManagerProtocol = StorageManager.shared
     ) {
         self.storageManager = storageManager
+        
         getFavoritesProducts()
     }
     
@@ -29,6 +34,7 @@ class FavoritesViewModel: ObservableObject {
     func addProductToFavorites(_ product: NUProduct) {
         if favoritesAreGranted {
             storageManager.saveInFavorites(product: product)
+            
             getFavoritesProducts()
         }
     }
@@ -36,6 +42,7 @@ class FavoritesViewModel: ObservableObject {
     func removeProductFromFavorites(_ product: NUProduct) {
         if favoritesAreGranted {
             storageManager.removeProductFromFavorites(product)
+            
             getFavoritesProducts()
         }
     }
@@ -44,6 +51,7 @@ class FavoritesViewModel: ObservableObject {
         if favoritesAreGranted {
             let index = indexSet[indexSet.startIndex]
             removeProductFromFavorites(products[index])
+            
             getFavoritesProducts()
         }
     }
@@ -51,6 +59,7 @@ class FavoritesViewModel: ObservableObject {
     func moveProduct(from: IndexSet, to: Int) {
         if favoritesAreGranted {
             storageManager.moveFavoritesProduct(from: from, to: to)
+            
             getFavoritesProducts()
         }
     }

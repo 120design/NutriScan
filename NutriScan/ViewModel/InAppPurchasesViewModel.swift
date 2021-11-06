@@ -1,5 +1,5 @@
 //
-//  InAppPurchaseViewModel.swift
+//  InAppPurchasesViewModel.swift
 //  NutriScan
 //
 //  Created by Vincent Caronnet on 28/10/2021.
@@ -41,7 +41,7 @@ struct UnwrappedVerificationResult<T> {
     let verificationError: VerificationResult<T>.VerificationError?
 }
 
-class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol {
+class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol  {
     @Published internal var paidVersionIsPurchased: Bool?
     
     private var products: [Product]?
@@ -52,16 +52,27 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
     // Handle for App Store transactions.
     private var transactionListener: Task<Void, Error>? = nil
     
+    private let canMakePayments: Bool
+            
     @MainActor
-    init() {
-        transactionListener = handleTransactions()
+    init(
+        readConfigFile: () -> Set<ProductID>? = InAppPurchasesProductsConfiguration.readConfigFile,
+        canMakePayments: Bool = AppStore.canMakePayments,
+        providedProducts: [Product]? = nil
+    ) {
+        self.canMakePayments = canMakePayments
 
-        if let productIDs = InAppPurchasesProductsConfiguration.readConfigFile() {
-            print("productIDs", productIDs)
-            // Get localized product info from the App Store
-            Task {
-                products = try? await Product.products(for: productIDs)
-                paidVersionIsPurchased = await isPaidVersionPurchased()
+        transactionListener = handleTransactions()
+        
+        if let providedProducts = providedProducts {
+            products = providedProducts
+        } else {
+            if let productIDs = readConfigFile() {
+                // Get localized product info from the App Store
+                Task {
+                    products = try? await Product.products(for: productIDs)
+                    paidVersionIsPurchased = await isPaidVersionPurchased()
+                }
             }
         }
     }
@@ -70,27 +81,27 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
     func purchasePaidVersion() async throws -> PurchaseState {
         guard let product = products?.first
         else {
-            print("InAppPurchasesViewModel ~> purchase ~> ERROR ~> No product to sell!")
+            print("InAppPurchasesViewModel ~> purchasePaidVersion ~> No product to sell")
             return .unknown
         }
         
-        guard AppStore.canMakePayments else {
-            print("InAppPurchasesViewModel ~> purchase ~> Purchase failed because the user cannot make payments")
+        guard canMakePayments else {
+            print("InAppPurchasesViewModel ~> purchasePaidVersion ~> Purchase failed because the user cannot make payments")
             return .userCannotMakePayments
         }
         
         guard purchaseState != .inProgress else {
-            print("InAppPurchasesViewModel ~> purchase ~> EXCEPTION ~> StoreKit throw an exception while processing a purchase")
+            print("InAppPurchasesViewModel ~> purchasePaidVersion ~> EXCEPTION ~> StoreKit throw an exception while processing a purchase")
             throw StoreException.purchaseInProgressException
         }
         
         // Start a purchase transaction
         purchaseState = .inProgress
-        print("InAppPurchasesViewModel ~> purchase ~> product.id ~>", product.id, "~> Purchase in progress")
+        print("InAppPurchasesViewModel ~> purchasePaidVersion ~> product.id ~>", product.id, "~> Purchase in progress")
         
         guard let result = try? await product.purchase() else {
             purchaseState = .failed
-            print("InAppPurchasesViewModel ~> purchase ~> EXCEPTION ~> product.id ~>", product.id, "~> Purchase failure")
+            print("InAppPurchasesViewModel ~> purchasePaidVersion ~> EXCEPTION ~> product.id ~>", product.id, "~> Purchase failure")
             throw StoreException.purchaseException
         }
         
@@ -111,7 +122,7 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
                 let checkResult = checkVerificationResult(result: verificationResult)
                 if !checkResult.verified {
                     purchaseState = .failedVerification
-                    print("InAppPurchasesViewModel ~> purchase ~> TRANSACTION VALIDATION FAILURE ~> checkResult.transaction.productID ~>", checkResult.transaction.productID)
+                    print("InAppPurchasesViewModel ~> purchasePaidVersion ~> TRANSACTION VALIDATION FAILURE ~> checkResult.transaction.productID ~>", checkResult.transaction.productID)
                     paidVersionIsPurchased = false
                     throw StoreException.transactionVerificationFailed
                 }
@@ -129,24 +140,24 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
                 // Let the caller know the purchase succeeded and that the user should be given access to the product
                 purchaseState = .purchased
                 paidVersionIsPurchased = true
-                print("InAppPurchasesViewModel ~> purchase ~> NOTIFICATION ~> product.id ~>", product.id, "~>", StoreNotification.purchaseSuccess)
+                print("InAppPurchasesViewModel ~> purchasePaidVersion ~> NOTIFICATION ~> product.id ~>", product.id, "~>", StoreNotification.purchaseSuccess)
                 
                 return .purchased
                 
             case .userCancelled:
                 purchaseState = .cancelled
-                print("InAppPurchasesViewModel ~> purchase ~>  product.id ~>", product.id, "~> .cancelled")
+                print("InAppPurchasesViewModel ~> purchasePaidVersion ~>  product.id ~>", product.id, "~> .cancelled")
                 paidVersionIsPurchased = false
                 return .cancelled
                 
             case .pending:
                 purchaseState = .pending
-                print("InAppPurchasesViewModel ~> purchase ~>  product.id ~>", product.id, "~> .pending")
+                print("InAppPurchasesViewModel ~> purchasePaidVersion ~>  product.id ~>", product.id, "~> .pending")
                 return .pending
                 
             default:
                 purchaseState = .unknown
-                print("InAppPurchasesViewModel ~> purchase ~>  product.id ~>", product.id, "~> .unknown")
+                print("InAppPurchasesViewModel ~> purchasePaidVersion ~>  product.id ~>", product.id, "~> .unknown")
                 paidVersionIsPurchased = false
                 return .unknown
         }
@@ -288,7 +299,7 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
         }
     }
     
-    // TODO: Replace by a real method for handle refundi
+    // TODO: Replace by a real method for handle refund
     func getFreeVersion() {
         paidVersionIsPurchased = false
     }

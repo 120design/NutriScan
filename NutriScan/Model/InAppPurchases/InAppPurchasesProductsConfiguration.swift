@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct InAppPurchasesProductsConfiguration {
+protocol InAppPurchasesProductsConfigurationProtocol {
+    static func readConfigFile() -> Set<ProductID>?
+}
+
+public struct InAppPurchasesProductsConfiguration: InAppPurchasesProductsConfigurationProtocol{
     private init() {}
     
     static func readConfigFile() -> Set<ProductID>? {
