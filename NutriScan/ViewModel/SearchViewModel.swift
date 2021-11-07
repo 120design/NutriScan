@@ -95,7 +95,6 @@ class SearchViewModel: ObservableObject {
                     return
 
                 case .failure(let error):
-                    // TODO: Traiter les erreurs
                     print("SearchManager ~> getProduct.failure ~> error ~>", error)
                     self.alertViewModel.isPresented = true
 
