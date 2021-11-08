@@ -11,6 +11,8 @@ struct HistoryView: View {
     @StateObject private var historyViewModel = HistoryViewModel()
     @EnvironmentObject private var inAppPurchasesViewModel: InAppPurchasesViewModel
     
+    var isSelected: Bool
+    
     var headerParagraphs: [String] {
         var array = ["Consultez ici *l’historique de vos \(historyViewModel.maxHistory.rawValue) dernières recherches* de produits."]
         if inAppPurchasesViewModel.paidVersionIsPurchased ?? false && !historyViewModel.products.isEmpty {
@@ -26,9 +28,10 @@ struct HistoryView: View {
                 products: historyViewModel.products,
                 headerParagraphs: headerParagraphs
             )
-                .onAppear {
-                    historyViewModel.getHistoryProducts()
-                }
+//                .onAppear {
+//                    print("HistoryView ~> ON APPEAR")
+//                    historyViewModel.getHistoryProducts()
+//                }
         }
         .nuNavigationBar()
         .environmentObject(historyViewModel)
@@ -41,11 +44,16 @@ struct HistoryView: View {
             
             historyViewModel.maxHistory = paidVersionIsPurchased ? .high : .low
         }
+        .onChange(of: isSelected) { isSelected in
+            if isSelected {
+                historyViewModel.getHistoryProducts()
+            }
+        }
     }
 }
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryView()
+        HistoryView(isSelected: true)
     }
 }

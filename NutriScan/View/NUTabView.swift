@@ -10,24 +10,30 @@ import SwiftUI
 let nuProVersion = true
 
 struct NUTabView: View {
+    @State var selectedTab = 1
+    
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             SearchView()
                 .tabItem {
                     Label("Recherche", systemImage: "magnifyingglass")
                 }
-            HistoryView()
+                .tag(1)
+            HistoryView(isSelected: selectedTab == 2)
                 .tabItem {
                     Label("Historique", systemImage: "gobackward")
                 }
+                .tag(2)
             FavoritesView()
                 .tabItem {
                     Label("Favoris", systemImage: "bookmark")
                 }
+                .tag(1)
             SettingsView()
                 .tabItem {
                     Label("Réglages", systemImage: "gear")
                 }
+                .tag(1)
         }
         .accentColor(.nuTertiaryColor)
         .onAppear() {

@@ -44,8 +44,6 @@
 	<dict>
 		<key>UIColorName</key>
 		<string>NUPrimaryColor</string>
-		<key>UIImageName</key>
-		<string>LaunchScreenImage</string>
 	</dict>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

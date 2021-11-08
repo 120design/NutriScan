@@ -14,6 +14,7 @@ class SearchViewModel: ObservableObject {
 
     @Published var foundProduct: NUProduct? {
         didSet {
+            print("SearchViewModel ~> foundProduct ~> DID SET")
             if let foundProduct = foundProduct {
                 storageManager.create(product: foundProduct)
             }

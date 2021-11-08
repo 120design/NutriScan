@@ -33,9 +33,12 @@ class HistoryViewModel: ObservableObject {
     
     init(storageManager: StorageManagerProtocol = StorageManager.shared) {
         self.storageManager = storageManager
+        
+        getHistoryProducts()
     }
     
     func getHistoryProducts() {
+        print("HistoryViewModel ~> getHistoryProducts")
         products = storageManager.getHistoryProducts()
     }
 }

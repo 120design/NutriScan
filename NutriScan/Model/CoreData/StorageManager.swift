@@ -24,7 +24,7 @@ enum StorageType {
     case persistent, inMemory
 }
 
-class StorageManager: StorageManagerProtocol {
+struct StorageManager: StorageManagerProtocol {
     var maxHistory: Int
     
     static let shared = StorageManager()
