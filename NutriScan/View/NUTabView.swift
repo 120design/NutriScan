@@ -10,7 +10,7 @@ import SwiftUI
 let nuProVersion = true
 
 struct NUTabView: View {
-    @State var selectedTab = 1
+    @State private var selectedTab = 0
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -18,22 +18,22 @@ struct NUTabView: View {
                 .tabItem {
                     Label("Recherche", systemImage: "magnifyingglass")
                 }
-                .tag(1)
-            HistoryView(isSelected: selectedTab == 2)
+                .tag(0)
+            HistoryView(isSelected: selectedTab == 1)
                 .tabItem {
                     Label("Historique", systemImage: "gobackward")
                 }
-                .tag(2)
+                .tag(1)
             FavoritesView()
                 .tabItem {
                     Label("Favoris", systemImage: "bookmark")
                 }
-                .tag(1)
+                .tag(2)
             SettingsView()
                 .tabItem {
                     Label("Réglages", systemImage: "gear")
                 }
-                .tag(1)
+                .tag(3)
         }
         .accentColor(.nuTertiaryColor)
         .onAppear() {
