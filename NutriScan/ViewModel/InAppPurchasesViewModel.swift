@@ -165,10 +165,12 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
     
     @MainActor
     internal func isPaidVersionPurchased() async -> Bool {
-        guard let productID = products?.first?.id,
+        guard let productID = products?
+                .first(where: { $0.id == "design.120.NutriScan.PaidVersion"})?
+                .id,
               let isPurchased = try? await isPurchased(productID: productID)
         else { return false }
-       
+        
         return isPurchased
     }
 

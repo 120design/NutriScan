@@ -14,7 +14,7 @@ class InAppPurchasesViewModelTestCase: XCTestCase {
     
     func readNilConfigFile() -> Set<ProductID>? { nil }
     func readNotNilConfigFile() -> Set<ProductID>? { ["123"] }
-    let providedProductID = "design.120.NutriScan.2110301905"
+    let providedProductID = "design.120.NutriScan.PaidVersion"
     
     typealias StoreException = InAppPurchasesViewModel.StoreException
     
