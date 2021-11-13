@@ -77,6 +77,8 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
         }
     }
     
+    deinit { transactionListener?.cancel() }
+    
     @MainActor
     func purchasePaidVersion() async throws -> PurchaseState {
         guard let product = products?.first
@@ -240,11 +242,6 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
             for await verificationResult in Transaction.updates {
                 // See if StoreKit validated the transaction
                 let checkResult = await self.checkVerificationResult(result: verificationResult)
-                
-//                StoreLog.transaction(
-//                    .transactionReceived,
-//                    productID: checkResult.transaction.productID
-//                )
                 print("InAppPurchasesViewModel ~> handleTransactions ~> checkResult.transaction.productID ~>", checkResult.transaction.productID)
                 
                 if checkResult.verified {
