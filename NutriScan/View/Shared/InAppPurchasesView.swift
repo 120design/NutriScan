@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct InAppPurchasesView: View {
     @EnvironmentObject private var inAppPurchasesViewModel: InAppPurchasesViewModel
@@ -103,6 +104,14 @@ struct InAppPurchasesView: View {
                 .modifier(NUSmoothCornersModifier(cornerRadius: 12))
                 .modifier(NUSmallButtonLabelModifier())
                 .nuShadowModifier(color: .nuTertiaryColor)
+                
+                Button("Restaurer cet achat", action: {
+                    Task {
+                        //This call displays a system prompt that asks users to authenticate with their App Store credentials.
+                        //Call this function only in response to an explicit user action, such as tapping a button.
+                        try? await AppStore.sync()
+                    }
+                })
             }
         }
         .padding()
@@ -118,5 +127,6 @@ struct LiteVersionFavoritesView_Previews:
     PreviewProvider {
     static var previews: some View {
         InAppPurchasesView()
+            .environmentObject(InAppPurchasesViewModel())
     }
 }
