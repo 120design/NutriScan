@@ -7,13 +7,6 @@
 
 import StoreKit
 
-protocol InAppPurchasesViewModelProtocol: ObservableObject {
-    var paidVersionIsPurchased: Bool? { get set }
-    
-    func purchasePaidVersion() async throws -> PurchaseState
-    func isPaidVersionPurchased() async -> Bool
-}
-
 typealias ProductID = String
 
 // The state of a purchase.
@@ -41,10 +34,12 @@ struct UnwrappedVerificationResult<T> {
     let verificationError: VerificationResult<T>.VerificationError?
 }
 
-class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol  {
+class InAppPurchasesViewModel: ObservableObject  {
     @Published internal var paidVersionIsPurchased: Bool?
     
     private var products: [Product]?
+    private let productIDs: Set<String> = ["design.120.NutriScan.PaidVersion"]
+    
     private var purchasedProductsIDs: [String] = []
 
     private(set) var purchaseState: PurchaseState = .notStarted
@@ -56,7 +51,6 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
             
     @MainActor
     init(
-        readConfigFile: () -> Set<ProductID>? = InAppPurchasesProductsConfiguration.readConfigFile,
         canMakePayments: Bool = AppStore.canMakePayments,
         providedProducts: [Product]? = nil
     ) {
@@ -64,16 +58,9 @@ class InAppPurchasesViewModel: ObservableObject, InAppPurchasesViewModelProtocol
 
         transactionListener = handleTransactions()
         
-        if let providedProducts = providedProducts {
-            products = providedProducts
-        } else {
-            if let productIDs = readConfigFile() {
-                // Get localized product info from the App Store
-                Task {
-                    products = try? await Product.products(for: productIDs)
-                    paidVersionIsPurchased = await isPaidVersionPurchased()
-                }
-            }
+        Task {
+            products = try? await Product.products(for: productIDs)
+            paidVersionIsPurchased = await isPaidVersionPurchased()
         }
     }
     
